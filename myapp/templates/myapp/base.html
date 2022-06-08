@@ -1,0 +1,411 @@
+<!doctype html>
+{% load static %}
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="You shopping need to satisfied us my mind and heart">
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <script src="https://kit.fontawesome.com/73aa0e5a96.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="{% static 'css/owl.carousel.css' %} ">
+  <link rel="stylesheet" href="{% static 'css/owl.theme.green.min.css' %} ">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="{% static 'css/base.css' %} ">
+  <link rel="stylesheet" href="{% static 'css/phone.css' %}">
+
+  {% block title %}<title>Go fresh</title>{% endblock title %}
+  </head>
+
+
+
+
+<header>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+  <div class="container">
+      <a class="navbar-brand" href="{% url 'home' %}"><img src="{% static 'images/banner/logo.png' %}" width="160px" height="auto"></a>
+      
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      
+ 
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        
+          <form class="d-flex me-4 bg-light" style="width: 150px;">
+            <button class="btn btn-danger btn-sm text-white">
+            <i class="fa-solid fa-location-dot text-white"></i>
+            </button>  
+            <input class="me-1 location" type="search" placeholder="enter pincode" aria-label="Search">
+          </form>
+        
+
+   
+        {% if request.user.is_authenticated  %}
+        <form class="d-flex " style="width: 615px;" id="search">
+          <input class=" me-1" type="search" placeholder="Search for any fresh products.." aria-label="Search ">
+          <button type="button" class="btn btn-sm btn-danger">
+            <i class="fas fa-search"></i>
+          </button>
+      </form>
+
+   
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0 wv-0" id="navDropdown">  
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              {{ request.user.username | capfirst }}
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <li><a class="dropdown-item" href="#">Profile</a></li>
+              <li><a class="dropdown-item" href="#">Orders</a></li>
+              <li><a class="dropdown-item" href="#">Chnage Password</a></li>
+              <li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
+            </ul>
+        </li>
+      
+
+      <li class="nav-item " style="list-style-type : none;">
+        <a href="{% url 'cart' %}" class="text-muted">
+          <span class="text-white bg-danger fs-6 rounded-circle px-2" style="position: absolute; right: 105px; bottom: 35px; font-size: 8px;" id="cartcount">{{ total_items}}</span>
+          <i class="fas fa-shopping-cart mx-1  fs-5 text-muted mt-1" style="position: relative;"></i></a> Cart
+        </li>
+
+
+
+
+      {% else %}
+
+      <form class="d-flex " style="width: 700px;" id="search">
+        <input class=" me-1" type="search" placeholder="Search for any fresh products.." aria-label="Search ">
+        <button type="button" class="btn btn-sm btn-danger">
+          <i class="fas fa-search"></i>
+        </button>
+    </form>
+      
+
+      <li class="nav-item" style="list-style-type: none; padding-left: 0px;">
+        <a href="{% url 'login' %}" class="text-decoration-none text-dark">Login</a>/<a href="{% url 'signup' %}"
+            class="text-decoration-none py-2 text-dark">Signup</a>
+      </li>
+
+  </ul>
+    {% endif %}
+
+<!--
+
+{% if request.user.is_authenticated  %}
+  
+  <ul class="navbar-nav me-auto mb-2 mb-lg-0 wv-0" id="navDropdown">  
+    <li class="nav-item dropdown">
+      <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+        {{ request.user.username | capfirst }}
+      </a>
+      <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+        <li><a class="dropdown-item" href="#">Profile</a></li>
+        <li><a class="dropdown-item" href="#">Orders</a></li>
+        <li><a class="dropdown-item" href="#">Chnage Password</a></li>
+        <li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
+      </ul>
+  </li>
+
+
+    <li class="nav-item ps-5 align-item-center pt-1">
+      <a href="{% url 'cart' %}" class="cart  text-muted mb-0">
+      <span class="text-white bg-danger fs-6 rounded-circle px-1" style="position: absolute; right: 50px; bottom: 10px; font-size: 8px;">{{ total_items}}</span>
+          <i class="fas fa-shopping-cart mx-1  fs-5 text-muted mt-1">
+
+          </i>Cart</a>
+    </li>
+
+
+{% else %}
+
+    <li class="nav-item" style="list-style-type: none; padding-left: 0px;">
+      <a href="{% url 'login' %}" class="text-decoration-none text-dark">Login</a>/<a href="{% url 'signup' %}"
+          class="text-decoration-none py-2 text-dark">Signup</a>
+      </li>
+
+    </ul>
+
+
+{% endif %}
+
+  
+
+
+
+
+-->
+  
+
+        </div>
+
+
+        </div>
+      
+      <!--   <form class="d-flex">
+        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success" type="submit">Search</button>
+      </form>   -->
+     
+
+  
+        </div>
+  
+    </nav>
+  
+
+</header>
+
+
+  <!-------------end here navbar div-------------------------->
+
+  <!------------------- start sub navigation- bar--------------->
+  {% block  subnavbar %}
+  <!--------------------->
+
+  <div class="container-fluid bg-light px-2" id="subnavbar">
+    <div class="row">
+  
+      <div class="col col-sm-12 offset-sm-0">
+      
+     
+        <div class = "d-flex justify-content-around align-items-center flex-wrap" id="categorynav">
+    
+        <div class="navcategoryDiv mt-0 ms-2">
+          <a {% if request.resolver_match.url_name == 'todaysale' %} active {% endif %}href="{% url 'todaysale' %}" class="navproductCategory">
+              <figure class="">
+                <img src="{% static 'images/category/c8.png' %}" alt="Trulli" width="40" height="40" class="">
+                <figcaption>Today's deal</figcaption>
+              </figure>
+            
+            </a>
+  
+        </div>
+  
+        <div class="navcategoryDiv">
+          
+          <a {% if request.resolver_match.url_name == '' %} acticountrychickenve {% endif %} href="{% url 'countrychicken' %}" class="navproductCategory">
+            <figure class="">
+              <img src="{% static 'images/category/c11.png' %}" alt="Trulli" width="40" height="40" class="">
+              <figcaption>Country chicken</figcaption>
+            </figure>
+          </a>
+        
+
+      </div>
+
+  
+        <div class="navcategoryDiv">
+            <a href="{% url 'poultrychicken' %}" class="navproductCategory">
+              <figure class="">
+                <img src="{% static 'images/category/c4.png' %}" alt="Trulli" width="40" height="40" class="">
+                <figcaption>Chicken</figcaption>
+              </figure>
+            </a>
+          </div>
+  
+        
+
+        <div class="navcategoryDiv">
+  
+            <a href="{% url 'mutton' %}" class="navproductCategory">
+              <figure class="">
+                <img src="{% static 'images/category/c1.png' %}" alt="Trulli" width="40" height="40" class="">
+                <figcaption>Mutton</figcaption>
+                </figure>
+            </a>
+          </div>
+  
+        
+  
+        <div class="navcategoryDiv">
+            <a href="{% url 'fishseafood' %}" class="navproductCategory">
+              <figure class="">
+                <img src="{% static 'images/category/c10.png' %}" alt="Trulli" width="40" height="40" class="">
+                <figcaption>Fish & Seafood</figcaption>
+              </figure>
+            </a>
+        
+
+        </div>
+  
+  
+        <div class="navcategoryDiv">
+            <a href="prawns" class="navproductCategory">
+              <figure class="">
+                <img src="{% static 'images/category/c7.png' %}" alt="Trulli" width="40" height="40" class="">
+                <figcaption>Prawns</figcaption>
+              </figure>
+            </a>
+        </div>
+
+
+        <div class="navcategoryDiv">
+          
+  
+          <a href="{% url 'coldcuts' %}" class="navproductCategory">
+            <figure class="">
+              <img src="{% static 'images/category/ccut.png' %}" alt="Trulli" width="40" height="40" class="">
+              <figcaption>Cold Cuts</figcaption>
+            </figure>
+          </a>
+    
+
+      </div>
+  
+  
+        <div class="navcategoryDiv">
+          
+            <a href="{% url 'readytocook' %}" class="navproductCategory">
+              <figure class="">
+                <img src="{% static 'images/category/c9.png' %}" alt="Trulli" width="40" height="40" class="">
+                <figcaption>Ready to Cook</figcaption>
+              </figure>
+            </a>
+          
+  
+        </div>
+
+
+
+  
+  
+      </div>
+ 
+  
+    </div>
+  
+  
+  </div>
+  </div>
+
+  <!---------------end sub navbar here------------->
+
+  {%  endblock subnavbar %}
+
+
+  {% block banner %}
+
+  {% endblock banner %}
+
+  {% block main %}
+
+  {% endblock main %}
+
+
+
+  {% block content %}
+
+  {% endblock content %}
+
+
+
+
+  <!--------------footer----------->
+  <footer class="text-dark mt-5" style="background-color: rgb(243, 243, 243);  width: 100%;">
+   
+
+    <div class="container-fluid">
+      <div class="row">
+
+        <div class="col-sm-10 offset-sm-1 d-flex justify-content-between align-item-center flex-wrap">
+     
+
+        <div class="col text-center ms-0 px-0 mt-3 me-5">
+          <img src="{% static 'images/banner/logo.png' %}" width="150px" height="auto" class="mb-3">
+          <img src="{% static 'images/banner/ios.png' %}" width="200" height="auto">
+         
+        </div>
+
+
+        <div class="col col-sm-0 text-start  px-0 mt-1 text-muted">
+          <h6 class="text-muted , mt-4 mb-3">COMPANY </h6>
+          <p><a href="#" class="footerLink">About</a></p>
+          <p><a href="{% url 'gallery' %}" class="footerLink">Galary</a></p>
+          <p><a href="#" class="footerLink">T&C</a></p>
+          <p><a href="#" class="footerLink">Policies</a></p>
+          <p><a href="#" class="footerLink">Support</a></p>
+          <h6 class="text-muted">CERTIFICATES</h6>
+          <p><a href="#" class="footerLink">FACCI</a></p>
+          <p><a href="#" class="footerLink">AZ</a></p>
+       
+          
+
+        </div>
+
+
+      
+        <div class="col col-sm-3 text-start text-muted px-0">
+          <div class="ms-0 border-start border-2 px-4">
+            <h6 class="text-muted mt-4 mb-3 text-start">CONTACT US</h6>
+            <p style="font-size: 14px;"> Call: 1234567891,<br>
+              Email: freshmeatz@gmail.com
+              <h6>OFFICE</h6>
+              Main road, 2nd phase, 3rd cross, Nelmangala,
+              Karnataka-556852
+            </p>
+          </div>
+        </div>
+
+        <div class="col col-sm-3 text-start text-muted ms-5  px-5">
+        <h6 class="text-muted mt-4 mb-3">KEEP IN TOUCH</h6>
+        <p><a href="#" class="footerLink"><i class="fab fa-facebook-f me-1"></i>Facebook</a></p>
+        <p><a href="#" class="footerLink"> <i class="fab fa-instagram me-1"></i> Instagram</a>
+        </p>
+        <p><a href="#" class="footerLink"><i class="fab fa-youtube me-1"></i>YouTube</a></p>
+       
+
+
+      </div>
+
+
+
+      </div>
+
+    </div>
+    <hr>
+
+
+
+
+    </div>
+
+
+
+      </div>
+
+    </div>
+
+    
+
+  </footer>
+
+
+
+
+  <!--------------footer----------->
+  
+
+
+
+  <!-- Optional JavaScript; choose one of the two! -->
+  <script src="{% static 'js/jquery.js' %}"></script>
+  <script src="{% static 'js/jquery.min.js' %}"></script>
+
+  <script src="{% static 'js/proper.js' %}"></script>
+  <script src="{% static 'js/all.min.js' %}"></script>
+  <script src="{% static 'js/owl.carousel.min.js' %}"></script>
+
+
+  <script src="{% static 'js/bootstrap.min.js' %}"></script>
+  <script src="{% static 'js/index.js' %}"></script>
+
+  </body>
+
+</html>

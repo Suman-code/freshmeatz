@@ -1,0 +1,467 @@
+
+@media screen and (max-width : 500px){
+
+    #slider1{
+        margin: 0px 0px;
+
+
+    }
+    *{
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    }
+
+
+
+    /* products live sale div design */
+    
+    #salelive h3 , a{
+        margin: 0;
+        padding: 0;
+        font-size: 15px;
+
+
+    }
+
+    #subscribe img{
+        height: 100%;
+    
+    }
+
+    #slider5 img{
+        width: 400px;
+        height: auto;
+
+
+    }
+
+    #slider5 div{
+        text-align: center;
+        margin: 0;
+        padding: 0;
+        font-size: 10px;
+        
+        
+    
+    }
+
+    #slider5 a{
+        
+        text-align: center;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        justify-content: start;
+    
+
+    }
+
+
+    .btn-outline-danger{
+        padding: 0 8px;
+        margin: 0;
+
+
+    }
+
+    
+    #slider5 small{
+        display: none;
+
+    }
+
+
+    #cate div{
+        width: 150px;
+        height: auto;
+
+
+    }
+
+
+    /*navbar */
+
+    #search{
+
+        max-width: 335px;
+        padding-top: 5px;
+    }
+
+    .navbar-nav{
+        padding-left: 0px;
+        margin: 0;
+    }
+
+    #navDropdown{
+        padding-left: 10px;
+    
+
+    }
+
+    .navbar ul{
+
+        padding-left: 10px;
+        padding: 0;
+
+    }
+
+
+    
+    /* subnavbar height changing while scrolling the page*/
+    .navcategoryDiv{
+        margin: 0;
+        padding: 0;
+
+    }
+
+    /* subnavbar div design */
+    #categorynav{
+            display: flex;
+            flex-wrap: nowrap;
+            height: 200px;
+            
+    }
+        
+    #categorynav div{
+            margin: 0;
+            padding: 0;
+            width: 80px;
+            height: 100px;
+    
+    
+    }
+
+
+    /*  product categories link div */
+
+    .categoryDiv{
+        margin: 0;
+        padding: 0;
+        width: 110px;
+        height: auto;
+
+
+    }
+   
+    .categoryLink img{
+        width: 150px;
+        height: auto;
+        padding: 0;
+        margin: 0;
+
+
+    }
+    #categories div{
+        width: 150px;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: row;
+    }
+    
+
+
+
+
+
+    /* freshmeatz processing details div */
+
+    #process{
+        height: 80px;
+        word-break: break-all;
+        word-spacing: 1px;
+        line-height: 80%;
+        padding: 0;
+        margin: 0;
+        word-wrap: break-word;
+
+    }
+    .process h6{
+    
+        word-break: break-all;
+        word-spacing: 1px;
+        line-height: 200%;
+        padding: 0;
+        margin: 0;
+  
+
+    }
+
+    #process small{
+        font-size: 12px;
+        padding: 0;
+        margin: 0;
+
+
+    }
+    #process span{
+
+        font-size: 12px;
+    }
+    
+
+
+    /*    products details page elements alignments  */
+    #productdetails div{
+        margin: 0;
+        padding: 0;
+
+
+    }
+
+    #prodcutdetails img{
+      
+        width: 50%;
+        height: auto;
+        padding: 0;
+        margin: 0;
+
+
+
+    }
+
+    #productdetails h4 , h6{
+        font-size: 16px;
+        margin: 0;
+        padding: 0;
+
+    }
+
+    #productdetails small , li{
+        font-size: 14px;
+        margin: 0;
+        padding: 0;
+        word-spacing: 1px;
+        line-height: 120%;
+
+    }
+
+    #productdetails{
+        height: auto;
+        padding: 0;
+        margin: 0;
+
+    }
+    .d-inline a{
+        margin: 0;
+        padding: 0;
+
+    }
+
+    /* cart page elements */
+    #showcart div ,h6{
+        margin: 0px;
+        padding: 0px;
+        font-size: 16px;
+
+    }
+    #showcart{
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        padding: 0;
+        margin: 0
+
+    }
+
+    #showcart p{
+        display: none;
+    }
+
+
+
+    #showcart img{
+        width: 70px;
+        height: auto;
+        padding: 0;
+        margin: 0;
+    }
+
+
+    #showcart a , .small{
+
+        padding: 0;
+        margin: 0;
+        font-size: 8px;
+        font-weight: normal;
+      
+    }
+    #showcart h6{
+        font-size: 16px;
+
+    }
+
+    #showcart li{
+        font-size: 16px;
+
+    }
+   
+
+    #pricedetails{
+        
+        width: 100%;
+
+        text-align: center;
+
+        font-size: 20px;
+        height: auto;
+        padding: 0;
+        margin: 0;
+
+    }
+
+    #pricedetails small{
+
+
+        font-size: 16px;
+    }
+
+    
+
+
+  #pricedetails a{
+      padding: 2px 10px;
+      font-size: 20px;
+
+
+  }
+
+
+  /* address page elements resize accorfing to screen size */
+
+
+  #checkoutPage{
+
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    margin: 0;
+    
+  }
+
+  #checkoutPage label , input ,a, b {
+      padding: 0;
+      margin: 0;
+      font-size: 12px;
+      
+
+  }
+  #addnewaddress{
+      margin: 0;
+      padding: 0;
+      font-size: 8px;
+      text-align: center;
+      width: 100%;
+  }
+  #addnewaddress a{
+      padding: 0;
+      margin: 0;
+      font-size: 8px;
+  }
+
+
+  #checkoutPage p{
+    font-size: 10px;
+    padding: 0;
+    margin: 0;
+}
+
+#checkoutPage h6 ,h5{
+    font-size: 12px;
+    padding: 0;
+    margin: 0;
+}
+
+
+#checkoutPage div{
+    padding: 0;
+    margin: 0;
+
+
+}
+
+
+  .addressDiv{
+      padding: 0;
+      margin: 0;
+      height: 130px;
+      width: 100%;
+  }
+
+
+  #paymentBtn{
+    width: 100%;
+    padding: 10px;
+    margin: 0;
+    height: auto;
+
+}
+
+#paymentBtn div{
+
+    margin: 0;
+    padding: 10px;
+}
+#paymentBtn input,label, b{
+    padding: 0;
+    margin: 0;
+}
+
+
+#paymentBtn a{
+
+  font-size: 16px;
+  padding: 10px;
+}
+
+/*Cart count span*/
+#cartcount{
+
+    position: relative;
+    left: 10px;
+    height: 25px;
+    width: 25px;
+    background-color: rgb(175, 39, 39);
+    border-radius: 50%;
+    display: inline-block;
+}
+
+#navbarDropdown{
+
+    padding-bottom: 25px;
+}
+
+
+input[type=search]:focus {
+    width: 75%;
+    border: none;
+    outline: none;
+   
+  
+  }
+
+}
+
+
+
+
+
+
+/* Responsive layout - makes a two column-layout instead of four columns of gallery */
+
+@media screen and (max-width: 800px) {
+    .galleryColumn {
+      -ms-flex: 50%;
+      flex: 50%;
+      max-width: 50%;
+    }
+  }
+
+
+  /* Responsive layout - makes the two columns stack on top of each other instead of next to each other */
+@media screen and (max-width: 600px) {
+    .galleryColumn {
+      -ms-flex: 100%;
+      flex: 100%;
+      max-width: 100%;
+    }
+  }

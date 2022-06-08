@@ -1,0 +1,294 @@
+
+body{
+    background-color: white;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto', sans-serif;
+    font-size: 14px;
+
+}
+
+.signupDiv{
+
+    text-align: center;
+
+  }
+
+.signupDiv :hover{
+
+    text-decoration: underline;
+ 
+}
+
+.order{
+
+    text-decoration: none;
+}
+
+.card {
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.2s;
+    width: 40%;
+  }
+    
+  .contain{
+
+    padding: 10px 16px;
+  }
+  
+
+
+/*  subnavbar (product category link) design     */
+
+.navcategoryDiv{
+
+  color: black;
+  font-size: 14px;
+  height: 90px;
+  text-align: center;
+
+}
+.dropdown-menu{
+  font-size: 14px;
+}
+
+
+.navcategoryDiv :hover{
+  color: rgb(209, 47, 47);
+  
+
+}
+.navproductCategory{
+  text-decoration: none;
+  text-align: center;
+  color: black;
+  margin: 0px;
+  padding: 0px 1px;
+  
+
+}
+
+  .fa-angle-right {
+    
+    background-color:white;
+    color: brown;
+     border-radius: 50px;
+    font-size: 70px;
+    cursor: pointer;
+    position: absolute;
+    padding: 10px;
+    right: 0px;
+    height: 40px;
+    top: 40%;
+    z-index: 100;
+  }
+  .fa-angle-left {
+    
+    background-color:white;
+    color: brown;
+     border-radius: 50px;
+    font-size: 70px;
+    cursor: pointer;
+    position: absolute;
+    padding: 10px;
+    left: 0px;
+    height: 40px;
+    top: 40%;
+    z-index: 100;
+  }
+
+
+
+/* Products categories div design and hover effect*/ 
+
+.categoryDiv{
+  border-radius: 8px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  text-decoration: none;
+  text-align: center;
+  width: 250px;
+  height: auto;
+
+
+}
+.categoryLink{
+  text-decoration: none;
+  color: black;
+  font-size: 14px;
+ 
+}
+
+
+.categoryDiv:hover{
+  font-size: 15px;
+  font-weight: bold;
+
+
+}
+
+.categoryLink:hover{
+
+  color: rgb(179, 58, 58);
+  
+}
+
+
+
+
+
+/* --------freshmeatz process video------------ */ 
+.videoBg{
+  position: relative;
+
+
+}
+.videoBgImg{
+
+  opacity: 0.5;
+  
+}
+
+.videoBg h4{
+  position: absolute;
+  top: 7%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+video{
+
+  position: absolute;
+  top: 55%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  
+}
+
+
+
+
+/*  footer div design */ 
+.footerLink{
+
+  text-decoration: none;
+  color:gray;
+  font-size: 14px;
+}
+
+.footerLink:hover{
+  color: brown;
+}
+
+input[type=text] {
+  padding: 30px;
+  margin-top: 8px;
+  font-size: 17px;
+  border: none;
+}
+
+
+
+
+.subscribeDiv{
+  position: relative;
+  text-align: center;
+  color: white;
+}
+
+.subscribeText{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* Company photos */
+.galleryColumn{
+
+  -ms-flex: 25%; /* IE10 */
+  flex: 25%;
+  max-width: 25%;
+  padding = 10px 10px;
+
+}
+
+.galleryRow{
+
+  display: -ms-flexbox; /* IE10 */
+  display: flex;
+  -ms-flex-wrap: wrap; /* IE10 */
+  flex-wrap: wrap;
+  padding: 5px 5px;
+}
+
+.galleryColumn img{
+  margin-top: 8px;
+  margin-right : 4px;
+  vertical-align: middle;
+  width: 100%;
+
+
+}
+
+.cart {
+  color: white;
+  margin-right: 12px;
+  text-decoration: none;
+  font-size: 14px;
+  position: relative;
+}
+
+
+/* Navbar profile droipdown buttom design  
+.profiledropdownlink{
+  float: left;
+  color: black;
+  text-decoration: none;
+  display: block;
+  text-align: left;
+  font-size: 15px;
+}
+
+
+.cart {
+
+  margin-right: 15px;
+  text-decoration: none;
+  font-size: 16px;
+  position: relative;
+  
+}
+
+ul{
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+*/
+
+
+.active{
+  border-bottom: brown;
+
+}
+
+
+input[type=search] {
+  width: 130px;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 14px;
+  background-color: offwhite;
+  transition: width 0.5s ease-in-out;
+}
+
+input[type=search]:focus {
+  width: 75%;
+  border: none;
+  outline: none;
+ 
+
+}

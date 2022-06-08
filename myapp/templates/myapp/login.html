@@ -1,0 +1,67 @@
+{% extends 'myapp/base.html' %}
+
+{% load static %}
+
+{% block title %}<title>User register page</title>{% endblock title %}
+
+
+{% block main %}
+
+<div class="container-fluid mt-5">
+    <div class="row my-3">
+        <div class=" col col-sm-8 offset-sm-2">
+
+            <div class="card mb-5" style="width: auto;">
+                <div class="row g-0">
+                  <div class="col-md-6">
+                    <img src="{% static 'images/bestsell/c5.jpg' %}" class="img-fluid" alt="..." width="100%" height="auto">
+                  </div>
+                  <div class="col-md-6">
+                    <div class="card-body">
+                        
+                      <h5 class="card-title text-center mt-3">Login</h5>
+                      <form class="px-3" method="POSt" action=""> {% csrf_token %}
+
+                        {% for fm in form %}
+                        <div class=" form-group mb-1">
+                            {{ fm.label_tag }}  {{ fm }} <small class="text-dnager">{{ fm.errors | striptags }}</small><br>
+
+                            
+                       
+                   
+                        </div>
+                        {% endfor %}
+
+                        
+                        <small><a href="#">Forgot password ? </a></small><br>
+                        <input type="submit" value="Login" class="btn btn-danger mt-2"><br>
+                        <div class="text-center text-primary fw-bold"><small>New to here ? <a href="{% url 'signup' %}"
+                    class="text-danger">Create an Account</a></small>
+        
+
+                      </form>
+
+                     
+
+
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+
+
+        </div>
+
+
+    </div>
+
+
+</div>
+
+
+
+
+{% endblock main %}

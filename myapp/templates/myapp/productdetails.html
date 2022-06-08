@@ -1,0 +1,218 @@
+{% extends 'myapp/base.html' %}
+{% load static %}
+{% block title %}<title>prodcut-details</title>{% endblock title %}
+
+{% block main %}
+
+
+
+<div class="container mb-1 p-2"  >
+    <div class="row" id="productdetails">
+    
+    
+      <div class=" p-3 col-sm-6 offset-sm-0 text-center align-self-center bg-light" >
+
+          <img src="{{ product.product_image.url}}" class="img-fluid rounded-3" width="500" height="auto">
+      </div>
+
+          <div class="p-3 col-sm-6 offset-sm-0 bg-light productdetails">
+
+          <h4 class="mt-3">{{ product.title }}</h4>
+      
+           <small>{{ product.description}}</small>
+        <hr>
+          
+
+          <h6 class="mt-1">Product Details</h6>
+          <ul class="list-group mb-3">
+              <li style="list-style-type: none;"><small>Pieces : {{ product.pieces}}</small></li>
+              <li style="list-style-type: none;"><small>Gross wt. : {{ product.quantity }} </small></li>
+          
+          </ul>
+
+          <h6 class="fw-bold"> Rs. {{ product.discounted_price}} | {{ product.quantity }} <small class="text-muted">MRP</small> <small class="fw-light text-decoration-line-through">{{ product.selling_price}}</small> <small class="text-muted">5%OFF</small></h6><br>
+
+          <form action="/addtocart/" novalidate class="d-inline">
+              <input type="hidden" name="product-id" id="product-id" value="{{ product.id}}">
+          
+              <button type="submit" class="btn btn-danger shadow px-3 py-1" id="addToCartBtn">Add to cart</button>
+              <!--<a href="#" class="btn btn-danger px-4">Add to cart</a>-->
+          </form>
+
+
+
+      </div>
+        
+
+    </div>
+
+
+</div>
+
+<!------------------------recomanded products details---------------->
+
+<div class="container mt-0">
+    <div class="row">
+  
+      <div class="col col-sm-12 ">
+  
+        <h3 class="mt-4 mb-3">You May Aslo like</h3>
+  
+        <div class="owl-carousel " id="slider1">
+  
+          <div class="item shadow bg-white border" style="height: 420">
+            <a href="#" class="text-decoration-none text-dark">
+              <img src="{% static 'images/bestsell/c1.jpg' %}" class="" width="320" height="240">
+  
+              <div class="m-3 mb-3">
+                <h6 class="mt-0">Chicken Curry Cuts (small psc)</small></h5>
+                  <small class="mb-3">Fresh and good quality Chicken.</small>
+              </div>
+  
+              <div class="m-3 mb-3">
+                <span class="text-danger mt-0  fw-bold fs-6"><i
+                    class="fa-solid fa-indian-rupee-sign text-danger fa-xs"></i>150 | 500gms</span>
+                <a href="#" class="btn btn-danger" style="float: right;">Add to Cart</a>
+  
+              </div>
+              <div class="text-center card-footer mt-4">
+                <small class="">
+                  Delivery
+                </small>
+              </div>
+            </a>
+  
+          </div>
+  
+  
+          <div class="item shadow bg-white" style="height:420">
+            <a href="#" class="text-decoration-none text-dark">
+              <img src="{% static 'images/bestsell/c6.jpg' %}" class="" width="320" height="240">
+  
+              <div class="m-3 mb-3">
+                <h6 class="mt-0">Chicken Drumsticks <small>(boneless)</small></h5>
+                  <small class="mb-3">Skinless, bone-in, juicy lower leg meat</small>
+              </div>
+  
+              <div class="m-3 mb-3">
+                <span class="text-danger mt-0  fw-bold fs-6"><i
+                    class="fa-solid fa-indian-rupee-sign text-danger fa-xs"></i>195 | 500gms</span>
+                <a href="#" class="btn btn-danger" style="float: right;">Add to Cart</a>
+  
+              </div>
+              <div class="text-center  card-footer mt-4">
+                <small class="">
+                  Delivery
+                </small>
+              </div>
+            </a>
+  
+          </div>
+  
+  
+          <div class="item shadow bg-white" style="height: 420">
+            <a href="#" class="text-decoration-none text-dark">
+              <img src="{% static 'images/bestsell/c5.jpg' %}" class="" width="320" height="240">
+  
+              <div class="m-3 mb-3">
+                <h6 class="mt-0">Rohu (Rui) Medium<small>(Curry cut)</small></h5>
+                  <small class="mb-3">Whole chicken in small cuts</small>
+              </div>
+  
+              <div class="m-3 mb-3">
+                <span class="text-danger mt-0  fw-bold fs-6"><i
+                    class="fa-solid fa-indian-rupee-sign text-danger fa-xs"></i>150 | 500gms</span>
+                <a href="#" class="btn btn-danger" style="float: right;">Add to Cart</a>
+  
+              </div>
+              <div class="text-center mt-3 card-footer mt-4">
+                <small class="">
+                  Delivery
+                </small>
+              </div>
+            </a>
+  
+          </div>
+  
+          <div class="item shadow bg-white" style="height: auto">
+            <a href="#" class="text-decoration-none text-dark">
+              <img src="{% static 'images/bestsell/c4.jpg' %}" class="" width="320" height="240">
+  
+              <div class="m-3 mb-3">
+                <h6 class="mt-0">Goat Curry Cut <small>(Leg part)</small></h5>
+                  <small class="mb-3">Evenly, , juicy, bone-in, boneless goat meat</small>
+              </div>
+  
+              <div class="m-3 mb-3">
+                <span class="text-danger mt-0  fw-bold fs-6"><i
+                    class="fa-solid fa-indian-rupee-sign text-danger fa-xs"></i>150 | 500gms</span>
+                <a href="#" class="btn btn-danger" style="float: right;">Add to Cart</a>
+  
+              </div>
+              <div class="text-center mt-3 card-footer mt-4">
+                <small class="">
+                  Delivery
+                </small>
+              </div>
+            </a>
+  
+          </div>
+  
+  
+  
+        </div>
+  
+      </div>
+  
+  
+    </div>
+  
+  
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="mt-5 container-fluid">
+    <div class="row">
+      <div class="col">
+    
+        <hr>
+        <div class="mt-5 mb-5">
+            <h3 class="text-danger text-center mb-3">freshmeatz</h3>
+          <h5 class="text-center">"We provide contactless retail and door step service to maintain social distence."</h5>
+    
+    
+        </div>
+    <hr>
+      </div>
+    
+    </div>
+    
+    </div>
+    
+
+
+
+{% endblock main %}
