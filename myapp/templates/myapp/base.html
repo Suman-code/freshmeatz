@@ -21,12 +21,40 @@
   {% block title %}<title>Go fresh</title>{% endblock title %}
   </head>
 
+<!------------add to cart function------->
+
+<script>
+
+let user = "{{ request.user }}"
+
+function getToken(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                // Does this cookie string begin with the name we want?
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+    const csrftoken = getToken('csrftoken');
 
 
+</script>
+
+
+
+
+{% block navbar %}
 
 <header>
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+<nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom py-2">
   <div class="container">
       <a class="navbar-brand" href="{% url 'home' %}"><img src="{% static 'images/banner/logo.png' %}" width="160px" height="auto"></a>
       
@@ -36,7 +64,7 @@
       
  
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        
+
           <form class="d-flex me-4 bg-light" style="width: 150px;">
             <button class="btn btn-danger btn-sm text-white">
             <i class="fa-solid fa-location-dot text-white"></i>
@@ -47,34 +75,36 @@
 
    
         {% if request.user.is_authenticated  %}
-        <form class="d-flex " style="width: 615px;" id="search">
-          <input class=" me-1" type="search" placeholder="Search for any fresh products.." aria-label="Search ">
+        <form class="d-flex " style="width: 615px;" id="search" action="/search/">
+          <input name="q" class=" me-1" type="search" placeholder="Search for any fresh products.." aria-label="Search ">
           <button type="button" class="btn btn-sm btn-danger">
             <i class="fas fa-search"></i>
           </button>
       </form>
 
    
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0 wv-0" id="navDropdown">  
+        <ul class="navbar-nav me-auto my-2 mb-lg-0 wv-0" id="navDropdown">  
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <a class="nav-link dropdown-toggle fw-bold" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               {{ request.user.username | capfirst }}
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
               <li><a class="dropdown-item" href="#">Profile</a></li>
               <li><a class="dropdown-item" href="#">Orders</a></li>
+              <li><a class="dropdown-item" href="{% url 'mywishlist' %}">Wishlist</a></li>
               <li><a class="dropdown-item" href="#">Chnage Password</a></li>
               <li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
             </ul>
         </li>
       
 
-      <li class="nav-item " style="list-style-type : none;">
-        <a href="{% url 'cart' %}" class="text-muted">
-          <span class="text-white bg-danger fs-6 rounded-circle px-2" style="position: absolute; right: 105px; bottom: 35px; font-size: 8px;" id="cartcount">{{ total_items}}</span>
-          <i class="fas fa-shopping-cart mx-1  fs-5 text-muted mt-1" style="position: relative;"></i></a> Cart
-        </li>
 
+      <li class="nav-item py-2 text-muted" style="list-style-type : none;">
+        <a href="{% url 'cart' %}" class="text-muted ">
+          <span class="text-white bg-danger  rounded-circle px-2" style="position: absolute; right: 90px; bottom: 35px; font-size: 14px;" id="cartcount">{{ total_items}}</span>
+          <i class="fas fa-shopping-cart mx-1  fs-5 text-muted " style="position: relative;"></i>
+        </a> Cart
+        </li>
 
 
 
@@ -96,51 +126,6 @@
   </ul>
     {% endif %}
 
-<!--
-
-{% if request.user.is_authenticated  %}
-  
-  <ul class="navbar-nav me-auto mb-2 mb-lg-0 wv-0" id="navDropdown">  
-    <li class="nav-item dropdown">
-      <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-        {{ request.user.username | capfirst }}
-      </a>
-      <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-        <li><a class="dropdown-item" href="#">Profile</a></li>
-        <li><a class="dropdown-item" href="#">Orders</a></li>
-        <li><a class="dropdown-item" href="#">Chnage Password</a></li>
-        <li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
-      </ul>
-  </li>
-
-
-    <li class="nav-item ps-5 align-item-center pt-1">
-      <a href="{% url 'cart' %}" class="cart  text-muted mb-0">
-      <span class="text-white bg-danger fs-6 rounded-circle px-1" style="position: absolute; right: 50px; bottom: 10px; font-size: 8px;">{{ total_items}}</span>
-          <i class="fas fa-shopping-cart mx-1  fs-5 text-muted mt-1">
-
-          </i>Cart</a>
-    </li>
-
-
-{% else %}
-
-    <li class="nav-item" style="list-style-type: none; padding-left: 0px;">
-      <a href="{% url 'login' %}" class="text-decoration-none text-dark">Login</a>/<a href="{% url 'signup' %}"
-          class="text-decoration-none py-2 text-dark">Signup</a>
-      </li>
-
-    </ul>
-
-
-{% endif %}
-
-  
-
-
-
-
--->
   
 
         </div>
@@ -162,6 +147,7 @@
 
 </header>
 
+{% endblock navbar %}
 
   <!-------------end here navbar div-------------------------->
 
@@ -395,7 +381,7 @@
 
 
   <!-- Optional JavaScript; choose one of the two! -->
-  <script src="{% static 'js/jquery.js' %}"></script>
+  <script src="{% static 'js/jquery.js' %}"></scrip>
   <script src="{% static 'js/jquery.min.js' %}"></script>
 
   <script src="{% static 'js/proper.js' %}"></script>
@@ -405,6 +391,7 @@
 
   <script src="{% static 'js/bootstrap.min.js' %}"></script>
   <script src="{% static 'js/index.js' %}"></script>
+  <script src="{% static 'js/base.js' %}"></script>
 
   </body>
 

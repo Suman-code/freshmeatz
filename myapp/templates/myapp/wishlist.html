@@ -1,0 +1,80 @@
+{% extends 'myapp/base.html' %}
+{% load static %}
+
+{% block title %}<title>My-wishlist</title>{% endblock title %}
+<!----------------
+
+{% block navbar %}
+
+<header>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom py-2">
+  <div class="container d-flex justify-content-between">
+      
+    <a class="navbar-brand" href="{% url 'home' %}"><img src="{% static 'images/banner/logo.png' %}" width="160px" height="auto"></a>
+      <div class="profileDropdown">
+
+        <button onclick="profileDropdown()" class="profileDropbtn text-muted">{{ request.user.username | capfirst }} <i class="fa-solid fa-angle-down ps-1"></i></button>
+         <div class="profileDropdown-content" id="dropDown-content">
+            <a class="dropdown-item" href="#">Profile</a>
+            <a class="dropdown-item" href="#">Orders</a>
+            <a class="dropdown-item" href="#">Chnage Password</a>
+            <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
+            </div>
+
+        </div>
+
+      </div>
+
+  </nav>
+</header>
+
+{% endblock navbar %}
+
+
+{% block subnavbar %}
+{% endblock subnavbar %}
+
+
+
+
+
+
+{% block main %}
+
+<div class="container" id="cartpage">
+  <div class="row">
+   
+    <div class="col-sm-8 col-lg-8 bg-light px-2 shadow">
+      <h6 class="py-2 fw-bold text-center">MY WISHLIST ()</h6>
+      <table class="table table-image  border-top">
+        
+        <tbody>
+
+        {% for item in wishlist %}
+       
+          <tr>
+            <a href="{% url 'productdetails' item.product.id %}" class="btn">
+          <td class="w-25" >
+            <img src="{{ item.product.product_image.url}}" class="rounded-2 img-fluid " alt="..." id="img">
+          </td>
+
+          <td class="px-4"> <small class="fs-6">{{ item.product.title}}</small> <br>
+            <span> <b class="fs-6"><i class="fa-solid fa-indian-rupee-sign"></i> {{ item.product.discounted_price}}</b> <small class="text-decoration-line-through  px-2 text-muted"><i class="fa-solid fa-indian-rupee-sign text-decoration-line-through"></i>{{ item.product.selling_price }}</small></span>
+          </td>
+      
+          <td> <i class="fa-solid fa-trash-can text-danger text-center btn"></i></td>
+          </a>
+        </tr>
+        
+        
+        {% endfor %}
+      </tbody>
+    </table>   
+
+    </div>
+
+
+
+
+{% endblock main %}
+--------------------->

@@ -3,6 +3,7 @@ from itertools import product
 import json
 from turtle import title
 from unicodedata import category
+from urllib import request
 from django.shortcuts import render
 from .models import *
 from django.views import *
@@ -93,11 +94,36 @@ def coldCutProdcuts(request):
 class ProductDetails(View):
     def get(self, request , pk):
         product = Product.objects.get(pk=pk)
-
-        return render(request , 'myapp/productdetails.html' , {'product':product})
+        related_product = Product.objects.filter(category=product.category).exclude(pk=pk)[:4]
+        return render(request , 'myapp/productdetails.html' , {'product':product , 'related_product' : related_product})
 
 
 # Add to cart function View
+
+def addToCart(request):
+    data = json.loads(request.body)
+    product_id = data['product_id']
+    action = data['action']
+    customer = request.user
+    product = Product.objects.get(id = product_id)
+    cart, created = Cart.objects.get_or_create(user=customer)
+    cartitems, created = CartItems.objects.get_or_create(product=product, cart=cart)
+    if action == 'add':
+        cartitems.quantity += 1
+    cartitems.save()
+
+
+
+
+    return JsonResponse("its working" , safe=False)
+
+
+
+
+
+
+
+'''
 def addToCart(request):
     usr = request.user
     product_id = request.GET.get('product-id')
@@ -106,10 +132,10 @@ def addToCart(request):
     savecart.save()
 
     return redirect('/cart/')
+'''
 
 
 #Display cart page
-
 def cartPage(request):
     if request.user.is_authenticated:
         user = request.user
@@ -159,10 +185,6 @@ class SignUp(View):
 
 
 
-def showCart(request):
-
-    return render(request , 'myapp/showcart.html' , {})
-
 
 
 
@@ -183,3 +205,47 @@ def photoGallery(request):
 def paymentPage(request):
 
     return render(request , 'myapp/payment.html' , {})
+
+
+# search view
+
+def searchProduct(request):
+    if request.method == "GET":
+
+        query = request.GET.get('q')
+
+        if query:
+            data = Product.objects.filter(title__icontains=query).order_by('-id')
+
+            return render(request, 'myapp/search.html' , {'data' : data})
+
+        else:
+            return render(request, 'myapp/search.html' , {'data' : 'No products found'})
+
+
+
+# add to wishlist Logic
+
+def addToWishlist(request):
+    prod_id = request.GET['product']
+    product = Product.objects.get(id=prod_id)
+    data = {}
+    check_wishlish = Wishlist.objects.filter(product=product , user = request.user).count()
+    if check_wishlish > 0:
+        data = {
+            'status' : 'Already in wishlist'
+        }
+    else:
+        wishlist = Wishlist.objects.create(product= product , user=request.user)
+        data = {
+
+            'status' : 'Added to wishlist'
+        }
+
+
+    return JsonResponse(data)
+
+#add to wish display
+def myWishlist(request):
+    wishlist = Wishlist.objects.filter(user=request.user).order_by('-id')
+    return render(request , 'myapp/wishlist.html' , {'wishlist': wishlist})

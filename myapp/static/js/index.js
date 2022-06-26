@@ -3,7 +3,7 @@ $(document).ready(function (){
         items:1,
         loop:true, 
         autoplay:true,
-        autoplayTimeout:2000,
+        autoplayTimeout:3000,
         autoplayHoverPause:true,
         nav : false,
         dots : false,
@@ -34,7 +34,7 @@ $('#slider1').owlCarousel({
             items:1,
             nav:true,
             autoplay:true,
-            autoplayTimeout:2000,
+            autoplayTimeout:3000,
             loop: true
         },
         600:{
@@ -67,7 +67,7 @@ $('#slider3').owlCarousel({
             items:1,
             nav:true,
             autoplay:true,
-            autoplayTimeout:2000,
+            autoplayTimeout:3000,
             loop: true
         },
         600:{
@@ -100,7 +100,7 @@ $('#slider4').owlCarousel({
             items:1,
             nav:true,
             autoplay:true,
-            autoplayTimeout:2000,
+            autoplayTimeout:3000,
             loop: true
         },
         600:{
@@ -133,20 +133,20 @@ $('#slider4 , #slider5 ').owlCarousel({
             items:2,
             nav:false,
             autoplay:true,
-            autoplayTimeout:2000,
+            autoplayTimeout:3000,
             loop: true
         },
         600:{
             items:3,
             nav:false,
             autoplay:true,
-            autoplayTimeout:2000,
+            autoplayTimeout:3000,
         },
         1000:{
             items:3,
             nav:true,
             autoplay:true,
-            autoplayTimeout:2000,
+            autoplayTimeout:3000,
             loop:true
         }
     }
@@ -189,10 +189,33 @@ var x = setInterval(function() {
   }}, 1000);
 */
 
-  //ad to cart
-  
-
-
 
   
+
+  /* When the user clicks on the button, 
+toggle between hiding and showing the dropdown content */
+function profileDropdown() {
+    document.getElementById("dropDown-content").classList.toggle("show");
+  }
+  
+  // Close the dropdown if the user clicks outside of it
+  window.onclick = function(event) {
+    if (!event.target.matches('.profileDropbtn')) {
+      var dropdowns = document.getElementsByClassName("profileDropdown-content");
+      var i;
+      for (i = 0; i < dropdowns.length; i++) {
+        var openDropdown = dropdowns[i];
+        if (openDropdown.classList.contains('show')) {
+          openDropdown.classList.remove('show');
+        }
+      }
+    }
+  }
+
+
+
+
+
+
+
 

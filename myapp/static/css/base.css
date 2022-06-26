@@ -292,3 +292,106 @@ input[type=search]:focus {
  
 
 }
+
+/*   cart design */
+
+
+.table-image td, .table-image th {
+  vertical-align: middle;
+}
+
+.fixPriceDiv{
+  position: fixed;
+  top: 0;
+
+
+}
+
+.sticky{
+
+  position: sticky;
+  top: 10px;
+}
+
+/*  circle  counting  for address */
+
+.circle{
+  height: 18px;
+  width: 18px;
+  background-color:white;
+  border-radius: 4px;
+  border: 1px solid white;
+  display: inline-block;
+  color: brown;
+  text-align: center;
+  font-size: 12px;
+ 
+  
+}
+
+/*-------delivery-------------------------*/
+
+.deliveryHereBtn{
+  color: black;
+  font-size: 12px;
+  font-weight: bold;
+  padding-left: 0px;
+
+  
+
+}
+
+/*-------------navbar elements dropdown--------*/
+
+.profileDropbtn {
+
+  font-size: 14px;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+
+
+.profileDropdown {
+  
+  position: relative;
+  display: inline-block;
+}
+
+.profileDropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  overflow: auto;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  right: 0;
+  z-index: 1;
+}
+
+.profileDropdown-content a {
+  color: black;
+  padding: 8px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.profileDropdown a:hover {background-color: white;}
+
+.show {display: block;}
+
+.deliveryAddressDiv{
+  padding-top: 12px;
+  padding-bottom: 12px;
+  padding-left:24px ;
+
+}
+
+
+
+.customerForm{
+outline: None;
+border: 1px solid brown;
+  
+}

@@ -9,11 +9,11 @@ admin.site.register(Myvideo)
 
 @admin.register(Banner)
 class BannerModelAdmin(admin.ModelAdmin):
-    list_display = ['id' , 'image']
+    list_display = ['id' ,  'image']
 
 @admin.register(Category)
 class CategoryModelAdmin(admin.ModelAdmin):
-    list_display = ['id' , 'category' , 'image']
+    list_display = ['id' , 'title' , 'image']
 
 @admin.register(Product)
 class ProductModelAdmin(admin.ModelAdmin):
@@ -23,6 +23,12 @@ class ProductModelAdmin(admin.ModelAdmin):
 class CartModelAdmin(admin.ModelAdmin):
     list_display = ['user' , 'product' , 'product_qty' , 'created_at']
 
+@admin.register(CartItems)
+class CartItemModelAdmin(admin.ModelAdmin):
+    list_display = ['cart' , 'product' , 'quantity' , 'date_added']
 
+@admin.register(Wishlist)
+class WhishlistModelAdmin(admin.ModelAdmin):
+    list_display = ['user' , 'product' , 'added_at']
    
 

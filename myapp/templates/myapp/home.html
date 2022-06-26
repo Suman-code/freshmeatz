@@ -28,6 +28,10 @@
   </div>
 
 </div>
+
+
+
+
 {% endblock banner %}
 <!-------------end div freshmeatz processing details --------->
 
@@ -82,7 +86,8 @@
                       <small class="text-decoration-line-through text-muted" style="font-size: 12px;">MRP: {{ d.selling_price}} | 500gms </small><br>
                       <span class="text-danger mt-0  fw-bold fs-6"><i
                         class="fa-solid fa-indian-rupee-sign text-danger fa-xs"></i>{{ d.discounted_price }} | {{ d.quantity }}</span>
-                    <a href="#" class="btn btn-danger" style="float: right;">Add to Cart</a>
+                      </a>
+                    <a class="btn btn-danger addToCart" data-action="add" data-product="{{ d.id}}" style="float: right;">Add to Cart</a>
 
                   </div>
                   <div class="text-center card-footer mt-4">
@@ -90,7 +95,7 @@
                       Delivery today within 2hrs
                 </small>
             </div>
-          </a>
+        
 
       </div>
   {% endfor %}
@@ -129,15 +134,15 @@
             <div class="m-3 mb-3">
               <span class="text-danger mt-0  fw-bold fs-6"><i
                   class="fa-solid fa-indian-rupee-sign text-danger fa-xs"></i>150 | 500gms</span>
-              <a href="#" class="btn btn-danger" style="float: right;">Add to Cart</a>
-
+                </a>
+                  <a class="btn btn-danger addToCart" data-action="add" data-product="{{ f.id}}" style="float: right;">Add to Cart</a>
             </div>
             <div class="text-center card-footer mt-4">
               <small class="">
                 Delivery
               </small>
             </div>
-          </a>
+      
         </div>
 
         {% endfor %}

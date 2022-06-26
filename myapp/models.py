@@ -1,3 +1,6 @@
+from itertools import product
+from pyexpat import model
+from turtle import title
 from django.db import models
 from django.contrib.auth.models import User
 
@@ -6,14 +9,16 @@ from django.contrib.auth.models import User
 #model for for product videos
 class Myvideo(models.Model):
     caption = models.CharField(max_length=250)
-    video = models.FileField(upload_to="video/%y")
+    video = models.FileField(upload_to="video/")
 
     def __str__(self):
         return self.caption
 
-#Home page banner model for 
+#Home page banner model 
 class Banner(models.Model):
+   
     image = models.ImageField(upload_to = "banner_images/")
+
     def __str__(self):
         return str(self.id)
 
@@ -32,7 +37,7 @@ CATEGORY_CHOICES = (
 )
 
 class Category(models.Model):
-    category = models.CharField(choices= CATEGORY_CHOICES , max_length=100 )
+    title = models.CharField(choices= CATEGORY_CHOICES , max_length=100 )
     image = models.ImageField(upload_to = "category_images/")
 
     def __str__(self):
@@ -56,7 +61,7 @@ class Product(models.Model):
     discounted_price = models.FloatField()
     quantity = models.CharField(max_length=200, blank=False)
     pieces = models.CharField(max_length=100 , null=True, blank=True)
-    product_image = models.ImageField(upload_to = 'producting')
+    product_image = models.ImageField(upload_to = 'producting/')
     date_added = models.DateTimeField(auto_now=True)
 
 
@@ -73,6 +78,34 @@ class Cart(models.Model):
     def __str__(self):
         return str(self.id)
 
+    @property
+    def subtotal(self):
+        total = self.product_qty * self.product.discounted_price
+        return total
+
+    '''
+        @property 
+    def grandtotal(self):
+        cartitems = self.cartitems_set.all()
+        total = sum([item.subtotal for item in cartitems])
+        return total
+    '''
+#cart Items
+class CartItems(models.Model):
+    cart = models.ForeignKey(Cart , on_delete=models.CASCADE ,null=True)
+    quantity = models.IntegerField(default=0, null=True, blank=True)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, null=True)
+    date_added = models.DateTimeField(auto_now_add=True)
+
+
+    def __str__(self):
+           return self.product.name
+
+
+
+
+
+
 
 
 class Customer(models.Model):
@@ -81,6 +114,7 @@ class Customer(models.Model):
     last_name = models.CharField(max_length = 200)
     mobile_number = models.IntegerField()
     email = models.EmailField(max_length=242)
+    locality = models.CharField(max_length = 300, null=False)
     address = models.TextField(null=False)
     city = models.CharField(max_length = 100)
     pincode = models.IntegerField(null=False)
@@ -92,11 +126,11 @@ class Customer(models.Model):
         return str(self.id)
 
 
-class OrderPlace(models.Model):
-
+'''
+class Order(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    Customer = models.ForeignKey(Customer , on_delete=models.CASCADE)
+    customer = models.ForeignKey(Customer , on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField(default = 1)
     order_Date = models.DateTimeField(auto_now_add = True)
     updated_Date = models.DateTimeField(auto_now_add = True)
@@ -104,7 +138,17 @@ class OrderPlace(models.Model):
 
     def __str__(self):
         return str(self.id)
-   
-   
+
+
+'''
+#Wishlist
+class Wishlist(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    added_at = models.DateTimeField(auto_now_add = True)
+
+
+    def __str__(self):
+        return str(self.id)
 
   

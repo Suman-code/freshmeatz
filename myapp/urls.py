@@ -29,13 +29,22 @@ path('readytocookmeat/' ,  views.readyToCookProducts, name="readytocook"),
 # Sungle product details
 path('Product-details/<int:pk>/' , views.ProductDetails.as_view(), name="productdetails" ),
 #add to cart
-path('addtocart/' , views.addToCart , name="addtocart"),
+path('add-to-cart/' , views.addToCart , name="addtocart"),
 #cart
 path('cart/' , views.cartPage , name="cart" ),
+
 path('checkout-cart/' , views.checkoutCart , name="checkout"),
 
 path('our-gallery/' , views.photoGallery , name="gallery"),
 path('payment-taken-here/' , views.paymentPage , name="payment"),
+#search url
+path('search/' ,views.searchProduct, name="search" ),
+
+#add to wishlist
+path('add-to-wishlist/', views.addToWishlist , name="addtowishlist"),
+#my wishlist
+path('my-wishlist',  views.myWishlist, name="mywishlist"),
+
 
 #authentications urls
 path('signup/' , views.SignUp.as_view() , name="signup" ),

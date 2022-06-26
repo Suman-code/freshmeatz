@@ -6,10 +6,12 @@
 
 
     }
-    *{
-        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-    }
 
+   *{ font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+
+    padding: 0;
+    margin: 0;
+   }
 
 
     /* products live sale div design */
@@ -39,9 +41,7 @@
         margin: 0;
         padding: 0;
         font-size: 10px;
-        
-        
-    
+
     }
 
     #slider5 a{
@@ -53,14 +53,12 @@
         justify-content: start;
     
 
-    }
+        }
 
 
     .btn-outline-danger{
         padding: 0 8px;
         margin: 0;
-
-
     }
 
     
@@ -126,8 +124,6 @@
             padding: 0;
             width: 80px;
             height: 100px;
-    
-    
     }
 
 
@@ -193,6 +189,7 @@
 
 
     }
+
     #process span{
 
         font-size: 12px;
@@ -200,7 +197,7 @@
     
 
 
-    /*    products details page elements alignments  */
+    /*---------------products details page elements alignments ---------------------- */
     #productdetails div{
         margin: 0;
         padding: 0;
@@ -247,53 +244,69 @@
 
     }
 
-    /* cart page elements */
-    #showcart div ,h6{
-        margin: 0px;
-        padding: 0px;
-        font-size: 16px;
+    /* ----------------------cart page elements --------------*/
+    #quantity{
+        display: block;
+        padding: 0;
+        margin: 0;
+
 
     }
-    #showcart{
+    #cartpage th{
+        font-size: 14px;
+        padding: 0;
+        margin: 0;
+        
+
+    }
+    #cartpage h6{
+
+        text-align: center;
+    }
+
+    #cartpage td{
+        color: black;
+        font-size: 12px;
+       padding-bottom: 0;
+     
+     
+     
+    }
+    .fa-trash-can{
+    float: right;
+    padding-right: 0;
+    margin-right: 0;
+    }
+
+
+    #price{
+        padding-top: 16px;
         width: 100%;
-        display: flex;
-        flex-direction: column;
-        padding: 0;
-        margin: 0
-
+        padding-left: 0;
+        padding-right: 0;
     }
+    #price div{
 
-    #showcart p{
-        display: none;
+        width: 100%;
+        
+        
     }
-
-
-
-    #showcart img{
-        width: 70px;
-        height: auto;
-        padding: 0;
-        margin: 0;
+    #price li{
+       font-size: 16px;
+       padding: 10px;
     }
-
-
-    #showcart a , .small{
-
-        padding: 0;
-        margin: 0;
-        font-size: 8px;
-        font-weight: normal;
-      
-    }
-    #showcart h6{
+    #price b{
         font-size: 16px;
+     }
+     
+    
 
-    }
 
-    #showcart li{
-        font-size: 16px;
 
-    }
+
+  
+
+
    
 
     #pricedetails{
@@ -439,7 +452,7 @@ input[type=search]:focus {
   
   }
 
-}
+
 
 
 
