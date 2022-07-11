@@ -67,44 +67,43 @@ class Product(models.Model):
 
     def __str__(self):
         return str(self.title)
-
+# cart
 
 class Cart(models.Model):
-    user = models.ForeignKey(User , on_delete=models.CASCADE)
-    product = models.ForeignKey(Product ,on_delete=models.CASCADE )
-    product_qty = models.PositiveIntegerField(default = 1)
+    user = models.ForeignKey(User,  on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now= True)
 
     def __str__(self):
-        return str(self.id)
+        return self.user.username
 
-    @property
-    def subtotal(self):
-        total = self.product_qty * self.product.discounted_price
-        return total
-
-    '''
-        @property 
+    @property 
     def grandtotal(self):
-        cartitems = self.cartitems_set.all()
+        cartitems = self.cartitem_set.all()
         total = sum([item.subtotal for item in cartitems])
         return total
-    '''
+    
+    @property 
+    def cartquantity(self):
+        cartitems = self.cartitem_set.all()
+        total = sum([item.quantity for item in cartitems])
+        return total
+
+   
 #cart Items
-class CartItems(models.Model):
-    cart = models.ForeignKey(Cart , on_delete=models.CASCADE ,null=True)
-    quantity = models.IntegerField(default=0, null=True, blank=True)
-    product = models.ForeignKey(Product, on_delete=models.CASCADE, null=True)
+class CartItem(models.Model):
+    cart = models.ForeignKey(Cart, on_delete=models.CASCADE , null=True)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE , null=True)
+    quantity = models.IntegerField(default=0 , null=True)
     date_added = models.DateTimeField(auto_now_add=True)
 
 
     def __str__(self):
-           return self.product.name
-
-
-
-
-
+        return self.product.title
+    
+    @property
+    def subtotal(self):
+        total =  self.product.discounted_price * self.quantity
+        return total
 
 
 

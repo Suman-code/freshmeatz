@@ -2,44 +2,180 @@
 {% load static %}
 
 {% block title %}<title>My-wishlist</title>{% endblock title %}
-<!----------------
-
-{% block navbar %}
-
-<header>
-  <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom py-2">
-  <div class="container d-flex justify-content-between">
-      
-    <a class="navbar-brand" href="{% url 'home' %}"><img src="{% static 'images/banner/logo.png' %}" width="160px" height="auto"></a>
-      <div class="profileDropdown">
-
-        <button onclick="profileDropdown()" class="profileDropbtn text-muted">{{ request.user.username | capfirst }} <i class="fa-solid fa-angle-down ps-1"></i></button>
-         <div class="profileDropdown-content" id="dropDown-content">
-            <a class="dropdown-item" href="#">Profile</a>
-            <a class="dropdown-item" href="#">Orders</a>
-            <a class="dropdown-item" href="#">Chnage Password</a>
-            <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
-            </div>
-
-        </div>
-
-      </div>
-
-  </nav>
-</header>
-
-{% endblock navbar %}
-
-
-{% block subnavbar %}
-{% endblock subnavbar %}
-
-
-
 
 
 
 {% block main %}
+
+
+<div class="container mt-4">
+  <div class="row">
+<!----------------side section------------->
+      <div class="col-sm-3   bg-light p-0  h-50 shadow" >
+
+        <div class="border-bottom py-3">
+          <small class="px-5 py-3">Welcom</small>
+          
+            <h6 class="fw-bold text-dark px-5">  {{ request.user }}</h6>
+     
+        </div>
+     
+        
+        
+          <div style="cursor: pointer;" class="py-3 px-3 border-bottom"><i class="fas fa-sort-amount-up-alt float-start text-danger fs-6 me-3">
+              </i>
+              <h6 class="text-dark  fw-bold" style="font-size: 14px;">MY ORDERS <i class="fas fa-chevron-right float-end"></i></h6>
+          </div>
+          
+
+
+          <div class="p-3"><i class="fas fa-user-alt float-start text-danger fs-6 me-3"></i>
+              <h6 class="text-dark fw-bold" style="font-size: 14px;"> ACCOUNT SETTING</h6>
+          </div>
+              
+          <div class="bg-light border-bottom">
+            <ul class="list-group list-group-flush bg-light profile-links">
+              
+              <a href="#" class=" text-decoration-none list-group-item-action px-5 py-2 text-muted">Profile information</a>
+              <a href="#" class="text-decoration-none list-group-item-action px-5 py-2 text-muted">Manage Address</a>
+              <a href="#" class=" text-decoration-none list-group-item-action px-5 py-2 mb-2 text-muted  ">KYC Information</a>
+              
+            </ul>          
+
+          </div>
+            
+
+          
+          <div class="p-3"><i class="fas fa-money-check-alt float-start text-danger fs-6 me-3"></i>
+            <h6 class="text-dark fw-bold" style="font-size: 14px;"> PAYMENTS</h6>
+          </div>
+            
+        <div class="bg-light border-bottom">
+          <ul class="list-group list-group-flush bg-light profile-links">
+            
+            <a href="#" class="text-decoration-none list-group-item-action px-5 py-2 text-muted">Gifts</a>
+            <a href="#" class="text-decoration-none list-group-item-action px-5 py-2 mb-2 text-muted">Coupons</a>
+           
+            
+          </ul>          
+        </div>
+
+             
+        <div class="p-3"><i class="fas fa-user-lock float-start text-danger fs-6 me-3"></i>
+          <h6 class="text-dark fw-bold" style="font-size: 14px;">MY STUFFS</h6>
+        </div>
+          
+      <div class="bg-light border-bottom">
+        <ul class="list-group list-group-flush bg-light profile-links">
+          <a href="{% url 'mywishlist' %}" class="text-decoration-none list-group-item-action px-5 py-2 text-muted">My Wishlist</a>
+          <a href="#" class="text-decoration-none list-group-item-action px-5 py-2 mb-2 text-muted">All Notifications</a>
+         
+          
+        </ul>          
+      </div>
+
+          <div class="p-3"><i class="fas fa-power-off text-danger float-start fs-6 "></i>
+              <a href="{% url 'logout' %}" class="text-muted ms-3"
+                  style="text-decoration: none; font-weight: bold;">LOGOUT</a>
+
+          </div>
+
+          
+      </div>
+
+<!----------------end side section------------->
+
+
+  <!----right side-->
+
+      <div class="col-sm-8 bg-light offset-sm-1 shadow h-50 px-3">
+
+        <h6 class="px-3 my-0 fw-bold mt-3">MY WISHLIST ({{ w }})</h6>
+
+        <div class="wishdata">
+          <table class="table table-image  border-top ">
+          
+            <tbody class="">
+              {% if wishlist %}
+    
+            {% for item in wishlist %}
+           
+              <tr class="">
+                <a href="{% url 'productdetails' item.product.id %}" class="btn">
+              <td class="w-25 p-3" >
+                <img src="{{ item.product.product_image.url}}" class="rounded-2 img-fluid " alt="..." id="img">
+              </td>
+    
+              <td class="px-3"> <small class="fs-6">{{ item.product.title}}</small> <br>
+                <span> <b class="fs-6"><i class="fa-solid fa-indian-rupee-sign"></i> {{ item.product.discounted_price}}</b> <small class="text-decoration-line-through  px-2 text-muted"><i class="fa-solid fa-indian-rupee-sign text-decoration-line-through"></i>{{ item.product.selling_price }}</small></span>
+              </td>
+              <input type="hidden" id="proud_id" value="{{ item.product.id }}">
+              <td class=" "> <i class="fa-solid fa-trash-can text-danger text-center btn wishlist-delete"></i></td>
+              </a>
+            </tr>
+            
+            
+            {% endfor %}
+
+            {% else %}
+
+            <h4 class="p-3">Your wishlist is empty</h4>
+  
+            {% endif %}
+          </tbody>
+        </table>   
+
+        </div>
+  
+  
+      </div>
+  
+  </div>
+ </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% endblock main %}
+
+
+<!---------------------------------
+
+--------------
+
+
+
+
+
+
+
+
+
+
+
+
 
 <div class="container" id="cartpage">
   <div class="row">
@@ -74,7 +210,13 @@
     </div>
 
 
-
-
-{% endblock main %}
 --------------------->
+
+
+
+
+
+
+
+
+

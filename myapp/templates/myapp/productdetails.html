@@ -31,22 +31,12 @@
           </ul>
 
           <h6 class="fw-bold"> Rs. {{ product.discounted_price}} | {{ product.quantity }} <small class="text-muted">MRP</small> <small class="fw-light text-decoration-line-through">{{ product.selling_price}}</small> <small class="text-muted">5%OFF</small></h6><br>
-          
-        <button type="submit" class="btn btn-sm btn-danger shadow px-3 py-1 addToCart" id="addToCartBtn">Add to cart</button>
-          
-          <button type="submit" class="btn btn-sm btn-secondary shadow px-3 py-1 addToWishlist" data-product="{{product.id}}" value="{{ product.id}}">Add to wishlist</button>
+               
+        <a class="btn btn-sm btn-danger addToCart" data-action="add" data-product="{{ product.id}}">Add to Cart</a>
 
-          
-          <!---
-             <form action="/addtocart/" novalidate class="d-inline">
-              <input type="hidden" name="product-id" id="product-id" value="{{ product.id}}">
-          
-              <button type="submit" class="btn btn-danger shadow px-3 py-1" id="addToCartBtn">Add to cart</button>
-              <a href="#" class="btn btn-danger px-4">Add to cart</a>
-            </form>
+        <button type="submit" class="btn btn-sm btn-secondary shadow px-2 py-1 addToWishlist" data-action="add" data-product="{{ product.id}}">Add in wishlist</button>
 
-          -->
-       
+     
       </div>
         
 
@@ -84,7 +74,7 @@
                     <span class="text-danger mt-0  fw-bold fs-6"><i
                         class="fa-solid fa-indian-rupee-sign text-danger fa-xs"></i>{{ data.discounted_price }} | {{ data.quantity }}</span>
                     
-                <button  type="button" class="btn btn-danger" id="addToCartBtn" style="float: right;">Add to Cart</button>
+                        <a class="btn btn-sm btn-danger addToCart" data-action="add" data-product="{{ product.id}}" style="float: right;">Add to Cart</a>
   
               </div>
               <div class="text-center mt-3 card-footer mt-4">

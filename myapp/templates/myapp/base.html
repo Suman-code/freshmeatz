@@ -14,6 +14,11 @@
   <link rel="stylesheet" href="{% static 'css/owl.carousel.css' %} ">
   <link rel="stylesheet" href="{% static 'css/owl.theme.green.min.css' %} ">
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300&display=swap" rel="stylesheet">
+  <!-- alertify css-->
+  
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css"/>
+  
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/default.min.css"/>
 
   <link rel="stylesheet" href="{% static 'css/base.css' %} ">
   <link rel="stylesheet" href="{% static 'css/phone.css' %}">
@@ -101,7 +106,7 @@ function getToken(name) {
 
       <li class="nav-item py-2 text-muted" style="list-style-type : none;">
         <a href="{% url 'cart' %}" class="text-muted ">
-          <span class="text-white bg-danger  rounded-circle px-2" style="position: absolute; right: 90px; bottom: 35px; font-size: 14px;" id="cartcount">{{ total_items}}</span>
+          <span  class="text-white bg-danger  rounded-circle px-2" style="position: absolute; right: 90px; bottom: 35px; font-size: 14px;" id="cartcount">{{ cart.cartquantity }}</span>
           <i class="fas fa-shopping-cart mx-1  fs-5 text-muted " style="position: relative;"></i>
         </a> Cart
         </li>
@@ -381,7 +386,7 @@ function getToken(name) {
 
 
   <!-- Optional JavaScript; choose one of the two! -->
-  <script src="{% static 'js/jquery.js' %}"></scrip>
+  <script src="{% static 'js/jquery.js' %}"></script>
   <script src="{% static 'js/jquery.min.js' %}"></script>
 
   <script src="{% static 'js/proper.js' %}"></script>
@@ -389,9 +394,26 @@ function getToken(name) {
   <script src="{% static 'js/owl.carousel.min.js' %}"></script>
 
 
+
   <script src="{% static 'js/bootstrap.min.js' %}"></script>
   <script src="{% static 'js/index.js' %}"></script>
   <script src="{% static 'js/base.js' %}"></script>
+  <!--alertify js--->
+  <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
+
+  <script>
+  alertify.set('notifier','position', 'bottom-right');
+
+  {% for msg in messages %}
+  alertify.success('{{ msg }}');
+  {% endfor %}
+
+
+    
+  </script>
+
+
+
 
   </body>
 

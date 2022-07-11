@@ -1,6 +1,7 @@
 from http.client import HTTPResponse
 from itertools import product
 import json
+from multiprocessing import context
 from turtle import title
 from unicodedata import category
 from urllib import request
@@ -13,6 +14,7 @@ from django.views import View
 from django.http import JsonResponse
 from django.shortcuts import redirect
 from django.contrib.auth.models import User
+from django.db.models import Q
 from django.http import HttpResponseRedirect
 
 # Create your views here.
@@ -27,7 +29,14 @@ def homePage(request):
     fish = Product.objects.filter(category = 'Country_chicken')
 
     if request.user.is_authenticated:
-        total_items = len(Cart.objects.filter(user = request.user))
+        customer = request.user
+        cart, created = Cart.objects.get_or_create(user=customer)
+        cartitems = cart.cartitem_set.all()
+    else:
+        cart = []
+        cartitems = []
+        cart = {'cartquantity': 0}
+
 
     return render( request , 'myapp/home.html' , 
     {'video' : video , 
@@ -35,7 +44,8 @@ def homePage(request):
     'category' : category , 
     'DOTD' : dealOfTheDay ,
     'fish' : fish, 
-    'total_items' : total_items,
+    'cart' : cart,
+    'cartitems' : cartitems,
     'active' : 'border-bottom border-danger border-2'})
 
  
@@ -95,32 +105,129 @@ class ProductDetails(View):
     def get(self, request , pk):
         product = Product.objects.get(pk=pk)
         related_product = Product.objects.filter(category=product.category).exclude(pk=pk)[:4]
-        return render(request , 'myapp/productdetails.html' , {'product':product , 'related_product' : related_product})
+
+        if request.user.is_authenticated:
+            customer = request.user
+            cart, created = Cart.objects.get_or_create(user=customer)
+            cartitems = cart.cartitem_set.all()
+        else:
+            cart = []
+            cartitems = []
+            cart = {'cartquantity': 0}
+
+        return render(request , 'myapp/productdetails.html' , {'product':product , 'related_product' : related_product , 'cart' :cart , 'cartitems':cartitems})
 
 
 # Add to cart function View
-
 def addToCart(request):
     data = json.loads(request.body)
-    product_id = data['product_id']
+    productId = data['product_id']
     action = data['action']
-    customer = request.user
+    if request.user.is_authenticated:
+        user = request.user
+        product = Product.objects.get(id = productId)
+        cart, created = Cart.objects.get_or_create(user=user)
+        cartitems, created = CartItem.objects.get_or_create(product=product, cart=cart)
+        
+
+        if action == 'add':
+            cartitems.quantity += 1
+        cartitems.save()
+
+        msg = {
+
+            'cartQuantity' : cart.cartquantity
+
+
+        }
+    return JsonResponse( msg ,  safe=False)
+
+# cart items display
+def cartItems(request):
+    if request.user.is_authenticated:
+        user = request.user
+        cart, create = Cart.objects.get_or_create(user=user)
+        cartitems = cart.cartitem_set.all()
+
+    else:
+        cart = []
+        cartitems = []
+    context = {'cart' : cart , 'cartitems' : cartitems}
+
+    return render(request, 'myapp/cartpage.html' , context)
+
+
+
+
+# update cart quantity
+
+# minus cart item
+def minusCartItem(request):
+    if request.method == "GET":
+        prod_id = request.GET['product_id']
+        print(prod_id)
+        cart = CartItem.objects.get(Q(product= prod_id))
+        cart.quantity -= 1
+        cart.save()
+
+    return JsonResponse('Successfully cart item decresed' , safe=False)
+
+
+#plus cart item
+def plusCartItem(request):
+    if request.method == "GET":
+        prod_id = request.GET['product_id']
+        print(prod_id)
+        cart = CartItem.objects.get(Q(product= prod_id))
+        print(cart)
+        cart.quantity += 1
+        cart.save()
+
+    return JsonResponse('Successfully cart item decresed' , safe=False)
+
+
+
+
+
+
+
+'''
+def updateCartQuantity(request):
+    data = json.loads(request.body)
+    print(data)
+    product_id = data['product_id']
+    itemValue = data['itemValue']
+    print(product_id , itemValue)
+    user = request.user
     product = Product.objects.get(id = product_id)
-    cart, created = Cart.objects.get_or_create(user=customer)
-    cartitems, created = CartItems.objects.get_or_create(product=product, cart=cart)
-    if action == 'add':
-        cartitems.quantity += 1
+    cart, created = Cart.objects.get_or_create(user=user)
+    cartitems, created = CartItem.objects.get_or_create(product=product, cart=cart)
+    cartitems.quantity = itemValue
     cartitems.save()
+    msg = {
+        'subtotal':cartitems.subtotal,
+        'grandtotal': cart.grandtotal,
+        'quantity': cart.cartquantity
+    }
+
+    return JsonResponse(msg , safe=False)
+
+'''
 
 
 
 
-    return JsonResponse("its working" , safe=False)
 
 
+'''
+def deleteCartItem(request):
+   
 
 
+    return JsonResponse({'status': 'Deleted successfully'})
 
+#delete cart item
+'''
 
 
 '''
@@ -132,10 +239,10 @@ def addToCart(request):
     savecart.save()
 
     return redirect('/cart/')
+
 '''
 
 
-#Display cart page
 def cartPage(request):
     if request.user.is_authenticated:
         user = request.user
@@ -165,6 +272,17 @@ def cartPage(request):
 
 
 
+
+
+
+
+
+
+
+
+
+
+
 class SignUp(View):
 
     def get(sself, request):
@@ -189,8 +307,14 @@ class SignUp(View):
 
 
 def checkoutCart(request):
+    cart = Cart.objects.get(user=request.user)
+    rawcart =  cart.cartitem_set.all()
 
-    return render(request , 'myapp/checkout.html' , {})
+    print(rawcart)
+
+
+    context = {}
+    return render(request , 'myapp/checkout.html' , context)
 
 
 
@@ -241,11 +365,37 @@ def addToWishlist(request):
 
             'status' : 'Added to wishlist'
         }
-
-
+    
     return JsonResponse(data)
 
 #add to wish display
 def myWishlist(request):
     wishlist = Wishlist.objects.filter(user=request.user).order_by('-id')
-    return render(request , 'myapp/wishlist.html' , {'wishlist': wishlist})
+    total_wishlist= len(Wishlist.objects.filter(user = request.user))
+    return render(request , 'myapp/wishlist.html' , {'wishlist': wishlist , 'w' : total_wishlist})
+
+# delete wishlist item
+def deleteWishlist(request):
+    if request.user.is_authenticated:
+        prod_id = int(request.GET.get('product_id'))
+        if(Wishlist.objects.filter(user=request.user, product_id = prod_id)):
+            wishlistitem = Wishlist.objects.get(product_id=prod_id)
+            wishlistitem.delete()
+
+            return JsonResponse({'status' : 'Item has been removed'})
+
+
+        else:
+            return JsonResponse({'status' : "Item nit found in wishlist"})
+
+    else:
+        return JsonResponse({'status' : 'Login required to remove'})
+
+    return redirect("/")
+
+
+
+# customer addres view
+
+def address(request):
+    return render(request , 'myapp/addres.html')

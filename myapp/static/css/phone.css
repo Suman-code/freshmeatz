@@ -249,15 +249,20 @@
         display: block;
         padding: 0;
         margin: 0;
+        text-align: center;
 
+    }
+    
+    #cartpage{
+        padding: 0;
+        margin: 0;
 
     }
     #cartpage th{
         font-size: 14px;
         padding: 0;
         margin: 0;
-        
-
+    
     }
     #cartpage h6{
 
@@ -266,16 +271,38 @@
 
     #cartpage td{
         color: black;
-        font-size: 12px;
+        font-size: 10px;
        padding-bottom: 0;
-     
-     
+    
      
     }
+    #cartItem{
+        margin: 0;
+        padding: 0;
+    }
+    #cartItem td>h6 {
+        font-size: 10px;
+        align-items: left;
+        word-spacing: -2px;
+        line-height: 2;
+        padding: 0;
+        margin: 0;
+    
+
+    }
+
+    #cartItem img{
+        width: 100%;
+        height: auto;
+
+    }
+
     .fa-trash-can{
     float: right;
-    padding-right: 0;
-    margin-right: 0;
+    padding: 0;
+    margin: 0;
+    margin: 0;
+    
     }
 
 
@@ -299,15 +326,6 @@
         font-size: 16px;
      }
      
-    
-
-
-
-
-  
-
-
-   
 
     #pricedetails{
         

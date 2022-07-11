@@ -395,3 +395,71 @@ outline: None;
 border: 1px solid brown;
   
 }
+
+.account-setting :hover {
+  background-color: white;
+  color: brown;
+  cursor: pointer;
+
+
+}
+
+
+
+
+.profile-links :hover{
+
+  background-color: rgb(241, 231, 232);
+  color: brown;
+}
+
+.profile-img {
+  vertical-align: middle;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+}
+
+/* addres collapse */
+
+.collapsible {
+  
+  color: rgb(206, 49, 49);
+  cursor: pointer;
+  padding: 16px;
+  width: 100%;
+  border: none;
+  text-align: left;
+  outline: none;
+  font-size: 14px;
+}
+
+
+
+.collapsible:after {
+  content: '\002B';
+  color: rgb(211, 38, 38);
+  font-weight: bold;
+  font-size: 16px;
+  float: left;
+  padding-right: 22px;
+  margin-left: 5px;
+}
+
+.active:after {
+  content: "\2212";
+  color: red;
+}
+
+.content {
+  padding: 0 18px;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.2s ease-out;
+  background-color: white;
+}
+
+#saveBtn :focus{
+  background-color: rgb(139, 31, 31);
+
+}

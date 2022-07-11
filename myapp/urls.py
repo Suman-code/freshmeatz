@@ -26,12 +26,20 @@ path('poultrychicken_items/' ,  views.poultryChickenProducts , name="poultrychic
 path('readytocookmeat/' ,  views.readyToCookProducts, name="readytocook"),
 
 
-# Sungle product details
+# Single product details
 path('Product-details/<int:pk>/' , views.ProductDetails.as_view(), name="productdetails" ),
 #add to cart
 path('add-to-cart/' , views.addToCart , name="addtocart"),
 #cart
-path('cart/' , views.cartPage , name="cart" ),
+path('cart/' , views.cartItems , name="cart"),
+#update cart item
+#minus cart item
+path('minus-cart-item/' , views.minusCartItem, name="minuscartitem"),
+#plus cart item
+path('plus-cart-item/' , views.plusCartItem, name="pluscartitem"),
+#path('update-cart-quantity/' , views.updateCartQuantity , name="updatecartquantity"),
+# delete-cart-item
+#path('delete-cart-item/' , views.deleteCartItem , name="delete-cart-item"),
 
 path('checkout-cart/' , views.checkoutCart , name="checkout"),
 
@@ -39,11 +47,15 @@ path('our-gallery/' , views.photoGallery , name="gallery"),
 path('payment-taken-here/' , views.paymentPage , name="payment"),
 #search url
 path('search/' ,views.searchProduct, name="search" ),
+# customer address
+
 
 #add to wishlist
 path('add-to-wishlist/', views.addToWishlist , name="addtowishlist"),
 #my wishlist
-path('my-wishlist',  views.myWishlist, name="mywishlist"),
+path('my-wishlist/',  views.myWishlist, name="mywishlist"),
+#delete-wishlist-item
+path('delete-wishlist-item/' , views.deleteWishlist, name="delete-wishlist-item"),
 
 
 #authentications urls

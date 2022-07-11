@@ -19,16 +19,15 @@ class CategoryModelAdmin(admin.ModelAdmin):
 class ProductModelAdmin(admin.ModelAdmin):
     list_display = ['id' , 'title' , 'selling_price' , 'discounted_price' , 'category' , 'product_image' , 'date_added']
 
-@admin.register(Cart)
-class CartModelAdmin(admin.ModelAdmin):
-    list_display = ['user' , 'product' , 'product_qty' , 'created_at']
-
-@admin.register(CartItems)
-class CartItemModelAdmin(admin.ModelAdmin):
-    list_display = ['cart' , 'product' , 'quantity' , 'date_added']
-
 @admin.register(Wishlist)
 class WhishlistModelAdmin(admin.ModelAdmin):
     list_display = ['user' , 'product' , 'added_at']
    
 
+@admin.register(Cart)
+class CartModelAdmin(admin.ModelAdmin):
+    list_display = ['user' , 'created_at']
+
+@admin.register(CartItem)
+class CartItemModelAdmin(admin.ModelAdmin):
+    list_display = ['cart' , 'product' , 'quantity' , 'date_added']
