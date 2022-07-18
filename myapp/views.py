@@ -16,6 +16,7 @@ from django.shortcuts import redirect
 from django.contrib.auth.models import User
 from django.db.models import Q
 from django.http import HttpResponseRedirect
+import random
 
 # Create your views here.
 
@@ -309,12 +310,64 @@ class SignUp(View):
 def checkoutCart(request):
     cart = Cart.objects.get(user=request.user)
     rawcart =  cart.cartitem_set.all()
-
-    print(rawcart)
-
-
     context = {}
     return render(request , 'myapp/checkout.html' , context)
+
+
+
+#----------place order----------
+
+def placeOrder(request):
+    if request.method == 'POST':
+        neworder = Order()
+        neworder.user = request.user
+        neworder.first_name = request.POST.get('first_name')
+        neworder.last_name = request.POST.get('last_name')
+        neworder.mobile_number = request.POST.get('mobile_number')
+        neworder.email = request.POST.get('email')
+        neworder.address = request.POST.get('address')
+        neworder.locality = request.POST.get('locality')
+        neworder.landmark = request.POST.get('landmark')
+        neworder.city= request.POST.get('city')
+        neworder.state = request.POST.get('state')
+        neworder.pincode = request.POST.get('pincode')
+        neworder.order_date = request.POST.get('order_date')
+        neworder.order_time = request.POST.get('order_time')
+
+        total_cart_price = 0
+        cart = Cart.objects.get(user=request.user)
+        cart_items = CartItem.objects.filter(cart=cart)
+        print(
+            cart_items
+        )
+        for item in cart_items:
+            total_cart_price = (int(item.product.discounted_price) * item.quantity)
+        neworder.total_price = total_cart_price
+
+        trackno = 'freshmeatz' + str(random.randint(111111,999999))
+        while Order.objects.filter(tracking_no = trackno):
+            trackno = 'freshmeatz' + str(random.randint(111111,999999))
+        
+        neworder.tracking_no = trackno
+        neworder.save()
+        cart = Cart.objects.get(user=request.user)
+        cart_items = CartItem.objects.filter(cart=cart)
+        for item in cart_items:
+            OrderItem.objects.create(
+                order =neworder,
+                product = item.product,
+                price = item.product.discounted_price,
+                quantity = item.quantity
+
+
+            )
+
+        Cart.objects.filter(user=request.user).delete()
+
+    return redirect('/')
+
+
+
 
 
 

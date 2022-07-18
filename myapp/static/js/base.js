@@ -343,6 +343,16 @@ $('.plus-cart').click(function(e){
 });
 
 
+// delivery date picker
+
+$('#datepicker').datepicker({
+
+    dateFormat : "yy-mm-dd",
+    maxDate : "2D",
+    minDate: 0,
+ 
+});
+
 
 
 
@@ -352,11 +362,54 @@ $('.plus-cart').click(function(e){
 
 
 
+// delievry time slot
+
+function deliveryTime(ele){
+    var btnValue = ele.innerText;
+    console.log('btn' , btnValue)
+
+}
 
 
 
 
+var timeSlots = [
+    { 'time_range' : '07:00 AM - 09:00AM' },
+    { 'time_range' : '09:00 AM - 11:00 AM' },
+    { 'time_range' : '11:00 AM - 01:00 PM' },
+    { 'time_range' : '01:00 PM - 03:00 PM' },
+    { 'time_range' : '03:00 PM - 05:00 PM' },
+    { 'time_range' : '05:00 PM - 07:00 PM' },
+    { 'time_range' : '07:00 PM - 09:00 PM' },
+    
+ 
+];
 
+
+var currentTime = new Date().getHours();
+
+var newSlot = timeSlots.filter(Slots => filterSlots(Slots))
+
+function filterSlots(Slots) {
+    var slot = Slots['time_range'];
+
+    var startTime = slot.substring(0, slot.indexOf('-'));
+
+    var isPM = startTime.toLocaleLowerCase().indexOf('pm');
+
+    var time = parseInt(startTime);
+
+    if (isPM > -1) {
+        time += 12;
+    }
+    
+    if ( time >= currentTime ) {
+        return slot;
+    }     
+   
+}
+
+console.log('newSlot :>> ', newSlot);
 
 
 

@@ -46,7 +46,7 @@
 
      <div class="bg-light h-auto  border-bottom ">
       
-      <form action="/paymentdone/" method="GET">
+      <form action="" method="GET">
 
         <div class="  form-group-row p-3">
             <input class="form-check-input bg-white ms-1" type="radio" value="{{ ad.id }}" name="custid" id="">
@@ -67,233 +67,110 @@
 
     <button class="collapsible bg-light mt-3 fw-bold">Add new address</button>
    
-      <div class="content">
+    <div class="content">
         <div class="container shadow">
           <div class="card-body mb-3">
-            <div class="row">
-           
-              <div class="col-sm-6">
-                <label for="inputEmail4" class="form-label">First name</label>
-                <input type="" class="form-control" id="inputname">
-              </div>
-
-              <div class="col-sm-6">
-                <label for="inputEmail4" class="form-label">Last name</label>
-                <input type="" class="form-control" id="inputname">
-              </div>
-
-              <div class="col-sm-6 mt-3">
-                <label for="inputEmail4" class="form-label">Email</label>
-                <input type="email" class="form-control" id="inputname">
-              </div>
-
-              <div class="col-sm-6 mt-3">
-                <label for="inputEmail4" class="form-label">Phone Number</label>
-                <input type="email" class="form-control" id="inputname">
-              </div>
-              
-              <div class="col-sm-12 mt-3">
-                <label for="inputEmail4" class="form-label">Address</label>
-                <textarea  class="form-control" id="inputname"></textarea>
-              </div>
-              
-              <div class="col-sm-6 mt-3">
-                <label for="inputEmail4" class="form-label">Locality</label>
-                <input  class="form-control" id="inputname" type=""></input>
-              </div>
-
-              <div class="col-sm-6 mt-3">
-                <label for="inputEmail4" class="form-label">Landmark</label>
-                <input  class="form-control" id="inputname" type="">
-              </div>
-
-              <div class="col-md-6 mt-3">
-                <label for="inputCity" class="form-label">City</label>
-                <input type="" class="form-control" id="inputCity">
-              </div>
-    
-              <div class="col-md-4 mt-3">
-                <label for="inputState" class="form-label">State</label>
-                <select id="inputState" class="form-select">
-                  <option selected>Choose...</option>
-                  <option>...</option>
-                </select>
-              </div>
-              <div class="col-md-2 mt-3">
-                <label for="inputZip" class="form-label">Zip</label>
-                <input type="" class="form-control" id="inputZip">
-              </div>
-    
-              <button class="btn btn-light mt-3 fw-bold" type="submit" id="saveBtn">Save</button>
-
-
-            </div>
-
-          </div>
+            <form method="POST" action="/placeorder/"> {%  csrf_token %}
+                    <div class="row" id="addressInput">
           
+                      <div class="col-sm-6">
+                        <label for="inputEmail4" class="form-label">First name</label>
+                        <input type="" class="form-control" id="firstname" name="first_name">
+                      </div>
 
+                      <div class="col-sm-6">
+                        <label for="inputEmail4" class="form-label">Last name</label>
+                        <input type="" class="form-control" id="lastname" name="last_name">
+                      </div>
+                      
+                      <div class="col-sm-6 mt-3">
+                        <label for="inputEmail4" class="form-label">Mobile_number</label>
+                        <input type="tel" class="form-control" id="inputphone" name="mobile_number">
+                      </div>
 
+                      <div class="col-sm-6 mt-3">
+                        <label for="inputEmail4" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="inputemail" name="email">
+                      </div>
+
+                    
+                      
+                      <div class="col-sm-12 mt-3">
+                        <label for="inputEmail4" class="form-label">Address</label>
+                        <textarea  class="form-control" id="inputtextarea" name="address"></textarea>
+                      </div>
+                      
+                      <div class="col-sm-6 mt-3">
+                        <label for="inputEmail4" class="form-label">Locality</label>
+                        <input  class="form-control" id="inputname" type="" name="locality"> </input>
+                      </div>
+
+                      <div class="col-sm-6 mt-3">
+                        <label for="inputEmail4" class="form-label">Landmark</label>
+                        <input  class="form-control" id="inputname" type="" name="landmark">
+                      </div>
+
+                      <div class="col-md-6 mt-3">
+                        <label for="inputCity" class="form-label">City</label>
+                        <input type="" class="form-control" id="inputCity" name="city">
+                      </div>
             
+                      <div class="col-md-4 mt-3">
+                        <label for="inputState" class="form-label">State</label>
+                        <input type="" class="form-control" id="inputStare" name="state">
+                        
+                      </div>
+                      <div class="col-md-2 mt-3">
+                        <label for="inputZip" class="form-label">Zip</label>
+                        <input type="" class="form-control" id="inputZip" name="pincode">
+                      </div>
+            
+                      <button class="btn btn-light mt-3 fw-bold" type="submit" id="saveBtn">Save</button>
+
+
+                  </div>
+                </form>
+
+              </div>
+           
+          </div>
+
       </div>
-
-
-
-
-
-
-  </div>
-      
-        
-
-
-        
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-    <!----
-    <div class="w-100 bg-light mt-3 py-2 px-1 text-danger border-bottom"><i class="fa-solid fa-plus px-3"></i>        
-        <a class="text-danger fw-bold text-decoration-none" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
-          Add new address
-        </a>
-      </div>
-    
-      <div class="collapse" id="collapseExample">
-      <div class="card card-body px-5 w-100">
-        <form class="row g-3">
-          <div class="col-md-6">
-            <label for="inputEmail4" class="form-label">Email</label>
-            <input type="email" class="form-control" id="inputEmail4">
-          </div>
-
-          <div class="col-md-6">
-            <label for="inputPassword4" class="form-label">Password</label>
-            <input type="password" class="form-control" id="inputPassword4">
-          </div>
-
-          <div class="col-md-6">
-            <label for="inputEmail4" class="form-label">Phone Number</label>
-            <input type="number" class="form-control" id="inputEmail4">
-          </div>
-
-          <div class="col-md-6">
-            <label for="inputPassword4" class="form-label">Email</label>
-            <input type="email" class="form-control" id="inputPassword4">
-          </div>
-
-          
-          <div class="col-md-12">
-            <label for="inputPassword4" class="form-label">Addrss</label>
-            <input class="form-control" id="inputAddress" type="textarea">
-          </div>
-
-
-          <div class="col-md-6">
-            <label for="inputCity" class="form-label">City</label>
-            <input type="text" class="form-control" id="inputCity" style="height: 10px;">
-          </div>
-
-          <div class="col-md-4">
-            <label for="inputState" class="form-label">State</label>
-            <select id="inputState" class="form-select">
-              <option selected>Choose...</option>
-              <option>...</option>
-            </select>
-          </div>
-          <div class="col-md-2">
-            <label for="inputZip" class="form-label">Zip</label>
-            <input type="text" class="form-control" id="inputZip">
-          </div>
-
-
-          
-
-
-
-
-</form>
-
-
-
-
-
-
-
-
-
-
-
-
-
-       
-    </div>
-
-
-      
-</div>
-
-    
-    -->
-
-      
-
-
-
-    <!--------------------
-<a class="btn btn-primary" data-bs-toggle="collapse" href="#multiCollapseExample1" role="button" aria-expanded="false" aria-controls="multiCollapseExample1">Toggle first element</a>
-
-
-
-
-
-
-          <div class="w-100 bg-light mt-3 py-2 px-1 text-danger border-bottom"><i class="fa-solid fa-plus px-3"></i>
-      <a href="#" class=" btn text-dnager px-1 text-danger fw-bold" style="font-size: 12px;">Add a new addres</a>
-      
-    </div>
-
-      
-      --------------->
-
-
-
-
-  
-
-
-       
+         
 
 </div>
-
-
 
               <!-----------------------------delivery time--------------------------->
 
-
              <div class="col-sm-4 offset-sm-0 mt-1" id="paymentBtn" >
                     <div class="bg-light p-3">
-                            <form action="" class="">
+                            <form action="/placeorder/" class="" method="POST"> {% csrf_token %}
                                     <h5 class="mt-4">Choose your delivery slot</h5><br>
                                         <b>Date : </b>
-                                        <input type="datetime-local" id="birthdaytime" name="birthdaytime" class="form-control""><br>
+                                        <input type="" id="datepicker" name="order_date" class="form-control" value="Select date :"><br>
                                         <b>Time : </b>
+
+                                        <div class="custom-select">
+                                          <select class="form-select" id="timepicker" name="order_time">
+                                            <option value="0">Select Time:</option>
+                                            <option value="07:00 AM - 09:00 AM">07:00 AM - 09:00 AM</option>
+                                            <option value="09:00 AM - 11:00 AM">09:00 AM - 11:00 AM</option>
+                                            <option value="11:00 AM - 01:00 PM">11:00 AM - 01:00 PM</option>
+                                            <option value="01:00 PM - 03:00 PM">01:00 PM - 03:00 PM</option>
+                                            <option value="03:00 PM - 05:00 PM">03:00 PM - 05:00 PM</option>
+                                            <option value="05:00 PM - 07:00 PM">05:00 PM - 07:00 PM</option>
+                                            <option value="07:00 PM - 09:00 PM">07:00 PM - 09:00 PM</option>
+                                            <option value="07:00 AM - 09:00 AM">07:00 AM - 09:00 AM</option>
                                         
-                                        <input type="time" id="myTime" step="2" class="form-control">
+                                          </select>
+                                        </div>
+
+                                        <button type="submit" class="btn btn-warning btn-sm py-2 fw-bold px-4 w-100 mt-3">PLACE ORDER</button>
                                       </form>
 
                                  </div>
                              
-                                <a href="{% url 'payment' %}" class="btn btn-warning btn-sm py-2 fw-bold px-4 w-100">CONTINUE TO PAYMENT </a>
+                                
                              </div>
 
 <!----------------------------------->

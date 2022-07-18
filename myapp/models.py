@@ -1,8 +1,16 @@
+from email import message
+from email.headerregistry import Address
+from ftplib import FTP
+from io import open_code
 from itertools import product
 from pyexpat import model
+from sys import modules
 from turtle import title
 from django.db import models
+from datetime import datetime, date,time
 from django.contrib.auth.models import User
+
+from phonenumber_field.modelfields import PhoneNumberField
 
 # Create your models here.
 
@@ -107,7 +115,10 @@ class CartItem(models.Model):
 
 
 
-class Customer(models.Model):
+
+
+
+class UserProfile(models.Model):
     user = models.ForeignKey(User , on_delete=models.CASCADE)
     first_name = models.CharField(max_length = 200)
     last_name = models.CharField(max_length = 200)
@@ -125,21 +136,53 @@ class Customer(models.Model):
         return str(self.id)
 
 
-'''
+
+
+ADDRESS_TYPE= (
+    ('Home' , 'Home'),
+    ('Work' , 'Work'),
+    ('Others' , 'Others')
+
+)
+
 class Order(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    customer = models.ForeignKey(Customer , on_delete=models.CASCADE)
-    quantity = models.PositiveIntegerField(default = 1)
-    order_Date = models.DateTimeField(auto_now_add = True)
-    updated_Date = models.DateTimeField(auto_now_add = True)
+    first_name = models.CharField(max_length = 200)
+    last_name = models.CharField(max_length = 200)
+    mobile_number = PhoneNumberField()
+    email = models.EmailField(max_length=242)
+    locality = models.CharField(max_length = 300, null=False)
+    address = models.TextField(null=False)
+    city = models.CharField(max_length = 100)
+    pincode = models.IntegerField(null=False)
+    landmark = models.CharField(max_length=500)
+    state = models.CharField(max_length = 100)
+    total_price = models.FloatField(null=False)
+    Address_type = models.CharField(max_length=25 , choices=ADDRESS_TYPE, default= 'Home')
+    payment_id = models.CharField(max_length=250 , null=True)
+    payment_mode = models.CharField(max_length=200 , null=True)
+    message = models.TextField(null=True)
+    tracking_no = models.CharField(max_length=200, null=True)
+    order_date = models.DateField(auto_now_add=False , auto_now=False, null=True, blank=True)
+    order_time = models.TimeField(auto_now_add=False , auto_now=False, null=True, blank=True)
+    updated_date = models.DateTimeField(auto_now_add = True, null= True)
     status = models.CharField(max_length=50, choices = STATUS_CHOICES , default='pending')
 
     def __str__(self):
-        return str(self.id)
+        return '{} - {}'.format(self.id , self.tracking_no)
 
 
-'''
+class OrderItem(models.Model):
+    order = models.ForeignKey(Order, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    price = models.FloatField(null=False)
+    quantity = models.IntegerField(null=False)
+
+    def __str__(self):
+        return '{} {}'.format(self.oder.id , self.order.tracking_no)
+
+
+
 #Wishlist
 class Wishlist(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)

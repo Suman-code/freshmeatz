@@ -41,7 +41,12 @@ path('plus-cart-item/' , views.plusCartItem, name="pluscartitem"),
 # delete-cart-item
 #path('delete-cart-item/' , views.deleteCartItem , name="delete-cart-item"),
 
+#----checkout page-----
 path('checkout-cart/' , views.checkoutCart , name="checkout"),
+
+#----------place order------
+path('placeorder/' , views.placeOrder, name="placeorder"),
+
 
 path('our-gallery/' , views.photoGallery , name="gallery"),
 path('payment-taken-here/' , views.paymentPage , name="payment"),

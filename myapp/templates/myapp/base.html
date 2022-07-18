@@ -14,6 +14,9 @@
   <link rel="stylesheet" href="{% static 'css/owl.carousel.css' %} ">
   <link rel="stylesheet" href="{% static 'css/owl.theme.green.min.css' %} ">
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'css/jquery-ui.min.css' %} ">
+  
+
   <!-- alertify css-->
   
   <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css"/>
@@ -59,7 +62,7 @@ function getToken(name) {
 
 <header>
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom py-2">
+<nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom py-2" id="navbar_top">
   <div class="container">
       <a class="navbar-brand" href="{% url 'home' %}"><img src="{% static 'images/banner/logo.png' %}" width="160px" height="auto"></a>
       
@@ -160,7 +163,7 @@ function getToken(name) {
   {% block  subnavbar %}
   <!--------------------->
 
-  <div class="container-fluid bg-light px-2" id="subnavbar">
+  <div class="container-fluid bg-light px-2 shadow" id="ubnavbar">
     <div class="row">
   
       <div class="col col-sm-12 offset-sm-0">
@@ -168,8 +171,8 @@ function getToken(name) {
      
         <div class = "d-flex justify-content-around align-items-center flex-wrap" id="categorynav">
     
-        <div class="navcategoryDiv mt-0 ms-2">
-          <a {% if request.resolver_match.url_name == 'todaysale' %} active {% endif %}href="{% url 'todaysale' %}" class="navproductCategory">
+        <div class="navcategoryDiv mt-0 ">
+          <a href="{% url 'todaysale' %}" class="navproductCategory {% if request.resolver_match.url_name == 'todaysale' %} active {% endif %}">
               <figure class="">
                 <img src="{% static 'images/category/c8.png' %}" alt="Trulli" width="40" height="40" class="">
                 <figcaption>Today's deal</figcaption>
@@ -398,6 +401,7 @@ function getToken(name) {
   <script src="{% static 'js/bootstrap.min.js' %}"></script>
   <script src="{% static 'js/index.js' %}"></script>
   <script src="{% static 'js/base.js' %}"></script>
+  <script src="{% static 'js/jquery-ui.min.js' %}"></script>
   <!--alertify js--->
   <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
 

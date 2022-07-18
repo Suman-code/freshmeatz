@@ -31,3 +31,13 @@ class CartModelAdmin(admin.ModelAdmin):
 @admin.register(CartItem)
 class CartItemModelAdmin(admin.ModelAdmin):
     list_display = ['cart' , 'product' , 'quantity' , 'date_added']
+
+
+
+@admin.register(Order)
+class OrderModelAdmin(admin.ModelAdmin):
+    list_display = ['user' , 'first_name', 'mobile_number' , 'total_price' , 'tracking_no', 'order_date', 'order_time', 'updated_date', 'status']
+
+@admin.register(OrderItem)
+class OrderItemModelAdmin(admin.ModelAdmin):
+    list_display = ['order' , 'product' , 'price' , 'quantity']
