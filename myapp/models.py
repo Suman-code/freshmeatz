@@ -1,8 +1,10 @@
+
 from email import message
 from email.headerregistry import Address
 from ftplib import FTP
 from io import open_code
 from itertools import product
+from operator import mod
 from pyexpat import model
 from sys import modules
 from turtle import title
@@ -114,30 +116,6 @@ class CartItem(models.Model):
         return total
 
 
-
-
-
-
-class UserProfile(models.Model):
-    user = models.ForeignKey(User , on_delete=models.CASCADE)
-    first_name = models.CharField(max_length = 200)
-    last_name = models.CharField(max_length = 200)
-    mobile_number = models.IntegerField()
-    email = models.EmailField(max_length=242)
-    locality = models.CharField(max_length = 300, null=False)
-    address = models.TextField(null=False)
-    city = models.CharField(max_length = 100)
-    pincode = models.IntegerField(null=False)
-    landmark = models.CharField(max_length=500)
-    state = models.CharField(max_length = 100)
-  
-
-    def __str__(self):
-        return str(self.id)
-
-
-
-
 ADDRESS_TYPE= (
     ('Home' , 'Home'),
     ('Work' , 'Work'),
@@ -145,31 +123,58 @@ ADDRESS_TYPE= (
 
 )
 
-class Order(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+
+class UserProfile(models.Model):
+    user = models.ForeignKey(User , on_delete=models.CASCADE)
     first_name = models.CharField(max_length = 200)
     last_name = models.CharField(max_length = 200)
+    email = models.EmailField(max_length=250)
     mobile_number = PhoneNumberField()
-    email = models.EmailField(max_length=242)
     locality = models.CharField(max_length = 300, null=False)
     address = models.TextField(null=False)
+    address_type = models.CharField(max_length=25 , choices=ADDRESS_TYPE, default= 'Home', null=True)
     city = models.CharField(max_length = 100)
     pincode = models.IntegerField(null=False)
     landmark = models.CharField(max_length=500)
     state = models.CharField(max_length = 100)
-    total_price = models.FloatField(null=False)
-    Address_type = models.CharField(max_length=25 , choices=ADDRESS_TYPE, default= 'Home')
-    payment_id = models.CharField(max_length=250 , null=True)
-    payment_mode = models.CharField(max_length=200 , null=True)
-    message = models.TextField(null=True)
-    tracking_no = models.CharField(max_length=200, null=True)
-    order_date = models.DateField(auto_now_add=False , auto_now=False, null=True, blank=True)
-    order_time = models.TimeField(auto_now_add=False , auto_now=False, null=True, blank=True)
-    updated_date = models.DateTimeField(auto_now_add = True, null= True)
-    status = models.CharField(max_length=50, choices = STATUS_CHOICES , default='pending')
+  
 
     def __str__(self):
-        return '{} - {}'.format(self.id , self.tracking_no)
+        return str(self.user.username)
+
+
+
+ORDER_STATUS = (
+    ('pending' , 'pending'),
+    ('on process' , 'on process'),
+    ('out for delivery' , 'out for delivery'),
+    ('delivered' , 'delivered'),
+    ('cancelled' , 'cancelled')
+
+)
+
+PAYMENT_STATUS = (
+    ('1' , 'success'),
+    ('2' , 'failure'),
+    ('3' , 'pending')
+
+)
+
+
+class Order(models.Model):
+    user = models.ForeignKey(User , on_delete=models.CASCADE)
+    userprofile = models.OneToOneField(UserProfile, on_delete=models.SET_NULL, null=True)
+    total_price = models.FloatField(null=False)
+    payment_mode = models.CharField(max_length=200 , null=True)
+    order_id = models.CharField(max_length=200, null=True)
+    payment_id = models.CharField(max_length=250 , null=True)
+    order_date = models.DateField(auto_now_add=False , auto_now=False, null=True)
+    order_time = models.TimeField(auto_now_add=False , auto_now=False, null=True) 
+    payment_status = models.CharField(max_length=50, choices = PAYMENT_STATUS , null=True)
+    order_status = models.CharField(max_length=50, choices = ORDER_STATUS , default='3')
+
+    def __str__(self):
+        return '{} - {}'.format(self.id , self.order_id)
 
 
 class OrderItem(models.Model):
@@ -179,7 +184,7 @@ class OrderItem(models.Model):
     quantity = models.IntegerField(null=False)
 
     def __str__(self):
-        return '{} {}'.format(self.oder.id , self.order.tracking_no)
+        return '{}'.format(self.order.tracking_no)
 
 
 

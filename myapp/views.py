@@ -1,21 +1,29 @@
-from http.client import HTTPResponse
+
 from itertools import product
 import json
 from multiprocessing import context
+from telnetlib import STATUS
+from threading import local
+
 from turtle import title
+from typing import List
 from unicodedata import category
 from urllib import request
 from django.shortcuts import render
+
+from myapp.forms import UserProfileForm
 from .models import *
 from django.views import *
-from .forms import UserRegistration
+
 from django.contrib import messages
 from django.views import View
 from django.http import JsonResponse
 from django.shortcuts import redirect
 from django.contrib.auth.models import User
 from django.db.models import Q
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect , HttpResponse
+from django .forms import *
+
 import random
 
 # Create your views here.
@@ -274,16 +282,7 @@ def cartPage(request):
 
 
 
-
-
-
-
-
-
-
-
-
-
+#sign up view
 class SignUp(View):
 
     def get(sself, request):
@@ -302,16 +301,121 @@ class SignUp(View):
 
 
 
-
-
-
-
-
+#checkout page
 def checkoutCart(request):
     cart = Cart.objects.get(user=request.user)
     rawcart =  cart.cartitem_set.all()
-    context = {}
+    form= UserProfileForm()
+   
+    order = Order.objects.filter(user = request.user)
+    profile = UserProfile.objects.filter(user=request.user)
+    context = {'order' : order,
+                'address' : profile,
+                'form' : form
+            }
     return render(request , 'myapp/checkout.html' , context)
+
+
+
+
+# ----------------userprofileaddress-----------------
+
+def userprofileAddress(request):
+
+    if request.method == "POST":
+        try:
+            data = json.loads(request.body)
+            user = request.user
+            first_name = data['first_name']
+            last_name = data['last_name']
+            email = data['email']
+            phone = data['mobile_number']
+            address= data['address']
+            locality = data['locality']
+            city = data['city']
+            landmark = data['landmark']
+            state = data['state']
+            pincode = data['pincode']
+            addresstype = data['address_type']
+            
+            data = UserProfile.objects.create(user = user, first_name = first_name, last_name = last_name, email = email , mobile_number  = phone , locality = locality, 
+            address = address , address_type = addresstype , city=city , pincode = pincode , landmark=landmark , state = state)
+            data.save()
+            data_json = UserProfile.objects.values()
+            data_in_list = list(data_json)
+            return JsonResponse({'status': 'added address' , 'user_data' : data_in_list }, status=200)
+            
+        except json.decoder.JSONDecodeError:
+            return JsonResponse({'status': 'Issue in json-data'} , status = 400)
+
+    else:   
+
+        return JsonResponse({'status': 'Invalid request'} , status = 400)
+
+
+    return JsonResponse({'status' : 'added'})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+    '''
+    
+        try:
+            data = json.loads(request.body)
+            user = request.user
+            first_name = data['first_name']
+            last_name = data['last_name']
+            email = data['email']
+            phone = data['mobile_number']
+            address= data['address']
+            locality = data['locality']
+            city = data['city']
+            landmark = data['landmark']
+            state = data['state']
+            pincode = data['pincode']
+            addresstype = data['address_type']
+            
+            data = UserProfile.objects.create(user = user, first_name = first_name, last_name = last_name, email = email , mobile_number  = phone , locality = locality, 
+            address = address , address_type = addresstype , city=city , pincode = pincode , landmark=landmark , state = state)
+            data.save()
+            return JsonResponse({'status': 'added address' }, status=200)
+            
+        except json.decoder.JSONDecodeError:
+            return JsonResponse({'status': 'Issue in json-data'} , status = 400)
+
+        else:   
+
+        return JsonResponse({'status': 'Invalid request'})
+
+        '''
+        
+  
+            
+    return JsonResponse({'status' : 'e'})
+ 
+
+def addressUser(request):
+    form= UserProfileForm()
+   
+
+    return render(request , 'myapp/customerAddress.html' ,  {'form' : form})
+
+
+
+
+
+
 
 
 
@@ -321,34 +425,23 @@ def placeOrder(request):
     if request.method == 'POST':
         neworder = Order()
         neworder.user = request.user
-        neworder.first_name = request.POST.get('first_name')
-        neworder.last_name = request.POST.get('last_name')
-        neworder.mobile_number = request.POST.get('mobile_number')
-        neworder.email = request.POST.get('email')
-        neworder.address = request.POST.get('address')
-        neworder.locality = request.POST.get('locality')
-        neworder.landmark = request.POST.get('landmark')
-        neworder.city= request.POST.get('city')
-        neworder.state = request.POST.get('state')
-        neworder.pincode = request.POST.get('pincode')
         neworder.order_date = request.POST.get('order_date')
         neworder.order_time = request.POST.get('order_time')
+        neworder.address_type = request.POST.get('address_type')
 
         total_cart_price = 0
         cart = Cart.objects.get(user=request.user)
         cart_items = CartItem.objects.filter(cart=cart)
-        print(
-            cart_items
-        )
+        
         for item in cart_items:
             total_cart_price = (int(item.product.discounted_price) * item.quantity)
         neworder.total_price = total_cart_price
 
-        trackno = 'freshmeatz' + str(random.randint(111111,999999))
-        while Order.objects.filter(tracking_no = trackno):
-            trackno = 'freshmeatz' + str(random.randint(111111,999999))
+        orderId = 'freshmeatz' + str(random.randint(111111,999999))
+        while Order.objects.filter(order_id = orderId):
+            orderId = 'OD' + str(random.randint(111111,999999))
         
-        neworder.tracking_no = trackno
+        neworder.order_id = orderId
         neworder.save()
         cart = Cart.objects.get(user=request.user)
         cart_items = CartItem.objects.filter(cart=cart)

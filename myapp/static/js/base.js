@@ -178,6 +178,90 @@ function updateCartQuantity(){
 
 
 
+let savBtn =document.getElementById("saveBtn").addEventListener('click' , delievryAddress)
+//savBtn.addEventListener('click' , delievryAddress)
+
+
+
+//delivery address
+function delievryAddress(e){
+    //e.preventDefault()
+    var first_name = $('#firstname').val();
+    var last_name = $('#lastname').val();
+    var email = $('#inputemail').val();
+    var phone = $('#inputphone').val();
+    var inputTextarea = $('#inputTextarea').val();
+    var locality= $('#inputLocality').val();
+    var city = $('#inputCity').val();
+    var landmark = $('#inputLandmark').val();
+    var state = $('#inputState').val();
+    var pincode = $('#inputPincode').val();
+    var addresstype = $('#addressType').val();
+
+    if(first_name == ''){
+        alert('Please enter First name');
+    }else if(last_name == ""){
+        alert('Please enter last name');
+    }else if(email == ""){
+        alert('Please enter email name')
+    }else if(phone == ""){
+        alert('Please enter phone number')
+    }else if(inputTextarea == ""){
+        alert('Please enter address details')
+    }else if(locality == ""){
+        alert('Please enter locality name')
+
+    }else if(city == ""){
+        alert('Please enter city name')
+    }else if(landmark == ""){
+        alert('Please enter landmark')
+    }else if(state == ""){
+        alert('Please enter state name')
+    }else if(pincode == ""){
+        alert('Please enter pincode')
+    }else if(addresstype == ""){
+        alert('Please enter your address type')
+    } else{
+
+    let data = {first_name : first_name , last_name:last_name, email:email , mobile_number : phone , address : inputTextarea,
+        locality :locality , city:city, landmark:landmark, state : state , pincode:pincode, address_type :addresstype,
+        };
+
+    url = "/userprofileaddress/"
+    fetch(url, {
+        method : 'POST',
+        headers :{
+            'Content-Type': 'application/json',
+            'X-CSRFToken': csrftoken,
+
+        },
+
+        body : JSON.stringify(data),
+
+        })
+        .then((respose) => {
+            return respose.json()
+
+
+        })
+        .then(data => {
+            //console.log('success' , data)
+            if (data.status == 'Added address'){
+                return data.user_data;
+                $("form")[0].reset()
+            }
+
+      
+           
+
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+          });
+
+
+}
+
 
 
 
@@ -344,7 +428,6 @@ $('.plus-cart').click(function(e){
 
 
 // delivery date picker
-
 $('#datepicker').datepicker({
 
     dateFormat : "yy-mm-dd",
@@ -353,6 +436,93 @@ $('#datepicker').datepicker({
  
 });
 
+// end delivery date picker
+
+
+// deleivery address
+/*
+$("#saveBtn").click(function(){
+    var first_name = $('#firstname').val();
+    var last_name = $('#lastname').val();
+    var email = $('#inputemail').val();
+    var phone = $('#inputphone').val();
+    var inputTextarea = $('#inputTextarea').val();
+    var locality= $('#inputLocality').val();
+    var city = $('#inputCity').val();
+    var landmark = $('#inputLandmark').val();
+    var state = $('#inputState').val();
+    var pincode = $('#inputPincode').val();
+    var addresstype = $('#addresstype').val();
+    let csr = $('input[name=csrfmiddlewaretoken]').val();
+
+
+    if(first_name == ''){
+        alert('Please enter First name');
+    }else if(last_name == ""){
+        alert('Please enter last name');
+    }else if(email == ""){
+        alert('Please enter email name')
+    }else if(phone == ""){
+        alert('Please enter phone number')
+    }else if(inputTextarea == ""){
+        alert('Please enter address details')
+    }else if(locality == ""){
+        alert('Please enter locality name')
+
+    }else if(city == ""){
+        alert('Please enter city name')
+    }else if(landmark == ""){
+        alert('Please enter landmark')
+    }else if(state == ""){
+        alert('Please enter state name')
+    }else if(pincode == ""){
+        alert('Please enter pincode')
+    }else if(addresstype == ""){
+        alert('Please enter your address type')
+    } else{
+        
+        let mydata = {first_name : first_name , last_name:last_name, email:email , mobile_number : phone , address : inputTextarea,
+                        locality :locality , city:city, landmark:landmark, state:state, pincode:pincode, address_type :addresstype,
+                        csrfmiddlewaretoken : csrftoken};
+
+
+    //ajax
+
+        $.ajax({
+            url : '/userprofileaddress/',
+            method : "POST",
+            data : JSON.stringify(mydata),
+            dataType: 'json',
+            async: true,
+            contentType: 'application/json; charset=utf-8',
+
+            success : function(data){
+                console.log(data.status)
+
+            },
+            error: (error) => {
+                console.log(error);
+            }
+
+
+           
+            })
+          
+
+        
+
+
+
+            // ajax end
+        }
+
+})
+
+
+
+
+
+
 
 
 
@@ -360,6 +530,7 @@ $('#datepicker').datepicker({
 
 })
 
+*/
 
 
 // delievry time slot
@@ -411,11 +582,11 @@ function filterSlots(Slots) {
 
 console.log('newSlot :>> ', newSlot);
 
+// end the time delievery
 
 
 
 
+})
 
-
-
-
+}

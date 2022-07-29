@@ -40,118 +40,144 @@
     <div class="d-flex justify-content-between align-item-center" id="checkoutPage">
     
     <div class="col col-sm-8 p-2">
-     <div class="w-100 bg-danger p-2">
-        <span class="circle fw-bold ms-2">1</span> <span class="fw-bold text-white text-center px-3" ;">DEIVERY ADDRESS</span>
+     <div class="w-100 bg-danger px-3 py-2">
+         <span class="fw-bold text-white text-center px-3">DEIVERY ADDRESS</span>
      </div>
 
-     <div class="bg-light h-auto  border-bottom ">
+     <div class="bg-light h-auto border-bottom">
       
+      {% for ad in address %}
       <form action="" method="GET">
 
-        <div class="  form-group-row p-3">
-            <input class="form-check-input bg-white ms-1" type="radio" value="{{ ad.id }}" name="custid" id="">
-
-            <label class="form-check-label fw-bold px-3" for="">Hemanth <small class="bg-white mx-3 text-muted fw-bold bg-white" style="font-size: 10px;">HOME</small>
-            <small class=" fw-bold" style="font-size: 12px;">9954182817 </small> </label>
+        <div class="  form-group-row p-3 border-bottom">
+            
+            <small class="form-check-label fw-bold px-3" for="">{{ad.first_name}}<small class="bg-white mx-3 text-muted fw-bold bg-white" style="font-size: 10px;">h{{ad.addrestype}}</small>
+            <small class=" fw-bold" style="font-size: 12px;">{{ ad.mobile_number}} </small> </small>
 
           <a href="#" class="px-3 fw-bold  text-danger" style="font-size: 12px; float: right;  text-decoration: none;">EDIT</a>
         
-          <p class="  py-2" style="margin-left: 36px;">#Gokula 1st Stage , Near Indian Petrol Bunk , Bengaluru , Karnataka - <b>560022</b></p>
-          <button class="btn  btn-warning fw-bold py-2 px-4" style="margin-left: 36px; font-size: 14px;">DELIVERY HERE</button>
-
+          <p class="  py-2" style="margin-left: 36px;">{{ ad.address }} {{ad.landmark }} {{ ad.locality }} ,{{ ad.city }}, {{ ad.state }} - <b>{{ad.pincode}}</b></p>
+        
         </div>
       </form>
+      {% endfor %}
 
     </div>
 
 
-    <button class="collapsible bg-light mt-3 fw-bold">Add new address</button>
-   
+
+    <button type="button" class="collapsible mt-3 bg-light fw-bold py-3 px-4">Add new address</button>
+<!-----------------------------
+  
+  ------------------------>
     <div class="content">
-        <div class="container shadow">
-          <div class="card-body mb-3">
-            <form method="POST" action="/placeorder/"> {%  csrf_token %}
-                    <div class="row" id="addressInput">
+      <div class="container shadow">
+        <div class="card-body mb-3">
           
-                      <div class="col-sm-6">
-                        <label for="inputEmail4" class="form-label">First name</label>
-                        <input type="" class="form-control" id="firstname" name="first_name">
-                      </div>
+          <form method="POST" action=""> {%  csrf_token %}
 
-                      <div class="col-sm-6">
-                        <label for="inputEmail4" class="form-label">Last name</label>
-                        <input type="" class="form-control" id="lastname" name="last_name">
-                      </div>
-                      
-                      <div class="col-sm-6 mt-3">
-                        <label for="inputEmail4" class="form-label">Mobile_number</label>
-                        <input type="tel" class="form-control" id="inputphone" name="mobile_number">
-                      </div>
-
-                      <div class="col-sm-6 mt-3">
-                        <label for="inputEmail4" class="form-label">Email</label>
-                        <input type="email" class="form-control" id="inputemail" name="email">
-                      </div>
-
-                    
-                      
-                      <div class="col-sm-12 mt-3">
-                        <label for="inputEmail4" class="form-label">Address</label>
-                        <textarea  class="form-control" id="inputtextarea" name="address"></textarea>
-                      </div>
-                      
-                      <div class="col-sm-6 mt-3">
-                        <label for="inputEmail4" class="form-label">Locality</label>
-                        <input  class="form-control" id="inputname" type="" name="locality"> </input>
-                      </div>
-
-                      <div class="col-sm-6 mt-3">
-                        <label for="inputEmail4" class="form-label">Landmark</label>
-                        <input  class="form-control" id="inputname" type="" name="landmark">
-                      </div>
-
-                      <div class="col-md-6 mt-3">
-                        <label for="inputCity" class="form-label">City</label>
-                        <input type="" class="form-control" id="inputCity" name="city">
-                      </div>
-            
-                      <div class="col-md-4 mt-3">
-                        <label for="inputState" class="form-label">State</label>
-                        <input type="" class="form-control" id="inputStare" name="state">
-                        
-                      </div>
-                      <div class="col-md-2 mt-3">
-                        <label for="inputZip" class="form-label">Zip</label>
-                        <input type="" class="form-control" id="inputZip" name="pincode">
-                      </div>
-            
-                      <button class="btn btn-light mt-3 fw-bold" type="submit" id="saveBtn">Save</button>
-
-
-                  </div>
-                </form>
-
-              </div>
+           <div class="row" id="addressInput">
            
-          </div>
+        
+                    <div class="col-sm-6">
+                      <label for="inputEmail4" class="form-label">First name</label><br>
+                    {{ form.first_name}}
+                    </div>
+  
+                    <div class="col-sm-6">
+                      <label for="inputEmail4" class="form-label">Last name</label><br>
+                      {{ form.last_name}}
+              
+                    </div>
+                    
+                    <div class="col-sm-6 mt-3">
+                      <label for="inputEmail4" class="form-label">Email</label><br>
 
-      </div>
+                      {{ form.email }}
+                    </div>
+  
+                    <div class="col-sm-6 mt-3">
+                      <label for="inputEmail4" class="form-label">Mobile_number</label><br>
+                      {{ form.mobile_number}}
+                    </div>
+                    
+                    <div class="col-sm-12 mt-3">
+                      <label for="inputTextArea4" class="form-label">Address</label>
+                      {{ form.address}}
+                    
+                    </div>
+                    
+                    <div class="col-sm-6 mt-3">
+                      <label for="inputEmail4" class="form-label">Locality</label>
+                      {{ form.locality}}
+                      
+                    </div>
+  
+                    
+                    <div class="col-md-6 mt-3">
+                      <label for="inputCity" class="form-label">City</label>
+                      {{ form.city}}
+                      
+                    </div>
+
+                    <div class="col-sm-6 mt-3">
+                      <label for="inputEmail4" class="form-label">Landmark</label>
+                      {{ form.landmark}}
+                    
+                    </div>
+  
+                    <div class="col-md-4 mt-3">
+                      <label for="inputState" class="form-label">State</label>
+                      {{ form.state}}
+                      
+                      
+                    </div>
+                    <div class="col-md-2 mt-3">
+                      <label for="inputZip" class="form-label">Pincode</label>
+                      {{ form.pincode }}
+                
+                    </div>
+                    <div class="col-md-3 mt-3">
+                      <label for="inputAddress" class="form-label">Delivery addres type</label>
+                      <select class="form-select" id="addressType" name="addres_type" required>
+                        {{ form.addres_type}}
+                        
+                        <option value="home">Home</option>
+                        <option value="work">Work</option>
+                        <option value="others">Others</option>
+                    
+                      </select>
+                    </div>
+                    
+                    <button class="btn btn-light mt-3 fw-bold" type="submit" id="saveBtn">Save</button>
+  
+  
+                  </div>
+              
+               
+              </form>
+  
+            </div>
          
-
+        </div>
+  
+    </div>
+       
+  
 </div>
-
-              <!-----------------------------delivery time--------------------------->
+  
+  
+<!----------------------------------------delivery time--------------------------------------->
 
              <div class="col-sm-4 offset-sm-0 mt-1" id="paymentBtn" >
                     <div class="bg-light p-3">
                             <form action="/placeorder/" class="" method="POST"> {% csrf_token %}
-                                    <h5 class="mt-4">Choose your delivery slot</h5><br>
+                                    <h6 class="mt-2">Choose your delivery slot</h6><br>
                                         <b>Date : </b>
-                                        <input type="" id="datepicker" name="order_date" class="form-control" value="Select date :"><br>
+                                        <input  required type="" id="datepicker" name="order_date" class="form-control" value="Select date :"><br>
                                         <b>Time : </b>
-
                                         <div class="custom-select">
-                                          <select class="form-select" id="timepicker" name="order_time">
+                                          <select class="form-select" id="timepicker" name="order_time" required>
                                             <option value="0">Select Time:</option>
                                             <option value="07:00 AM - 09:00 AM">07:00 AM - 09:00 AM</option>
                                             <option value="09:00 AM - 11:00 AM">09:00 AM - 11:00 AM</option>
@@ -169,14 +195,18 @@
                                       </form>
 
                                  </div>
-                             
+                       
                                 
                              </div>
+                     
 
-<!----------------------------------->
+<!---------------------------------------------------------------------->
+
 
 
                         </div>
+
+
 
 
                  </div>

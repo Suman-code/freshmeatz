@@ -43,6 +43,12 @@ path('plus-cart-item/' , views.plusCartItem, name="pluscartitem"),
 
 #----checkout page-----
 path('checkout-cart/' , views.checkoutCart , name="checkout"),
+#userprofile
+path('userprofileaddress/' , views.userprofileAddress , name="userprofileaddress"),
+
+
+#address
+path('addressuser/' , views.addressUser , name="addressuser"),
 
 #----------place order------
 path('placeorder/' , views.placeOrder, name="placeorder"),

@@ -212,7 +212,8 @@ function profileDropdown() {
     }
   }
 
-// sticky navbar
+
+/* sticky navbar
   document.addEventListener("DOMContentLoaded", function(){
     window.addEventListener('scroll', function() {
         if (window.scrollY > 50) {

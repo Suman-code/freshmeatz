@@ -1,0 +1,94 @@
+{% extends 'myapp/base.html' %}
+
+{%  load static %}
+
+{% block title %}<title>User-profile</title>{% endblock title %}
+
+{% block navbar %}
+<div class="content">
+    <div class="container shadow">
+      <div class="card-body mb-3">
+        <form method="POST" action="/checkout-cart/"> {%  csrf_token %}
+                <div class="row" id="addressInput">
+      
+                  <div class="col-sm-6">
+                    <label for="inputEmail4" class="form-label">First name</label>
+                    <input type="" class="form-control" id="firstname" name="first_name" required>
+                  </div>
+
+                  <div class="col-sm-6">
+                    <label for="inputEmail4" class="form-label">Last name</label>
+                    <input type="" class="form-control" id="lastname" name="last_name"  required>
+                  </div>
+                  
+                  <div class="col-sm-6 mt-3">
+                    <label for="inputEmail4" class="form-label">Email</label>
+                    <input type="email" class="form-control" id="inputemail" name="email" required>
+                  </div>
+
+                  <div class="col-sm-6 mt-3">
+                    <label for="inputEmail4" class="form-label">Mobile_number</label>
+                    <input type="tel"  class="form-control" id="inputphone" name="mobile_number" required>
+                  </div>
+                  
+                  <div class="col-sm-12 mt-3">
+                    <label for="inputEmail4" class="form-label">Address</label>
+                    <textarea  class="form-control" id="inputtextarea" name="address" required></textarea>
+                  </div>
+                  
+                  <div class="col-sm-6 mt-3">
+                    <label for="inputEmail4" class="form-label">Locality</label>
+                    <input  class="form-control"  id="inputname" type="" name="locality" required> </input>
+                  </div>
+
+                  <div class="col-sm-6 mt-3">
+                    <label for="inputEmail4" class="form-label">Landmark</label>
+                    <input  class="form-control"  id="inputname" type="" name="landmark" required>
+                  </div>
+
+                  <div class="col-md-6 mt-3">
+                    <label for="inputCity" class="form-label">City</label>
+                    <input type="" class="form-control" id="inputCity" name="city" required>
+                  </div>
+        
+                  <div class="col-md-4 mt-3">
+                    <label for="inputState" class="form-label">State</label>
+                    <input type="" class="form-control" id="inputStare" name="state"required>
+                    
+                  </div>
+                  <div class="col-md-2 mt-3">
+                    <label for="inputZip" class="form-label">Pincode</label>
+                    <input type="" class="form-control" id="inputZip" name="pincode" required>
+                  </div>
+                  <div class="col-md-3 mt-3">
+                    <label for="inputAddress" class="form-label">Delivery addres type</label>
+                    <select class="form-select" id="" name="addres_type" required>
+                      
+                      <option value="home">Home</option>
+                      <option value="work">Work</option>
+                      <option value="others">Others</option>
+                  
+                    </select>
+                  </div>
+                  
+                  <button class="btn btn-light mt-3 fw-bold" type="submit" id="saveBtn">Save</button>
+
+
+              </div>
+            </form>
+
+          </div>
+       
+      </div>
+
+  </div>
+     
+
+</div>
+
+
+
+
+
+
+{% endblock main %}
