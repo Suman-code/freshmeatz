@@ -35,51 +35,112 @@
 {% block main %}
 
 <div class="container mt-1">
-  <div class="row">
 
-    <div class="d-flex justify-content-between align-item-center" id="checkoutPage">
-    
-    <div class="col col-sm-8 p-2">
-     <div class="w-100 bg-danger px-3 py-2">
-         <span class="fw-bold text-white text-center px-3">DEIVERY ADDRESS</span>
-     </div>
+                <div class="row">
+                  <form action="/placeorder/" method="POST"> {% csrf_token %}
+                  <div class="d-flex justify-content-between align-item-center" id="checkoutPage">
 
-     <div class="bg-light h-auto border-bottom">
-      
-      {% for ad in address %}
-      <form action="" method="GET">
+                  <div class="col col-sm-8 p-2">
+                  <div class="w-100 bg-danger px-3 py-2">
+                      <span class="fw-bold text-white text-center px-3">DEIVERY ADDRESS</span>
+                  </div>
 
-        <div class="  form-group-row p-3 border-bottom">
-            
-            <small class="form-check-label fw-bold px-3" for="">{{ad.first_name}}<small class="bg-white mx-3 text-muted fw-bold bg-white" style="font-size: 10px;">h{{ad.addrestype}}</small>
-            <small class=" fw-bold" style="font-size: 12px;">{{ ad.mobile_number}} </small> </small>
+                  <div class="bg-light h-auto border-bottom">
+                    
+                    {% for ad in address %}
+                  
+                      <div class="  form-group-row p-3 border-bottom form-data" id="order-address">
+                        <a href="{% url 'update-address' ad.id %}" class="btn fw-bold btn btn-sm edit-btn  text-danger" data-sid="{{ad.id}}" value="{{ad.id}}" style="font-size: 12px; float: right;">edit</a>
+                        <small class="form-check-label fw-bold px-3" for="">{{ad.first_name}}<small class="bg-white mx-3 text-muted fw-bold bg-white" style="font-size: 10px;">{{ad.address_type}}</small>
+                        <small class=" fw-bold" style="font-size: 12px;">{{ ad.mobile_number}} </small> </small>
 
-          <a href="#" class="px-3 fw-bold  text-danger" style="font-size: 12px; float: right;  text-decoration: none;">EDIT</a>
-        
-          <p class="  py-2" style="margin-left: 36px;">{{ ad.address }} {{ad.landmark }} {{ ad.locality }} ,{{ ad.city }}, {{ ad.state }} - <b>{{ad.pincode}}</b></p>
-        
-        </div>
-      </form>
-      {% endfor %}
+                      <p class="  p-3">{{ ad.address }} {{ad.landmark }} {{ ad.locality }} ,{{ ad.city }}, {{ ad.state }} - <b>{{ad.pincode}}</b></p>
 
+                      <input class=" ms-3" type="radio" value="{{ ad.id }}" name="customerid" id="addid{{ forloop.counter}}" required>
+                      <label class="form-check-label fw-bold px-3 pb-3" for="">Delivery here </label><br>
+                      </div>
+                  
+
+                    {% endfor %}
+
+            </div>
     </div>
 
+    <div class="col-sm-4 offset-sm-0 mt-2" id="paymentBtn" >
+      <div class="bg-light px-4 pt-2">
+              
+                        
+                          <h6 class="fw-bold py-2" style="font-size: 14px;">CHOOSE YOUR DELIVERY SLOT</h6>
+                          
+                          <input  required type="" id="datepicker" name="order_date" class="" value="Select date :" style="font-size: 14px;" required>
+                      
+                          <div class="custom-select">
+                            <select class="form-select" id="timepicker" name="order_time" required>
+                              <option value="0">Select Time :</option>
+                              <option value="07:00 AM - 09:00 AM">07:00 AM - 09:00 AM</option>
+                              <option value="09:00 AM - 11:00 AM">09:00 AM - 11:00 AM</option>
+                              <option value="11:00 AM - 01:00 PM">11:00 AM - 01:00 PM</option>
+                              <option value="01:00 PM - 03:00 PM">01:00 PM - 03:00 PM</option>
+                              <option value="03:00 PM - 05:00 PM">03:00 PM - 05:00 PM</option>
+                              <option value="05:00 PM - 07:00 PM">05:00 PM - 07:00 PM</option>
+                              <option value="07:00 PM - 09:00 PM">07:00 PM - 09:00 PM</option>
+                              <option value="07:00 AM - 09:00 AM">07:00 AM - 09:00 AM</option>
+                          
+                            </select>
+                          </div>
+                          
 
 
-    <button type="button" class="collapsible mt-3 bg-light fw-bold py-3 px-4">Add new address</button>
-<!-----------------------------
-  
-  ------------------------>
-    <div class="content">
-      <div class="container shadow">
+                          <h6 class="fw-bold pt-4" style="font-size: 14px;">CHOOSE PAYMENT MODE</h6>
+                          
+                              <div class="payment_option">
+                            <select class="paymentMode " id="paymentmode" name="payment_mode"   required>
+                              <option value="0">Select options :</option>
+                              <option value="cash_on_delivery">Cash on delivery</option>
+                              <option value="online_payment">Online payment</option>
+                              </select>
+                            
+                          </div>
+                        
+                    
+                      
+                        
+                        <div class="data cash_on_delivery">
+                            <button class="btn btn-danger  btn-sm py-2 fw-bold px-4 w-100 mt-3 " id="cod">CONTINUE</button>
+                        </div>
+
+                        <div class="data online_payment">
+                            <a href="#" class="btn btn-danger  btn-sm py-2 fw-bold px-4 w-100 mt-3 " id="onlinePayment">CONTINUE</a>
+                        </div>
+                  
+
+
+
+                   </div>  
+         
+          </form>
+
+    </div>
+       
+</div>
+
+
+
+
+
+<!------------address div -->
+
+<div class="col-sm-8">
+    
+<button  type="button" class="collapsible p-3 bg-light fw-bold text-danger">  Add new address</button>
+      <div class="container shadow content">
         <div class="card-body mb-3">
           
-          <form method="POST" action=""> {%  csrf_token %}
+          <form method="POST" action="" id="form"> {%  csrf_token %}
 
            <div class="row" id="addressInput">
-           
-        
                     <div class="col-sm-6">
+                      
                       <label for="inputEmail4" class="form-label">First name</label><br>
                     {{ form.first_name}}
                     </div>
@@ -162,57 +223,10 @@
         </div>
   
     </div>
+    
        
-  
-</div>
-  
-  
-<!----------------------------------------delivery time--------------------------------------->
 
-             <div class="col-sm-4 offset-sm-0 mt-1" id="paymentBtn" >
-                    <div class="bg-light p-3">
-                            <form action="/placeorder/" class="" method="POST"> {% csrf_token %}
-                                    <h6 class="mt-2">Choose your delivery slot</h6><br>
-                                        <b>Date : </b>
-                                        <input  required type="" id="datepicker" name="order_date" class="form-control" value="Select date :"><br>
-                                        <b>Time : </b>
-                                        <div class="custom-select">
-                                          <select class="form-select" id="timepicker" name="order_time" required>
-                                            <option value="0">Select Time:</option>
-                                            <option value="07:00 AM - 09:00 AM">07:00 AM - 09:00 AM</option>
-                                            <option value="09:00 AM - 11:00 AM">09:00 AM - 11:00 AM</option>
-                                            <option value="11:00 AM - 01:00 PM">11:00 AM - 01:00 PM</option>
-                                            <option value="01:00 PM - 03:00 PM">01:00 PM - 03:00 PM</option>
-                                            <option value="03:00 PM - 05:00 PM">03:00 PM - 05:00 PM</option>
-                                            <option value="05:00 PM - 07:00 PM">05:00 PM - 07:00 PM</option>
-                                            <option value="07:00 PM - 09:00 PM">07:00 PM - 09:00 PM</option>
-                                            <option value="07:00 AM - 09:00 AM">07:00 AM - 09:00 AM</option>
-                                        
-                                          </select>
-                                        </div>
-
-                                        <button type="submit" class="btn btn-warning btn-sm py-2 fw-bold px-4 w-100 mt-3">PLACE ORDER</button>
-                                      </form>
-
-                                 </div>
-                       
-                                
-                             </div>
-                     
-
-<!---------------------------------------------------------------------->
-
-
-
-                        </div>
-
-
-
-
-                 </div>
-
-            </div>
-
+    
 
 
 {% endblock main %}

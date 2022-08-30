@@ -168,6 +168,7 @@ class Order(models.Model):
     payment_mode = models.CharField(max_length=200 , null=True)
     order_id = models.CharField(max_length=200, null=True)
     payment_id = models.CharField(max_length=250 , null=True)
+    address = models.CharField(max_length=255, null=True)
     order_date = models.DateField(auto_now_add=False , auto_now=False, null=True)
     order_time = models.TimeField(auto_now_add=False , auto_now=False, null=True) 
     payment_status = models.CharField(max_length=50, choices = PAYMENT_STATUS , null=True)
@@ -178,13 +179,14 @@ class Order(models.Model):
 
 
 class OrderItem(models.Model):
+
     order = models.ForeignKey(Order, on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     price = models.FloatField(null=False)
     quantity = models.IntegerField(null=False)
 
     def __str__(self):
-        return '{}'.format(self.order.tracking_no)
+        return '{}'.format(self.order.order_id)
 
 
 

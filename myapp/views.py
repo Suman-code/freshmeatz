@@ -4,17 +4,15 @@ import json
 from multiprocessing import context
 from telnetlib import STATUS
 from threading import local
-
+from tkinter import E
+import urllib.request 
 from turtle import title
 from typing import List
 from unicodedata import category
 from urllib import request
 from django.shortcuts import render
 
-from myapp.forms import UserProfileForm
 from .models import *
-from django.views import *
-
 from django.contrib import messages
 from django.views import View
 from django.http import JsonResponse
@@ -22,7 +20,7 @@ from django.shortcuts import redirect
 from django.contrib.auth.models import User
 from django.db.models import Q
 from django.http import HttpResponseRedirect , HttpResponse
-from django .forms import *
+from .forms import UserRegistration , LoginForm ,  UserProfileForm
 
 import random
 
@@ -249,7 +247,6 @@ def addToCart(request):
 
     return redirect('/cart/')
 
-'''
 
 
 def cartPage(request):
@@ -279,10 +276,10 @@ def cartPage(request):
             return render(request , 'myapp/empty.html')
 
 
+'''
 
 
-
-#sign up view
+#---------------sign up view--------------------
 class SignUp(View):
 
     def get(sself, request):
@@ -301,134 +298,137 @@ class SignUp(View):
 
 
 
-#checkout page
+#----------------------checkout page-----------------------
 def checkoutCart(request):
     cart = Cart.objects.get(user=request.user)
     rawcart =  cart.cartitem_set.all()
-    form= UserProfileForm()
-   
     order = Order.objects.filter(user = request.user)
     profile = UserProfile.objects.filter(user=request.user)
+    form = UserProfileForm()
+   
     context = {'order' : order,
                 'address' : profile,
-                'form' : form
-            }
+                'form' : form}
     return render(request , 'myapp/checkout.html' , context)
 
 
 
 
-# ----------------userprofileaddress-----------------
+# ----------------userprofile  address-----------------
 
-def userprofileAddress(request):
 
+'''
+def userProfileAddress(request):
+    form = UserProfileForm()
+
+    return render(request , 'myapp/useraddress.html', {'form' : form})
+
+'''
+
+def userProfileAddress(request):
     if request.method == "POST":
-        try:
-            data = json.loads(request.body)
-            user = request.user
-            first_name = data['first_name']
-            last_name = data['last_name']
-            email = data['email']
-            phone = data['mobile_number']
-            address= data['address']
-            locality = data['locality']
-            city = data['city']
-            landmark = data['landmark']
-            state = data['state']
-            pincode = data['pincode']
-            addresstype = data['address_type']
-            
-            data = UserProfile.objects.create(user = user, first_name = first_name, last_name = last_name, email = email , mobile_number  = phone , locality = locality, 
-            address = address , address_type = addresstype , city=city , pincode = pincode , landmark=landmark , state = state)
-            data.save()
-            data_json = UserProfile.objects.values()
-            data_in_list = list(data_json)
-            return JsonResponse({'status': 'added address' , 'user_data' : data_in_list }, status=200)
-            
-        except json.decoder.JSONDecodeError:
-            return JsonResponse({'status': 'Issue in json-data'} , status = 400)
-
-    else:   
-
-        return JsonResponse({'status': 'Invalid request'} , status = 400)
-
-
-    return JsonResponse({'status' : 'added'})
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        data = json.loads(request.body)
+        user = request.user
+        first_name = data['first_name']
+        last_name = data['last_name']
+        email = data['email']
+        mobile_number = data['mobile_number']
+        address = data['address']
+        locality = data['locality']
+        city = data['city']
+        landmark = data['landmark']
+        state = data['state']
+        pincode = data['pincode']
+        address_type = data['address_type']
+        user_data = UserProfile(user=user , first_name = first_name, last_name = last_name, email=email, mobile_number=mobile_number, address=address, locality=locality,
+        city=city , landmark=landmark , state=state, pincode = pincode, address_type = address_type)
+        user_data.save()
+        user_data_value = UserProfile.objects.values()
+        user_list = list(user_data_value)
         
-    '''
+        return JsonResponse({'status': 'address added' , 'user_list':user_list} , status=200 , safe=False)
     
-        try:
-            data = json.loads(request.body)
-            user = request.user
-            first_name = data['first_name']
-            last_name = data['last_name']
-            email = data['email']
-            phone = data['mobile_number']
-            address= data['address']
-            locality = data['locality']
-            city = data['city']
-            landmark = data['landmark']
-            state = data['state']
-            pincode = data['pincode']
-            addresstype = data['address_type']
-            
-            data = UserProfile.objects.create(user = user, first_name = first_name, last_name = last_name, email = email , mobile_number  = phone , locality = locality, 
-            address = address , address_type = addresstype , city=city , pincode = pincode , landmark=landmark , state = state)
-            data.save()
-            return JsonResponse({'status': 'added address' }, status=200)
-            
-        except json.decoder.JSONDecodeError:
-            return JsonResponse({'status': 'Issue in json-data'} , status = 400)
+    return JsonResponse("Invalid request" , safe=False )
 
-        else:   
-
-        return JsonResponse({'status': 'Invalid request'})
-
-        '''
-        
   
-            
-    return JsonResponse({'status' : 'e'})
- 
-
-def addressUser(request):
-    form= UserProfileForm()
    
 
-    return render(request , 'myapp/customerAddress.html' ,  {'form' : form})
+''''
+def editUserAddress(request):
+    if request.method == "POST":
+        id = request.POST.get('sid')
+        print(id)
+
+        userProfile = UserProfile.objects.get(pk=id)
+        print(userProfile)
+        userProfileData = f'{{"id" : {userProfile.id}, "first_name" : {userProfile.first_name} , "last_name" : {userProfile.last_name}, "email" : {userProfile.email}, "mobile_number": {userProfile.mobile_number}, "address" : {userProfile.address}, "locality" : {userProfile.locality}, "city": {userProfile.city}, "landmark" : {userProfile.landmark}, "state" : {userProfile.state} , "pincode": {userProfile.pincode}, "addres_type": {userProfile.address_type} }}'
+     
+        return JsonResponse(userProfileData , safe=False)
+
+
+
+'''
+#----------------------------------edit user address view---------------
+class EditAddress(View):
+    def get(self, request , id):
+        pi = UserProfile.objects.get(pk = id)
+        form = UserProfileForm(instance=pi)
+        return render(request, 'myapp/editaddress.html' ,{'form' : form})
+    def post(self, request, id):
+        pi = UserProfile.objects.get(pk=id)
+        form = UserProfileForm(request.POST , instance=pi)
+        if form.is_valid():
+            form.save()
+            return redirect('/checkout-cart/')
+        return render(request, 'myapp/editaddress.html' , {'form' : form})
+        
+
+def updateAddress(request, id=0):
+    '''    if request.method=="POST":
+        pi = UserProfile.objects.get(pk=id)
+        form = UserProfileForm(request.POSt , instance=pi)
+        if form.is_valid():
+            form.save()
+        return redirect('/checkout-cart/')
+        #return render(request, 'myapp/editaddress.html' , {'form' : form})
+
+    else:
+        pi = UserProfile.objects.get(pk=id)
+        form = UserProfileForm( instance=pi)
+        return render(request, 'myapp/editaddress.html' , {'form' : form})
+
+    '''
+    if request.method == "GET":
+        if id == 0:
+            form = UserProfileForm()
+        else:
+            userAddress = UserProfile.objects.get(pk=id)
+            form = UserProfileForm(instance=userAddress)
+        return render(request, 'myapp/editaddress.html' , {'form' : form})
+
+    else:
+        form = UserProfileForm(request.POST)
+        if form.is_valid():
+            form.save()
+        return redirect('/checkout-cart/')
 
 
 
 
 
-
-
-
-
-#----------place order----------
+#--------------------------Order details view----------
 
 def placeOrder(request):
     if request.method == 'POST':
+        user_profile = UserProfile()
         neworder = Order()
         neworder.user = request.user
         neworder.order_date = request.POST.get('order_date')
         neworder.order_time = request.POST.get('order_time')
-        neworder.address_type = request.POST.get('address_type')
-
+        #neworder.address_type = request.POST.get('address_type')
+        #neworder.userprofile = request.POST.get('custid')
+        neworder.payment_mode = request.POST.get('payment_mode')
+        neworder.address = request.POST.get('customerid')
         total_cart_price = 0
         cart = Cart.objects.get(user=request.user)
         cart_items = CartItem.objects.filter(cart=cart)
@@ -457,10 +457,13 @@ def placeOrder(request):
 
         Cart.objects.filter(user=request.user).delete()
 
-    return redirect('/')
+    return redirect('orderpayment/')
 
 
+#------------------cash on deliveryy option view
+def order_done(request):
 
+    return render(request, 'myapp/orderdone.html')
 
 
 
@@ -477,11 +480,10 @@ def paymentPage(request):
     return render(request , 'myapp/payment.html' , {})
 
 
-# search view
+#-----------------------search view----------------------------
 
 def searchProduct(request):
     if request.method == "GET":
-
         query = request.GET.get('q')
 
         if query:
@@ -494,7 +496,7 @@ def searchProduct(request):
 
 
 
-# add to wishlist Logic
+# ----------------------dd to wishlist Logic--------------------
 
 def addToWishlist(request):
     prod_id = request.GET['product']

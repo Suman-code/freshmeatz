@@ -2,16 +2,44 @@
 {% load static %}
 {% block title %}<title>add address</title>{% endblock title %}
 
+{% block navbar %}
+
+<header>
+<nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom py-2" id="navbar_top">
+  <div class="container">
+      <a class="navbar-brand" href="{% url 'home' %}"><img src="{% static 'images/banner/logo.png' %}" width="160px" height="auto"></a>
+      
+
+
+        </div>
+  
+    </nav>
+  
+
+</header>
+
+{% endblock navbar %}
+
+{% block subnavbar %}
+
+{%  endblock subnavbar %}
+
+{% block content %}
+
+
+
+
+{% endblock content %}
+
+
 {% block main %}
 
-<div class="content">
-  <h1>jjjj</h1>
-  <h1>jjjj</h1>
-  <h1>jjjj</h1>
-  <h1>jjjj</h1>
+<div class="w-50 col-sm-11 offset-sm-3 mt-3">
+
 
   <div class="container shadow">
-    <div class="card-body mb-3">
+
+    <div class="card-body mb-3 w-100">
       
       <form method="POST" action="" id=""> {%  csrf_token %}
 

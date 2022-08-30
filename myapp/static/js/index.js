@@ -320,3 +320,85 @@ function closeAllSelect(elmnt) {
 /* If the user clicks anywhere outside the select box,
 then close all select boxes: */
 document.addEventListener("click", closeAllSelect);
+
+
+// payment options selector js
+/*
+const selector = document.querySelector(".payment_option");
+
+selector.addEventListener('change' , e =>{
+  console.log(e.target.value);
+
+})
+
+selector.addEventListener('mousedown' , e =>{
+e.preventDefault();
+const select = selector.children[0];
+const dropDown = document.createElement('ul');
+dropDown.className = 'selector-options';
+
+[...select.children].forEach(option => {
+  const dropDownOption = document.createElement('li');
+  dropDownOption.textContent = option.textContent;
+
+
+dropDownOption.addEventListener('mousedown' , e =>{
+
+  e.stopPropagation();
+  select.value = option.value;
+  selector.value = option.value;
+  select.dispatchEvent(new Event('change'));
+  selector.dispatchEvent(new Event('change'));
+  dropDown.remove();
+
+})
+
+
+
+
+  dropDown.appendChild(dropDownOption);
+
+
+
+
+
+})
+
+selector.appendChild(dropDown);
+
+
+
+})
+*/
+
+/*
+window.onscroll = function() {myFunction()};
+ 
+var navlist = document.getElementById("subnavbar");
+var sticky = navlist.offsetTop;
+
+/* Function to stick the nav bar 
+function myFunction() {
+    if (window.pageYOffset >= sticky) {
+        navlist.classList.add("sticky")
+    }
+    else {
+        navlist.classList.remove("sticky");
+    }
+}
+*/
+
+/* subnavbar fixed wile scrolling donw */ 
+
+window.onscroll = function() {scrollFunction()};
+
+function scrollFunction(){
+  if (document.body.scrollTop > 30 || document.documentElement.scrollTop > 30){
+    document.getElementById("subnavbar").classList.add("subNavbar");
+} else{
+  document.getElementById("subnavbar").classList.remove("subNavbar");
+
+}
+
+
+}

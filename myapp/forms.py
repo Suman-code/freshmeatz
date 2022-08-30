@@ -11,32 +11,34 @@ from django.contrib.auth.models import User
 from django.utils.translation import gettext , gettext_lazy as _
 
 
-
+# sign up form
 
 class UserRegistration(UserCreationForm):
-    username = forms.CharField(required = True , label = 'Email address' , widget = forms.EmailInput( attrs= {'class': 'form-control'}))
-    password1 = forms.CharField(label='Password' , widget= forms.PasswordInput(attrs={'class' : 'form-control'}))
-    password2 = forms.CharField(label= 'Confirm password(again)', widget= forms.PasswordInput(attrs={'class' : 'form-control'}))
+    username = forms.CharField( label= 'Username', widget=forms.TextInput( attrs={'class': 'input', 'placeholder': 'Your username'}))
+    email = forms.CharField(required = True , label = 'Email address' , widget = forms.EmailInput( attrs= {'class': 'input', 'placeholder': 'e.g. demo@gmail.com '}))
+    password1 = forms.CharField(label='Password' , widget= forms.PasswordInput(attrs={'class' : 'input', 'placeholder': 'Password'}))
+    password2 = forms.CharField(label= 'Confirm password(again)', widget= forms.PasswordInput(attrs={'class' : 'input', 'placeholder': 'Confrim passwor'}))
 
     class Meta:
         model = User
-        fields = ['username' , 'password1' , 'password2']
+        fields = ['username' , 'email',  'password1' , 'password2']
 
 
 class LoginForm(AuthenticationForm):
-    username = UsernameField(widget= forms.EmailInput(attrs={'class' : 'form-control' , 'autofocus' : True}))
-    password = forms.CharField(label=_("Password"), strip = False , widget= forms.PasswordInput(attrs= {'autocomplete' : 'current-password' , 'class' : 'form-control' }) )
+    username = UsernameField(widget= forms.TextInput(attrs={'class' : 'input' , 'placeholder': 'Your username', 'autofocus' : True}))
+    password = forms.CharField(label=_("Password"), strip = False , widget= forms.PasswordInput(attrs= {'autocomplete' : 'current-password' , 'class' : 'input' , 'placeholder': '********' }) )
 
 
-
+# user address form
 
 class UserProfileForm(forms.ModelForm):
     first_name = forms.CharField(widget=forms.TextInput(attrs={
 
-        "class" :'form-control input',
-        'type' : '',
-        'placeholder' : 'Enter yor first name',
-        'id' : 'firstname'
+        "class" :' input',
+        'type' : 'text',
+        'placeholder' : 'Enter your first name',
+        'id' : 'firstname',
+        
 
     }))
 
@@ -44,7 +46,7 @@ class UserProfileForm(forms.ModelForm):
 
     last_name = forms.CharField(widget=forms.TextInput(attrs={
 
-        "class" :' form-control input',
+        "class" :' input',
         'type' : '',
         'id' : 'lastname',
         'placeholder' : 'Enter yor last name'
@@ -53,7 +55,7 @@ class UserProfileForm(forms.ModelForm):
 
     email = forms.CharField(widget=forms.EmailInput(attrs={
 
-        "class" :' form-control input',
+        "class" :' input',
         'type' : 'email',
         'id' : 'inputemail',
         'placeholder' : ' e.g. demo@gmail.com '
@@ -62,7 +64,7 @@ class UserProfileForm(forms.ModelForm):
 
     mobile_number = forms.CharField(widget=forms.NumberInput(attrs={
 
-        "class" :' form-control input',
+        "class" :' input',
         'type' : 'tel',
         'id' : 'inputphone',
         'placeholder' : '10 digit mobile number'
@@ -70,7 +72,7 @@ class UserProfileForm(forms.ModelForm):
     }))
     address = forms.CharField(widget=forms.Textarea(attrs={
 
-        "class" :' form-control input',
+        "class" :'  input',
         'type' : 'textarea',
         'id' : 'inputTextarea',
         'placeholder' : 'Address (Area and street)'
@@ -78,7 +80,7 @@ class UserProfileForm(forms.ModelForm):
     }))
     locality = forms.CharField(widget=forms.TextInput(attrs={
 
-        "class" :' form-control input',
+        "class" :'  input',
         'type' : '',
         'id' : 'inputLocality',
         'placeholder' : 'Locality'
@@ -87,7 +89,7 @@ class UserProfileForm(forms.ModelForm):
 
     city = forms.CharField(widget=forms.TextInput(attrs={
 
-        "class" :' form-control input',
+        "class" :' input',
         'type' : '',
         'id' : 'inputCity',
         'placeholder' : 'City/Distict/Town'
@@ -96,7 +98,7 @@ class UserProfileForm(forms.ModelForm):
 
     city = forms.CharField(widget=forms.TextInput(attrs={
 
-        "class" :' form-control input',
+        "class" :'input',
         'type' : '',
         'id' : 'inputCity',
         'placeholder' : 'City/Distict/Town'
@@ -105,7 +107,7 @@ class UserProfileForm(forms.ModelForm):
 
     landmark = forms.CharField(widget=forms.TextInput(attrs={
 
-        "class" :' form-control input',
+        "class" :' input',
         'type' : '',
         'id' : 'inputLandmark',
         'placeholder' : 'Near landmark'
@@ -114,7 +116,7 @@ class UserProfileForm(forms.ModelForm):
 
     state = forms.CharField(widget=forms.TextInput(attrs={
 
-        "class" :' form-control input',
+        "class" :'  input',
         'type' : '',
         'id' : 'inputState',
         'placeholder' : 'State'
@@ -123,7 +125,7 @@ class UserProfileForm(forms.ModelForm):
 
     pincode = forms.CharField(widget=forms.NumberInput(attrs={
 
-        "class" :' form-control input',
+        "class" :'  input',
         'type' : '',
         'id' : 'inputPincode',
         'placeholder' : 'Pincode of area'
@@ -132,7 +134,7 @@ class UserProfileForm(forms.ModelForm):
 
     address_type = forms.CharField(widget=forms.NumberInput(attrs={
 
-        "class" :' form-control input',
+        "class" :' input',
         'type' : '',
         'id' : 'addressType',
     
@@ -140,32 +142,6 @@ class UserProfileForm(forms.ModelForm):
     }))
 
 
-
-
-    '''
-     widgets = {'first_name' : forms.TextInput(attrs=
-        
-        { 'id':'fm' ,
-
-
-
-        'placeholder' : 'First Name'}),
-
-
-        'last_name' : forms.TextInput(attrs={'id':'fm' , 'placeholder' : 'Last Name'}),
-        'mobile_number' : forms.NumberInput(attrs={'class' : 'form-control customerForm', 'placeholder' : '10 digit mobile number'}),
-        'email' : forms.EmailInput(attrs={'class' : 'form-control' 'customerForm' ,  'placeholder' : 'Email' }),       
-        'locality' : forms.TextInput(attrs={'class' : 'form-control customerForm' , 'placeholder' : 'Locality'}),
-        'address' : forms.Textarea(attrs={'class' : 'form-control customerForm' , 'placeholder' : 'Address (Area and Street)'}),
-        'city' : forms.TextInput(attrs={'class' : 'form-control customerForm' , 'placeholder' : 'City/Distict/Town'}),
-        'pincode' : forms.NumberInput(attrs={'class' : 'form-control customerForm' , 'placeholder' : 'Pincode'}),
-        'landmark' : forms.TextInput(attrs={'class' : 'form-control customerForm', 'placeholder' : 'Landmark'}),
-        'state' : forms.TextInput(attrs={'class' : 'form-control customerForm' , 'placeholder' : 'State'}),
-        'addres_type' : forms.TextInput(attrs={'class' : 'form-control customerForm'})
-        }
-    
-    '''
-       
 
     class Meta:
         model = UserProfile

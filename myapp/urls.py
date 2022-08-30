@@ -44,14 +44,18 @@ path('plus-cart-item/' , views.plusCartItem, name="pluscartitem"),
 #----checkout page-----
 path('checkout-cart/' , views.checkoutCart , name="checkout"),
 #userprofile
-path('userprofileaddress/' , views.userprofileAddress , name="userprofileaddress"),
+path('userprofileaddress/' , views.userProfileAddress , name="userprofileaddress"),
+#----------------user address edit
+path('<int:id>/', views.updateAddress, name="update-address" ),
 
-
-#address
-path('addressuser/' , views.addressUser , name="addressuser"),
 
 #----------place order------
 path('placeorder/' , views.placeOrder, name="placeorder"),
+#--------------place order with  cash on delivery-------------
+path('order-done/' , views.order_done, name="order-done"),
+
+
+
 
 
 path('our-gallery/' , views.photoGallery , name="gallery"),

@@ -19,30 +19,31 @@
                   <div class="col-md-6">
                     <div class="card-body">
                         
-                      <h5 class="card-title text-center mt-3">Login</h5>
+                      <h5 class="card-title text-center mt-3 fw-bold">Login</h5>
                       <form class="px-3" method="POSt" action=""> {% csrf_token %}
 
                         {% for fm in form %}
-                        <div class=" form-group mb-1">
-                            {{ fm.label_tag }}  {{ fm }} <small class="text-dnager">{{ fm.errors | striptags }}</small><br>
-
-                            
-                       
-                   
+                        <div class=" form-group mb-0">
+                            <label class="fw-bold text-muted">{{ fm.label_tag }}</label>  {{ fm }}<br> <small class="text-dnager">{{ fm.errors | striptags }}</small><br>
+                 
                         </div>
-                        {% endfor %}
-
                         
-                        <small><a href="#">Forgot password ? </a></small><br>
-                        <input type="submit" value="Login" class="btn btn-danger mt-2"><br>
-                        <div class="text-center text-primary fw-bold"><small>New to here ? <a href="{% url 'signup' %}"
-                    class="text-danger">Create an Account</a></small>
+                        {% endfor %}
+                       
+                        <small class=""><a href="#" class="mb-3">Forgot password ? </a></small><br>
+                       
+                        <button type="submit" class="btn fw-bold btn-sm btn-danger py-1 w-100">Login</button>
+                        <p class="text-center m-3">OR</p>
+                        <a href="#" class="btn w-100 fw-bold btn-sm btn-light py-1 px-3">Request for OTP login</a>
+
+
+                        <div class=" text-primary fw-bold text-center p-2"><small>New to here ? <a href="{% url 'signup' %}"
+                        class="text-danger">Create an Account</a></small>
         
 
                       </form>
 
-                     
-
+                    
 
 
                     </div>

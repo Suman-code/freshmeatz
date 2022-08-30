@@ -108,14 +108,17 @@
     .navcategoryDiv{
         margin: 0;
         padding: 0;
+        height: 80px;
 
     }
 
     /* subnavbar div design */
     #categorynav{
             display: flex;
-            flex-wrap: nowrap;
+            flex-wrap: wrap;
             height: 200px;
+           
+            flex-direction: row;
             
     }
         
@@ -124,6 +127,11 @@
             padding: 0;
             width: 80px;
             height: 100px;
+    }
+
+    .navproductCategory > img{
+        display: hide;
+
     }
 
 

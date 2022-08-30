@@ -25,6 +25,7 @@ for (i = 0; i < coll.length; i++) {
 
 
 // add to cart 
+
 var btns = document.getElementsByClassName("addToCart");
 for (let i = 0; i < btns.length; i++ ){
     btns[i].addEventListener('click' , function(e){
@@ -175,102 +176,6 @@ function updateCartQuantity(){
 }
 
 */
-
-
-
-let savBtn =document.getElementById("saveBtn").addEventListener('click' , delievryAddress)
-//savBtn.addEventListener('click' , delievryAddress)
-
-
-
-//delivery address
-function delievryAddress(e){
-    //e.preventDefault()
-    var first_name = $('#firstname').val();
-    var last_name = $('#lastname').val();
-    var email = $('#inputemail').val();
-    var phone = $('#inputphone').val();
-    var inputTextarea = $('#inputTextarea').val();
-    var locality= $('#inputLocality').val();
-    var city = $('#inputCity').val();
-    var landmark = $('#inputLandmark').val();
-    var state = $('#inputState').val();
-    var pincode = $('#inputPincode').val();
-    var addresstype = $('#addressType').val();
-
-    if(first_name == ''){
-        alert('Please enter First name');
-    }else if(last_name == ""){
-        alert('Please enter last name');
-    }else if(email == ""){
-        alert('Please enter email name')
-    }else if(phone == ""){
-        alert('Please enter phone number')
-    }else if(inputTextarea == ""){
-        alert('Please enter address details')
-    }else if(locality == ""){
-        alert('Please enter locality name')
-
-    }else if(city == ""){
-        alert('Please enter city name')
-    }else if(landmark == ""){
-        alert('Please enter landmark')
-    }else if(state == ""){
-        alert('Please enter state name')
-    }else if(pincode == ""){
-        alert('Please enter pincode')
-    }else if(addresstype == ""){
-        alert('Please enter your address type')
-    } else{
-
-    let data = {first_name : first_name , last_name:last_name, email:email , mobile_number : phone , address : inputTextarea,
-        locality :locality , city:city, landmark:landmark, state : state , pincode:pincode, address_type :addresstype,
-        };
-
-    url = "/userprofileaddress/"
-    fetch(url, {
-        method : 'POST',
-        headers :{
-            'Content-Type': 'application/json',
-            'X-CSRFToken': csrftoken,
-
-        },
-
-        body : JSON.stringify(data),
-
-        })
-        .then((respose) => {
-            return respose.json()
-
-
-        })
-        .then(data => {
-            //console.log('success' , data)
-            if (data.status == 'Added address'){
-                return data.user_data;
-                $("form")[0].reset()
-            }
-
-      
-           
-
-        })
-        .catch((error) => {
-            console.error('Error:', error);
-          });
-
-
-}
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -426,7 +331,6 @@ $('.plus-cart').click(function(e){
 
 });
 
-
 // delivery date picker
 $('#datepicker').datepicker({
 
@@ -436,24 +340,46 @@ $('#datepicker').datepicker({
  
 });
 
+$("#paymentmode").on('change' , function(){
+    var nameValue = $("#paymentmode").val();
+    $(".data").hide();
+    $("."+nameValue).show();
+
+    
+});
+
+
+
+
+
+})
+
+
+//---------
+
+
+
 // end delivery date picker
 
 
-// deleivery address
-/*
-$("#saveBtn").click(function(){
+// deleivery address insert
+
+$("#saveBtn").click(function(e){
+    //e.preventDefault();
+    var output = ""
     var first_name = $('#firstname').val();
     var last_name = $('#lastname').val();
     var email = $('#inputemail').val();
-    var phone = $('#inputphone').val();
-    var inputTextarea = $('#inputTextarea').val();
+    var mobile_number = $('#inputphone').val();
+    var address = $('#inputTextarea').val();
     var locality= $('#inputLocality').val();
     var city = $('#inputCity').val();
     var landmark = $('#inputLandmark').val();
     var state = $('#inputState').val();
     var pincode = $('#inputPincode').val();
-    var addresstype = $('#addresstype').val();
-    let csr = $('input[name=csrfmiddlewaretoken]').val();
+    var address_type = $('#addressType').val();
+ 
+
 
 
     if(first_name == ''){
@@ -462,9 +388,9 @@ $("#saveBtn").click(function(){
         alert('Please enter last name');
     }else if(email == ""){
         alert('Please enter email name')
-    }else if(phone == ""){
+    }else if(mobile_number == ""){
         alert('Please enter phone number')
-    }else if(inputTextarea == ""){
+    }else if(address == ""){
         alert('Please enter address details')
     }else if(locality == ""){
         alert('Please enter locality name')
@@ -477,60 +403,113 @@ $("#saveBtn").click(function(){
         alert('Please enter state name')
     }else if(pincode == ""){
         alert('Please enter pincode')
-    }else if(addresstype == ""){
+    }else if(address_type == ""){
         alert('Please enter your address type')
     } else{
         
-        let mydata = {first_name : first_name , last_name:last_name, email:email , mobile_number : phone , address : inputTextarea,
-                        locality :locality , city:city, landmark:landmark, state:state, pincode:pincode, address_type :addresstype,
-                        csrfmiddlewaretoken : csrftoken};
+    let mydata = {first_name : first_name , last_name:last_name, email:email , mobile_number : mobile_number , address : address,
+    locality :locality , city:city, landmark:landmark, state:state, pincode:pincode, address_type :address_type}
 
 
     //ajax
 
         $.ajax({
-            url : '/userprofileaddress/',
+            url : "/userprofileaddress/",
             method : "POST",
             data : JSON.stringify(mydata),
-            dataType: 'json',
-            async: true,
-            contentType: 'application/json; charset=utf-8',
+            headers :{
+                'Content-Type': 'application/json',
+                'X-CSRFToken': csrftoken,
+    
+            },
 
             success : function(data){
-                console.log(data.status)
+                console.log(data)
+                x = data.user_list
+                
+                if (data.status == 'address added'){
+                    console.log(data.user_list);
+                    for(i=0; i < x.length ; i++){
+                    output += "<small>" + x[i].first_name + x[i].addres_type  + x[i].mobile_number + x[i].email + x[i].address + 
+                    x[i].landmark  + x[i].locality +  x[i].city + x[i].state + x[i].pincide + "</small> <input class='btn fw-bold btn btn-sm edit-btn text-danger'  value='EDIT' style='font-size: 12px; float: right;] data-sid=" + x[i].id + ">"
+                    
+
+                    }    window.location.reload();
+                     $(".form-data").html(output);
+                    
+                  
+                }
+    
 
             },
             error: (error) => {
                 console.log(error);
             }
-
-
            
             })
-          
-
+            
         
-
-
-
             // ajax end
+
         }
 
 })
 
 
 
+//})
+
+// ---------------------------------end deleivery address insert----------------
+
+//--------------------------------------deleivery address edit------------------
+
+/*
+$("div").on("click" , ".edit-btn", function(e){
+//e.preventDefault();
+
+  let id  = $(this).attr("data-sid");
+  console.log(id)
+  mydata = {sid : id};
+  $.ajax({
+
+    url : '/edit-address/',
+    method : 'POST',
+    data : mydata,
+    dataType : "json",
+    
+
+    headers :{
+        
+        'X-CSRFToken': csrftoken,
+
+    },
+
+    success : function(data){
+        console.log(data);
+        
+
+
+    }
 
 
 
 
 
+  });
+// ajax end
 
 
 
 })
 
+
 */
+
+
+
+
+
+
 
 
 // delievry time slot
@@ -540,8 +519,6 @@ function deliveryTime(ele){
     console.log('btn' , btnValue)
 
 }
-
-
 
 
 var timeSlots = [
@@ -586,7 +563,21 @@ console.log('newSlot :>> ', newSlot);
 
 
 
+// payment mode option function
 
-})
+/*
+function changeOption(){
+    let payMode = document.getElementById(paymentmode);
+    if (payMode.value == "cash_on_delivery"){
+        document.getElementById(onlinePayment).style.display = "none"
+
+    } else{
+        document.getElementById(onlinePayment).style.display = "block";
+    }
+
+
+
+
 
 }
+*/

@@ -8,54 +8,56 @@
 {% block main %}
 
 <div class="container-fluid mt-5">
-    <div class="row my-3">
-        <div class=" col col-sm-8 offset-sm-2">
+  <div class="row my-3">
+      <div class=" col col-sm-8 offset-sm-2">
 
-            <div class="card mb-5" style="width: auto;">
-                <div class="row g-0">
-                  <div class="col-md-6">
-                    <img src="{% static 'images/bestsell/c9.png' %}" class="img-fluid" alt="..." width="100%" height="auto">
-                  </div>
-                  <div class="col-md-6">
-                    <div class="card-body">
+          <div class="card mb-5" style="width: auto;">
+              <div class="row g-0">
+                <div class="col-md-6">
+                  <img src="{% static 'images/bestsell/c9.png' %}" class="img-fluid" alt="..." width="100%" height="auto">
+                </div>
+                
+                <div class="col-md-6">
+                  <div class="card-body">
 
-                      <h5 class="card-title text-center mt-3">Sign Up</h5>
-                      <form class="px-3" method="POSt" action="" novalidate> {% csrf_token %}
+                    <h5 class="card-title text-center mt-3 fw-bold">REGISTER HERE</h5>
+                    <form class="px-3" method="POSt" action="" novalidate> {% csrf_token %}
 
-                        {% for fm in form %}
-                        <div class=" form-group">
-                            {{ fm.label_tag }}  {{ fm }} <small class="text-dnager">{{ fm.errors | striptags }}</small><br>
+                      {% for fm in form %}
+                      <div class="form-group fw-bold">
+                          <label class="fw-bold text-muted">{{ fm.label_tag }}</label>
+                           {{ fm }}<br> <small class="text-dnager">{{ fm.errors | striptags }}</small><br>
 
-                            
-                        {% endfor %}
-                        <input type="submit" class="btn btn-danger" value="Sign Up">
-                        </div>
+                          
+                      {% endfor %}
+                      <input type="submit" class="btn btn-danger  btn-sm py-1 w-100" value="Sign Up">
+                      </div>
 
-                        <div class="text-center fw-bold text-primary mt-1"> Existing User ? <a href="{% url 'login' %}"
-                            class="text-danger">Login here</a></div>
+                      <div class="text-center fw-bold text-primary mt-1 py-2"> Existing User ? <a href="{% url 'login' %}"
+                          class="text-danger">Login here</a></div>
 
-                      </form>
+                    </form>
 
-                     
+                   
 
 
 
-                    </div>
                   </div>
                 </div>
               </div>
+            </div>
 
 
 
 
-        </div>
+
+      </div>
 
 
-    </div>
+  </div>
 
 
 </div>
-
 
 
 
