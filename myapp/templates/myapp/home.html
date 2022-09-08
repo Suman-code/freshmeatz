@@ -10,14 +10,15 @@
   <div class="item "><img src="{{ b.image.url }}"></div>
 
   {% endfor %}
-  
+
 </div>
 
 <!-------------freshmeatz processing details div--------->
 
-<div class="container mt-4" >
+<div class="container mt-4">
   <div class="row">
-    <div class="col col-sm-12 offse-sm-0 offset-sm-0" style="background-color: hsl(0, 79%, 91%);border-radius: 6px;" id="process">
+    <div class="col col-sm-12 offse-sm-0 offset-sm-0" style="background-color: hsl(0, 79%, 91%);border-radius: 6px;"
+      id="process">
       <h6 class="text-center">How freshmeatz process..?</h6>
       <small class="">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam, ea. Lorem ipsum dolor sit amet
         consectetur adipisicing elit. Officiis nobisnemo! <span
@@ -44,13 +45,13 @@
   <div class="videoBg">
     <img src="{% static 'images/banner/videobg.jpg' %}" class="img-fluid" style="opacity: 0.5;">
 
-          {% for v in video %}
-          <video class="embed-responsive embed-responsive-16by9" controls="controls video" width="100%" height="auto" >
-            <source src="{{ v.video.url }}" type="video/mp4" />
-          </video>
+    {% for v in video %}
+    <video class="embed-responsive embed-responsive-16by9" controls="controls video" width="100%" height="auto">
+      <source src="{{ v.video.url }}" type="video/mp4" />
+    </video>
 
-          {% endfor %}
-      </div>
+    {% endfor %}
+  </div>
 </div>
 <!-------------- end div video of product process-------------->
 
@@ -59,51 +60,74 @@
 <div class="container mt-4">
   <div class="row">
     <div class="col">
-      
+
       <div class="d-flex justify-content-between" id="salelive">
 
-      <h3 class="mt-4">Today's Sale</h3>
-      <h3 class="mt-4 text-danger" id="livesale"></h3>
- 
+        <h3 class="mt-4">Today's Sale</h3>
+        <h3 class="mt-4 text-danger" id="livesale"></h3>
+
         <a href="{% url 'todaysale' %}" class="btn   mt-4 btn-outline-danger">View all </a>
-        
+
       </div>
 
       <div class="owl-carousel" id="slider5">
 
-      {% for d in DOTD %}
+        {% for d in DOTD %}
         <div class="item shadow bg-white mt-3">
           <a href="{% url 'productdetails' d.id %}" class="text-decoration-none text-dark">
-          <img src="{{ d.product_image.url }}" class="rounded-top img-fluid" width="320" height="240">
+            <img src="{{ d.product_image.url }}" class="rounded-top img-fluid" width="320" height="240">
 
             <div class="m-3 mb-3">
               <h6 class="mt-0">{{ d.title }}</small></h5>
                 <small class="mb-3">{{ d.description }}</small>
-                  </div>
-
-                    <div class="m-3 mb-3">
-      
-                      <small class="text-decoration-line-through text-muted" style="font-size: 12px;">MRP: {{ d.selling_price}} | 500gms </small><br>
-                      <span class="text-danger mt-0  fw-bold fs-6"><i
-                        class="fa-solid fa-indian-rupee-sign text-danger fa-xs"></i>{{ d.discounted_price }} | {{ d.quantity }}</span>
-                      </a>
-                    <a class="btn btn-danger addToCart" data-action="add" data-product="{{ d.id}}" style="float: right;">Add to Cart</a>
-
-                  </div>
-                  <div class="text-center card-footer mt-4">
-                    <small class="">
-                      Delivery today within 2hrs
-                </small>
             </div>
-        
+
+            <div class="m-3 mb-3">
+
+              <small class="text-decoration-line-through text-muted" style="font-size: 12px;">MRP: {{ d.selling_price}}
+                | 500gms </small><br>
+              <span class="text-danger mt-0  fw-bold fs-6"><i
+                  class="fa-solid fa-indian-rupee-sign text-danger fa-xs"></i>{{ d.discounted_price }} | {{ d.quantity
+                }}</span>
+          </a>
+          <!----
+            <a class="btn btn-danger addToCart" data-action="add" data-product="{{ d.id}}" style="float: right;">Add to
+            Cart</a>
+
+          
+          -->
+
+          {% if already_in_cart %}
+          <a href="{% url 'cart' %}" class="btn btn-warning shadow-sm px-5 py-2">Got to cart</a>
+
+          {% else %}
+          <a class="btn btn-danger addToCart" data-action="add" data-product="{{ d.id}}" style="float: right;">Add to
+            Cart</a>
+
+
+          {% endif %}
+
+
+
+
+
+
+
+        </div>
+        <div class="text-center card-footer mt-4">
+          <small class="">
+            Delivery today within 2hrs
+          </small>
+        </div>
+
 
       </div>
-  {% endfor %}
+      {% endfor %}
 
 
 
-      </div>
     </div>
+  </div>
 </div>
 
 </div>
@@ -123,7 +147,7 @@
 
       <div class="owl-carousel" id="slider1">
         {% for f in fish %}
-        <div class="item bg-white" style="height: auto";>
+        <div class="item bg-white" style="height: auto" ;>
           <a href="{% url 'productdetails' f.id %}" class=" text-decoration-none text-dark">
             <img src="{{ f.product_image.url }}" class="rounded-top" width="320" height="240">
             <div class="m-3 mb-3">
@@ -134,24 +158,25 @@
             <div class="m-3 mb-3">
               <span class="text-danger mt-0  fw-bold fs-6"><i
                   class="fa-solid fa-indian-rupee-sign text-danger fa-xs"></i>150 | 500gms</span>
-                </a>
-                  <a class="btn btn-danger addToCart" data-action="add" data-product="{{ f.id}}" style="float: right;">Add to Cart</a>
-            </div>
-            <div class="text-center card-footer mt-4">
-              <small class="">
-                Delivery
-              </small>
-            </div>
-      
+          </a>
+          <a class="btn btn-danger addToCart" data-action="add" data-product="{{ f.id}}" style="float: right;">Add to
+            Cart</a>
+        </div>
+        <div class="text-center card-footer mt-4">
+          <small class="">
+            Delivery
+          </small>
         </div>
 
-        {% endfor %}
-
-
-  
       </div>
+
+      {% endfor %}
+
+
+
     </div>
   </div>
+</div>
 </div>
 
 <!-----------------------Products div end------------>
@@ -161,101 +186,109 @@
   <div class="row">
     <div class="col col-sm-8 offset-sm-2 text-center bg-light shadow">
 
-        <img src="{% static 'images/banner/logo.png' %}" class="mt-4" alt="..." width ="50%" height="auto" >
-           
-      <p class="card-text text-center text-dark">Subscribe to <b class="text-danger">freshmeatz</b> and get extra 5% off.</p>
+      <img src="{% static 'images/banner/logo.png' %}" class="mt-4" alt="..." width="50%" height="auto">
+
+      <p class="card-text text-center text-dark">Subscribe to <b class="text-danger">freshmeatz</b> and get extra 5%
+        off.</p>
       <button class="btn mb-4 btn-danger btn-sm text-center">Subscribe</button>
-      </div>
-</div>
+    </div>
+  </div>
 </div>
 
 
 
 <!-----------------------products categories div start------------------------->
 <div class="container  mt-5">
-      <div class="row">
-          <div class="col col-sm-0 offset-sm-0">
-            <h3 class="mb-3">Browse by Category</h3>
-              <div class = "d-flex flex-wrap justify-content-between align-items-center" id="categories"> 
+  <div class="row">
+    <div class="col col-sm-0 offset-sm-0">
+      <h3 class="mb-3">Browse by Category</h3>
+      <div class="d-flex flex-wrap justify-content-between align-items-center" id="categories">
 
-            <div class="card categoryDiv mt-2">
-                <a href="{% url 'todaysale' %}" class="categoryLink">
-                  <img src="{% static 'images/category/offer.jpg' %}" class="card-img-top" alt="..." width="450px" height="auto">
-                <figcaption class="py-2">Deal of the day</figcaption>
-              </a> 
-          </div>
-      
-
-          <div class="card categoryDiv mt-2">
-            <a href="{% url 'countrychicken' %}" class="categoryLink">
-              <img src="{% static 'images/category/lchick.jpg' %}" class="card-img-top" alt="..." width="450px" height="auto">
-              <figcaption class="py-2">Country Chickens</figcaption>
-            </a> 
-          </div>
-
-          <div class="card categoryDiv mt-2">
-            <a href="{% url 'poultrychicken' %}" class="categoryLink">
-              <img src="{% static 'images/category/pchick.jpg' %}" class="card-img-top" alt="..." width="450px" height="auto">
-              <figcaption class="py-2">Poultry Chickens</figcaption>
-            </a> 
-          </div>
-
-          <div class="card categoryDiv mt-2">
-            <a href="{% url 'mutton' %}" class="categoryLink">
-              <img src="{% static 'images/category/mutton.jpg' %}" class="card-img-top" alt="..." width="450px" height="auto">
-              <figcaption class="py-2">Mutton</figcaption>
-            </a> 
-          </div>
-
-          <div class="card categoryDiv mt-2">
-            <a href="{% url 'fishseafood' %}" class="categoryLink">
-              <img src="{% static 'images/category/seafood.jpg' %}" class="card-img-top" alt="..." width="450px" height="auto">
-              <figcaption class="py-2">Fish & Seafood</figcaption>
-            </a> 
-          </div>
-
-          <div class="card categoryDiv mt-2">
-            <a href="{% url 'prawns' %}" class="categoryLink">
-              <img src="{% static 'images/category/prawn.jpg' %}" class="card-img-top" alt="..." width="450px" height="auto">
-              <figcaption class="py-2">Prawns</figcaption>
-            </a> 
-          </div>
-
-          <div class="card categoryDiv mt-2">
-            <a href="{% url 'coldcuts' %}" class="categoryLink">
-              <img src="{% static 'images/category/cc.jpg' %}" class="card-img-top" alt="..." width="450px" height="auto">
-              <figcaption class="py-2">Cold Cuts</figcaption>
-            </a> 
-          </div>
-
-          <div class="card categoryDiv mt-2">
-            <a href="{% url 'readytocook' %}" class="categoryLink">
-              <img src="{% static 'images/category/rtc.jpg' %}" class="card-img-top" alt="..." width="450px" height="auto">
-              <figcaption class="py-2">Ready to Cook</figcaption>
-            </a> 
-          </div>
+        <div class="card categoryDiv mt-2">
+          <a href="{% url 'todaysale' %}" class="categoryLink">
+            <img src="{% static 'images/category/offer.jpg' %}" class="card-img-top" alt="..." width="450px"
+              height="auto">
+            <figcaption class="py-2">Deal of the day</figcaption>
+          </a>
+        </div>
 
 
+        <div class="card categoryDiv mt-2">
+          <a href="{% url 'countrychicken' %}" class="categoryLink">
+            <img src="{% static 'images/category/lchick.jpg' %}" class="card-img-top" alt="..." width="450px"
+              height="auto">
+            <figcaption class="py-2">Country Chickens</figcaption>
+          </a>
+        </div>
 
+        <div class="card categoryDiv mt-2">
+          <a href="{% url 'poultrychicken' %}" class="categoryLink">
+            <img src="{% static 'images/category/pchick.jpg' %}" class="card-img-top" alt="..." width="450px"
+              height="auto">
+            <figcaption class="py-2">Poultry Chickens</figcaption>
+          </a>
+        </div>
+
+        <div class="card categoryDiv mt-2">
+          <a href="{% url 'mutton' %}" class="categoryLink">
+            <img src="{% static 'images/category/mutton.jpg' %}" class="card-img-top" alt="..." width="450px"
+              height="auto">
+            <figcaption class="py-2">Mutton</figcaption>
+          </a>
+        </div>
+
+        <div class="card categoryDiv mt-2">
+          <a href="{% url 'fishseafood' %}" class="categoryLink">
+            <img src="{% static 'images/category/seafood.jpg' %}" class="card-img-top" alt="..." width="450px"
+              height="auto">
+            <figcaption class="py-2">Fish & Seafood</figcaption>
+          </a>
+        </div>
+
+        <div class="card categoryDiv mt-2">
+          <a href="{% url 'prawns' %}" class="categoryLink">
+            <img src="{% static 'images/category/prawn.jpg' %}" class="card-img-top" alt="..." width="450px"
+              height="auto">
+            <figcaption class="py-2">Prawns</figcaption>
+          </a>
+        </div>
+
+        <div class="card categoryDiv mt-2">
+          <a href="{% url 'coldcuts' %}" class="categoryLink">
+            <img src="{% static 'images/category/cc.jpg' %}" class="card-img-top" alt="..." width="450px" height="auto">
+            <figcaption class="py-2">Cold Cuts</figcaption>
+          </a>
+        </div>
+
+        <div class="card categoryDiv mt-2">
+          <a href="{% url 'readytocook' %}" class="categoryLink">
+            <img src="{% static 'images/category/rtc.jpg' %}" class="card-img-top" alt="..." width="450px"
+              height="auto">
+            <figcaption class="py-2">Ready to Cook</figcaption>
+          </a>
+        </div>
+
+
+
+      </div>
     </div>
   </div>
-</div>
 </div>
 
 <!--- ------------------------------end category div----------------------------------->
 
 <div class="mt-5 container-fluid">
-<div class="row">
-  <div class="col">
-    <hr>
-    <div class="mt-5 mb-5">
-      <h5 class="text-center">"We provide contactless Delivery service to maintain the social distance."</h5>
+  <div class="row">
+    <div class="col">
+      <hr>
+      <div class="mt-5 mb-5">
+        <h5 class="text-center">"We provide contactless Delivery service to maintain the social distance."</h5>
 
+      </div>
+      <hr>
     </div>
-<hr>
-  </div>
 
-</div>
+  </div>
 
 </div>
 

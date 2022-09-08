@@ -38,8 +38,8 @@ path('minus-cart-item/' , views.minusCartItem, name="minuscartitem"),
 #plus cart item
 path('plus-cart-item/' , views.plusCartItem, name="pluscartitem"),
 #path('update-cart-quantity/' , views.updateCartQuantity , name="updatecartquantity"),
-# delete-cart-item
-#path('delete-cart-item/' , views.deleteCartItem , name="delete-cart-item"),
+#delete-cart-item
+path('delete-cart-item/' , views.deleteCartItem , name="delete-cart-item"),
 
 #----checkout page-----
 path('checkout-cart/' , views.checkoutCart , name="checkout"),

@@ -388,12 +388,14 @@ function myFunction() {
 }
 */
 
+
+
 /* subnavbar fixed wile scrolling donw */ 
 
 window.onscroll = function() {scrollFunction()};
 
 function scrollFunction(){
-  if (document.body.scrollTop > 30 || document.documentElement.scrollTop > 30){
+  if (document.body.scrollTop > 10 || document.documentElement.scrollTop > 10){
     document.getElementById("subnavbar").classList.add("subNavbar");
 } else{
   document.getElementById("subnavbar").classList.remove("subNavbar");

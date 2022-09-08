@@ -130,11 +130,13 @@ def addToCart(request):
     data = json.loads(request.body)
     productId = data['product_id']
     action = data['action']
+    item_already_in_cart = False
     if request.user.is_authenticated:
         user = request.user
         product = Product.objects.get(id = productId)
         cart, created = Cart.objects.get_or_create(user=user)
         cartitems, created = CartItem.objects.get_or_create(product=product, cart=cart)
+        item_already_in_cart = CartItem.objects.filter(Q(product=product) & Q(cart=cart)).exists()
         
 
         if action == 'add':
@@ -144,12 +146,11 @@ def addToCart(request):
         msg = {
 
             'cartQuantity' : cart.cartquantity
+            }
 
+    return JsonResponse({'status' : 'Item has added to cart' , 'item_already_in_cart' : item_already_in_cart}, msg ,  safe=False)
 
-        }
-    return JsonResponse( msg ,  safe=False)
-
-# cart items display
+#--------------cart items display----------------
 def cartItems(request):
     if request.user.is_authenticated:
         user = request.user
@@ -166,35 +167,75 @@ def cartItems(request):
 
 
 
-# update cart quantity
+#-----------update cart quantity------------
 
-# minus cart item
+#-------------minus cart item--------------
 def minusCartItem(request):
-    if request.method == "GET":
-        prod_id = request.GET['product_id']
-        print(prod_id)
-        cart = CartItem.objects.get(Q(product= prod_id))
-        cart.quantity -= 1
-        cart.save()
+    if request.method == 'GET':
+        product_id = request.GET['productId']
+        cart_item = CartItem.objects.get(Q(product = product_id))
+        cart_item.quantity -= 1
+        cart_item.save()
+        cart = Cart.objects.get(user = request.user)
+        shipping_charge = 70.0
+        data = {
+            'quantity' : cart_item.quantity,
+            'subTotal' : cart_item.subtotal,
+            'grandTotal' : cart.grandtotal + shipping_charge
 
-    return JsonResponse('Successfully cart item decresed' , safe=False)
+        }
 
 
-#plus cart item
+    return JsonResponse({'status' : 'Item quantity has been decresed' , 'data' : data}, status = 200)
+
+
+#-------------plus cart item----------
+
 def plusCartItem(request):
-    if request.method == "GET":
-        prod_id = request.GET['product_id']
-        print(prod_id)
-        cart = CartItem.objects.get(Q(product= prod_id))
-        print(cart)
-        cart.quantity += 1
-        cart.save()
+    if request.method == 'GET':
+        item_id = request.GET['itemId']
+        cartitem = CartItem.objects.get(Q(product = item_id))
+        cartitem.quantity += 1
+        cartitem.save()
+        cart = Cart.objects.get(user = request.user)
+        cartitems = CartItem.objects.all()
+        shipping_charge = 70.0
+      
+        data = {
+            'quantity' : cartitem.quantity,
+            'total' : cartitem.subtotal,
+            'subTotal' : cart.grandtotal,
+            'grandTotal' : cart.grandtotal + shipping_charge
 
-    return JsonResponse('Successfully cart item decresed' , safe=False)
+            }
+    return JsonResponse({'status' : 'Item added to cart' , 'data' : data}, status = 200)
+
+    
+#---------delete cart items----------------------- 
+
+def deleteCartItem(request):
+    if request.user.is_authenticated:
+        if request.method == "GET":
+            prodId = request.GET['id']
+            cart_item = CartItem.objects.get(id = prodId)
+            cart_item.delete()
+            cart = Cart.objects.get(user = request.user)
+          
+            cartitems = [p for p in cart.cartitem_set.all() if p.cart==cart]
+            shipping_charge = 70.0
+          
+            data = {
 
 
+            'cartQuantity' : cart.cartquantity,
+            'subTotal' : cart.grandtotal,
+            'grandTotal' : cart.grandtotal + shipping_charge
+
+            
+            }
 
 
+    return JsonResponse({'status': 'item has been deleted', 'cartitems': data } , status = 200)
 
 
 
