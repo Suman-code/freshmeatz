@@ -1,4 +1,5 @@
 
+from importlib.metadata import requires
 from itertools import product
 import json
 from multiprocessing import context
@@ -106,7 +107,7 @@ def coldCutProdcuts(request):
     return render(request , 'myapp/coldcut.html' , {'coldcut' : coldcut})
 
 
-#single product details view
+#------------------single product details view-------------
 
 class ProductDetails(View):
     def get(self, request , pk):
@@ -125,7 +126,7 @@ class ProductDetails(View):
         return render(request , 'myapp/productdetails.html' , {'product':product , 'related_product' : related_product , 'cart' :cart , 'cartitems':cartitems})
 
 
-# Add to cart function View
+#------------------Add to cart function View-------------------
 def addToCart(request):
     data = json.loads(request.body)
     productId = data['product_id']
@@ -136,19 +137,21 @@ def addToCart(request):
         product = Product.objects.get(id = productId)
         cart, created = Cart.objects.get_or_create(user=user)
         cartitems, created = CartItem.objects.get_or_create(product=product, cart=cart)
-        item_already_in_cart = CartItem.objects.filter(Q(product=product) & Q(cart=cart)).exists()
-        
-
+        item_already_in_cart = CartItem.objects.filter(Q(product = product) & Q(cart=cart)).exists()
+    
         if action == 'add':
             cartitems.quantity += 1
         cartitems.save()
 
         msg = {
 
-            'cartQuantity' : cart.cartquantity
-            }
+            'cartQuantity' : cart.cartquantity,
+            'item_already_in_cart' : item_already_in_cart
+            
 
-    return JsonResponse({'status' : 'Item has added to cart' , 'item_already_in_cart' : item_already_in_cart}, msg ,  safe=False)
+            }
+    
+    return JsonResponse( msg ,  safe=False, status=200)
 
 #--------------cart items display----------------
 def cartItems(request):
@@ -265,61 +268,6 @@ def updateCartQuantity(request):
 
 
 
-
-
-'''
-def deleteCartItem(request):
-   
-
-
-    return JsonResponse({'status': 'Deleted successfully'})
-
-#delete cart item
-'''
-
-
-'''
-def addToCart(request):
-    usr = request.user
-    product_id = request.GET.get('product-id')
-    product = Product.objects.get(id=product_id)
-    savecart = Cart(user = usr , product = product)
-    savecart.save()
-
-    return redirect('/cart/')
-
-
-
-def cartPage(request):
-    if request.user.is_authenticated:
-        user = request.user
-        total_tems = 0
-        total_amount = 0.0
-        grand_amount = 0.0
-        cart = Cart.objects.filter(user=user)
-        cart_items = [p for p in Cart.objects.all() if p.user==user]
-        if user.is_authenticated:
-            total_items = len(Cart.objects.filter(user=user))
-
-        if (cart_items):
-            for c in cart_items:
-                temporaryAmount = (c.product_qty * c.product.discounted_price)
-                total_amount += temporaryAmount
-                grand_amount = total_amount
-
-            return render( request , 'myapp/showcart.html',{
-                'cart' : cart,
-                'total_amount' : total_amount,
-                'grand_total' : grand_amount,
-                'total_items' : total_items
-                })
-        else:
-            return render(request , 'myapp/empty.html')
-
-
-'''
-
-
 #---------------sign up view--------------------
 class SignUp(View):
 
@@ -357,14 +305,6 @@ def checkoutCart(request):
 
 # ----------------userprofile  address-----------------
 
-
-'''
-def userProfileAddress(request):
-    form = UserProfileForm()
-
-    return render(request , 'myapp/useraddress.html', {'form' : form})
-
-'''
 
 def userProfileAddress(request):
     if request.method == "POST":
@@ -557,33 +497,28 @@ def addToWishlist(request):
     
     return JsonResponse(data)
 
-#add to wish display
+#---------------add to wish display---------------
 def myWishlist(request):
     wishlist = Wishlist.objects.filter(user=request.user).order_by('-id')
     total_wishlist= len(Wishlist.objects.filter(user = request.user))
     return render(request , 'myapp/wishlist.html' , {'wishlist': wishlist , 'w' : total_wishlist})
 
-# delete wishlist item
+
+#---------------------delete wishlist item----------------------
 def deleteWishlist(request):
-    if request.user.is_authenticated:
-        prod_id = int(request.GET.get('product_id'))
-        if(Wishlist.objects.filter(user=request.user, product_id = prod_id)):
-            wishlistitem = Wishlist.objects.get(product_id=prod_id)
-            wishlistitem.delete()
-
-            return JsonResponse({'status' : 'Item has been removed'})
-
-
-        else:
-            return JsonResponse({'status' : "Item nit found in wishlist"})
-
-    else:
-        return JsonResponse({'status' : 'Login required to remove'})
-
-    return redirect("/")
+    if request.method == 'GET':
+        prod_id = request.GET['id']
+        wishlist_item = Wishlist.objects.get(Q(user=request.user) & Q(id = prod_id))
+        wishlist_item.delete()
+        total_wishlist= len(Wishlist.objects.filter(user = request.user))
+        data = {
+            'total_wishlist' : total_wishlist
+        }
 
 
-
+    return JsonResponse({'status' : 'item has been removed form wishlist' , 'data' : data}, status=200)
+    
+ 
 # customer addres view
 
 def address(request):

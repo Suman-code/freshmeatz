@@ -1,41 +1,38 @@
 {% extends 'myapp/base.html' %}
 {% load static %}
-
-{% block title %}<title>My cart page</title>{% endblock title %}
-
+{% block title %}
+<title>My cart page</title>
+{% endblock title %}
 
 {% block navbar %}
 
 <header>
   <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom py-2" id="navbar_top">
     <div class="container d-flex justify-content-between">
-
       <a class="navbar-brand" href="{% url 'home' %}"><img src="{% static 'images/banner/logo.png' %}" width="160px"
-          height="auto"></a>
+          height="auto" /></a>
       <div class="profileDropdown">
-
-        <button onclick="profileDropdown()" class="profileDropbtn text-muted">{{ request.user.username | capfirst }} <i
-            class="fa-solid fa-angle-down ps-1"></i></button>
+        <button onclick="profileDropdown()" class="profileDropbtn text-muted">
+          {{ request.user.username | capfirst }}
+          <i class="fa-solid fa-angle-down ps-1"></i>
+        </button>
         <div class="profileDropdown-content" id="dropDown-content">
           <a class="dropdown-item" href="#">Profile</a>
           <a class="dropdown-item" href="#">Orders</a>
           <a class="dropdown-item" href="#">Chnage Password</a>
           <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
         </div>
-
       </div>
-
     </div>
-
   </nav>
 </header>
 
-{% endblock navbar %}
+{% endblock navbar %} 
 
 
-{% block subnavbar %}
-{% endblock subnavbar %}
+{% block subnavbar %} 
 
+{% endblock subnavbar %} 
 
 {% block main %}
 
@@ -44,18 +41,16 @@
     <h5 class="text-center fw-bold py-3">MY CART DETAILS</h5>
     <div class="col-sm-8 col-lg-8 bg-light py-3 shadow">
       <h6 class="p-3 fw-bold text-center">CART PRODUCTS</h6>
-      <table class="table table-image  border-top">
-
+      <table class="table table-image border-top">
         <tbody>
-
           {% for item in cartitems %}
           <tr id="cartItem">
             <td class="w-25 p-3">
-              <img src="{{ item.product.product_image.url}}" class="rounded-2 img-fluid " alt="..." id="img">
+              <img src="{{ item.product.product_image.url}}" class="rounded-2 img-fluid" alt="..." id="img" />
             </td>
 
             <td class="p-3">
-              <h6 style="font-size: 14px;">{{ item.product.title}}</h6>
+              <h6 style="font-size: 14px">{{ item.product.title}}</h6>
             </td>
             <td>{{ item.product.discounted_price}}</td>
 
@@ -72,60 +67,51 @@
 
             <td class="text-center" id="total">{{ item.subtotal }}</td>
 
-            <td class="delete-cart-item" data-item="{{ item.id }}"> <i
-                class="fa-solid fa-trash-can text-danger text-center btn btn-sm"></i></td>
+            <td class="delete-cart-item" data-item="{{ item.id }}">
+              <i class="fa-solid fa-trash-can text-danger text-center btn btn-sm"></i>
+            </td>
           </tr>
           {% endfor %}
-
         </tbody>
       </table>
-
     </div>
 
-    <!--------------------------price details div ----------------------------->
+    <!--------------------------Cart price details div ----------------------------->
     <div class="col-sm-4" id="price">
       <div class="bg-light shadow sticky">
-
         <ul class="list-group">
-          <h6 class="text-center fw-bold py-3 border-bottom"> PRICE DETAILS </h6>
+          <h6 class="text-center fw-bold py-3 border-bottom">PRICE DETAILS</h6>
           <div class="p-3">
             <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0 bg-light">
-              Subtotal <span>Rs. <span id="subTotal">{{ cart.grandtotal | floatformat:2 }}</span></span></li>
+              Subtotal
+              <span>Rs.
+                <span id="subTotal">{{ cart.grandtotal | floatformat:2 }}
+                </span></span>
+            </li>
 
             <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0 bg-light">
-              Shipping charge<span class="ms-3">Rs. 70.00</span></li>
+              Shipping charge<span class="ms-3">Rs. 70.00</span>
+            </li>
             <!--
              <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0 bg-light">
           Tax<span class="ms-3">Rs. 00.00</span></li>
           -->
 
-
             <li class="list-group-item d-flex justify-content-between align-items-center border-0 bg-light p-0 my-3">
               <b>Grand Total</b>
-              <span id="grandTotal"> <strong> Rs. {{ cart.grandtotal | floatformat:2 }}</strong></span>
+              <span id="grandTotal">
+                <strong>
+                  Rs. {{ cart.grandtotal | floatformat:2 }}</strong></span>
             </li>
-
           </div>
-
         </ul>
-
-
 
         <div class="d-grid shadow">
           <a href="{% url 'checkout' %}" class="btn btn-danger">CHECKOUT</a>
         </div>
-
-
       </div>
-
-
     </div>
-
   </div>
-
 </div>
-
-
-
 
 {% endblock main %}

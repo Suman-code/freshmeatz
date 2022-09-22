@@ -14,7 +14,7 @@ for (i = 0; i < coll.length; i++) {
   });
 }
 
-// add to cart
+//----------------add to cart----------------
 
 var btns = document.getElementsByClassName("addToCart");
 for (let i = 0; i < btns.length; i++) {
@@ -26,11 +26,17 @@ for (let i = 0; i < btns.length; i++) {
       console.log("user not loged");
     } else {
       addToCartItem(product_id, action);
+    
     }
+    
   });
+
 }
 
-//add to cart
+
+
+
+//....................add to cart funtion------------
 function addToCartItem(product_id, action) {
   var data = { product_id: product_id, action: action };
 
@@ -45,18 +51,20 @@ function addToCartItem(product_id, action) {
   })
     .then((response) => {
       return response.json();
+
     })
 
     .then((data) => {
-      console.log("Success:", data);
-      document.getElementById(
-        "cartcount"
-      ).innerHTML = `<span>${data.cartQuantity}</span>`;
+      document.getElementById("cartcount" ).innerHTML = `<span>${data.cartQuantity}</span>`;
     })
+
+
     .catch((error) => {
       console.error("Error:", error);
     });
 }
+
+
 
 // Update cart quantity
 /*
@@ -154,7 +162,8 @@ function updateCartQuantity(){
 
 */
 
-//----------------add to wishlist-----------------
+//--------------------------add to wishlist-----------------
+
 
 $(document).ready(function () {
   //add to wishlist
@@ -179,27 +188,33 @@ $(document).ready(function () {
     // endajax
   });
 
-  //------------------wishlist delete---------------------
 
-  $(".wishlist-delete").click(function (e) {
-    e.preventDefault();
-    product_id = $("#proud_id").val();
-    //console.log(product_id);
+  //------------------wishlist item delete---------------------
 
-    $.ajax({
-      method: "GET",
-      url: "/delete-wishlist-item/",
-      data: {
-        product_id: product_id,
-      },
-      success: function (res) {
-        console.log(res.status);
-        $(".wishdata").load(location.href + " .wishdata");
-      },
-    });
+$(document).on("click", ".delete-wishlist-item", function () {
+  var prodId = $(this).attr("data-item");
+  var ele = this;
+  // ajax
+
+  $.ajax({
+    url: "/delete-wishlist-item/",
+    data: {
+      id: prodId,
+    },
+    dataType: "json",
+
+    success: function (response) {
+      console.log(response);
+      data = response.data
+      document.getElementById('wishlistCount').innerHTML = "My wishlist" + " " + data.total_wishlist
+      ele.parentNode.remove();
+    },
   });
 
-  //--------------------update cart quantity------------------------
+  // ajx end
+});
+
+  //--------------------update cart quantity item plus/item minus------------------------
 
   // delivery date picker
   $("#datepicker").datepicker({
@@ -237,7 +252,7 @@ $(document).ready(function () {
     //ajax end
   });
 
-  //-------------decrese cart items-------------------
+  //--------------------decrese cart items-------------------
 
   $(document).on("click", ".minus-cart", function () {
     var productId = $(this).attr("data-product");
@@ -295,6 +310,7 @@ $(document).ready(function () {
     // ajx end
   });
 
+  
   //-------------payment mode selective--------------
   $("#paymentmode").on("change", function () {
     var nameValue = $("#paymentmode").val();

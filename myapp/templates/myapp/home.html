@@ -1,5 +1,6 @@
 {% extends 'myapp/base.html' %}
 {% load static %}
+{% load item_in_cart %}
 
 {% block banner %}
 
@@ -87,30 +88,13 @@
               <small class="text-decoration-line-through text-muted" style="font-size: 12px;">MRP: {{ d.selling_price}}
                 | 500gms </small><br>
               <span class="text-danger mt-0  fw-bold fs-6"><i
-                  class="fa-solid fa-indian-rupee-sign text-danger fa-xs"></i>{{ d.discounted_price }} | {{ d.quantity
-                }}</span>
-          </a>
-          <!----
-            <a class="btn btn-danger addToCart" data-action="add" data-product="{{ d.id}}" style="float: right;">Add to
+                  class="fa-solid fa-indian-rupee-sign text-danger fa-xs"></i>{{ d.discounted_price }} | {{ d.quantity }}</span>
+                </a>
+
+
+          <a class="btn btn-danger addToCart" id="id{{d.id}}" data-action="add" data-product="{{ d.id}}"
+            style="float: right;">Add to
             Cart</a>
-
-          
-          -->
-
-          {% if already_in_cart %}
-          <a href="{% url 'cart' %}" class="btn btn-warning shadow-sm px-5 py-2">Got to cart</a>
-
-          {% else %}
-          <a class="btn btn-danger addToCart" data-action="add" data-product="{{ d.id}}" style="float: right;">Add to
-            Cart</a>
-
-
-          {% endif %}
-
-
-
-
-
 
 
         </div>
@@ -159,8 +143,15 @@
               <span class="text-danger mt-0  fw-bold fs-6"><i
                   class="fa-solid fa-indian-rupee-sign text-danger fa-xs"></i>150 | 500gms</span>
           </a>
-          <a class="btn btn-danger addToCart" data-action="add" data-product="{{ f.id}}" style="float: right;">Add to
-            Cart</a>
+          <!--{{ product | is_in_cart:cartitems }}-->
+        
+          <span id="item{{f.id}}"> <a class="btn btn-danger addToCart" data-action="add" data-product="{{ f.id}}"
+              style="float: right;">Add to cart
+            </a>
+
+          </span>
+
+
         </div>
         <div class="text-center card-footer mt-4">
           <small class="">
