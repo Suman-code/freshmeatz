@@ -57,15 +57,18 @@
             <!--<td class="text-center">  <label for="quantiy">Qty :</label> <input  type="number" name="quantity" class="quantity bg-light text-center" data-product="{{item.product.id}}" value="{{ item.quantity }}" step="1" style="width: 50px; height: auto; border: 1px solid lightgray;">-->
             <td>
               <small>
-                <span class="minus-cart btn" data-product="{{ item.product.id }}"><i
-                    class="fas fa-minus-square fa-sm text-secondary"></i></span>
-                <span id="quantity">{{ item.quantity}}</span>
-                <span class="plus-cart btn" data-product="{{ item.product.id }}"><i
-                    class="fas fa-plus-square fa-sm text-secondary"></i></span>
+                <span class="minus-cart btn" data-product="{{ item.product.id }}"><i class="fas fa-minus-square fa-sm text-secondary"></i></span>
+
+                <span id="quantity" class="">{{ item.quantity}}</span>
+
+                <span class="plus-cart btn" data-product="{{ item.product.id }}"><i class="fas fa-plus-square fa-sm text-secondary"></i></span>
+
               </small>
             </td>
 
-            <td class="text-center" id="total">{{ item.subtotal }}</td>
+
+            <td class="text-center " id="total">{{ item.subtotal }}</td>
+
 
             <td class="delete-cart-item" data-item="{{ item.id }}">
               <i class="fa-solid fa-trash-can text-danger text-center btn btn-sm"></i>

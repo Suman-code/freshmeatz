@@ -65,6 +65,48 @@ function addToCartItem(product_id, action) {
 }
 
 
+//---browse by category function-----------------
+
+/*
+var categorylink = document.getElementsByClassName('categoryLink');
+
+for(let i = 0; i<categorylink.length; i++){
+  categorylink[i].addEventListener('click' ,  function(e){
+    var product_id = this.dataset.product;
+    console.log(product_id);
+    getCategoryItems(product_id)
+  
+
+  })
+}
+
+function getCategoryItems(product_id){
+  data = {product_id : product_id}
+  url = "/categoryitems/";
+  fetch(url , {
+    method :"POST",
+    headers : {
+      "Content-Type": "application/json",
+      "X-CSRFToken": csrftoken,
+
+    },
+    body: JSON.stringify(data),
+  }).then((response) => {
+    return response.json();
+
+  }).then((data) => {
+    console.log(data)
+  })
+  .catch((error) => {
+    console.error("Error:", error);
+  });
+
+
+
+}
+
+
+*/
 
 // Update cart quantity
 /*
@@ -162,6 +204,52 @@ function updateCartQuantity(){
 
 */
 
+
+$(document).ready(function(){
+  var categorylink = document.getElementsByClassName('categoryLink');
+
+  for(i = 0; i<categorylink.length; i++){
+    $(categorylink[i]).click(function(){
+      var category_id = this.dataset.product;
+      console.log(category_id)
+      
+      //ajax
+      $.ajax({
+        
+        url: "/category-base-items/",
+        type : "GET",
+        
+        data: {
+          category_id: category_id,
+        },
+        dataType: "json",
+        
+        headers :{
+        
+          'X-CSRFToken': csrftoken,
+  
+      },
+  
+  
+        success: function (res) {
+          console.log(res.data);
+        },
+      });
+  
+
+      //ajax end
+
+
+    })
+
+  }
+
+
+
+})
+
+
+
 //--------------------------add to wishlist-----------------
 
 
@@ -227,7 +315,7 @@ $(document).on("click", ".delete-wishlist-item", function () {
 
   $(document).on("click", ".plus-cart", function () {
     var itemId = $(this).attr("data-product");
-    var ele = this;
+    var ele = $(this);
     // ajax
 
     $.ajax({
@@ -239,7 +327,8 @@ $(document).on("click", ".delete-wishlist-item", function () {
       success: function (response) {
         console.log(response.status);
         data = response.data;
-
+        
+        
         document.getElementById("quantity").innerText = data.quantity;
         document.getElementById("total").innerText = data.total;
         document.getElementById("subTotal").innerText = data.subTotal;
@@ -257,7 +346,8 @@ $(document).on("click", ".delete-wishlist-item", function () {
   $(document).on("click", ".minus-cart", function () {
     var productId = $(this).attr("data-product");
     console.log(productId);
-    var ele = $(this).next();
+    var ele = $(this).first();
+    console.log(ele)
     // ajax
 
     $.ajax({
@@ -271,9 +361,10 @@ $(document).on("click", ".delete-wishlist-item", function () {
         console.log(response.status);
         console.log(response.data);
         data = response.data;
-        //ele.innerText = data.quantity;
+       
         
-        document.getElementById("quantity").innerText = data.quantity;
+        //document.getElementById("quantity").innerText = data.quantity;
+       ele.innerText = data.quantity;
         document.getElementById("total").innerText = data.total;
         document.getElementById("subTotal").innerText = data.subTotal;
         document.getElementById("grandTotal").innerText = data.grandTotal;
@@ -317,7 +408,9 @@ $(document).on("click", ".delete-wishlist-item", function () {
     $(".data").hide();
     $("." + nameValue).show();
   });
-});
+})
+
+
 
 //---------------deleivery address insert------------
 

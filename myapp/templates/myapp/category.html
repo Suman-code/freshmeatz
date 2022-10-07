@@ -1,0 +1,59 @@
+{% extends 'myapp/base.html' %}
+{% load static %}
+
+{% block title %}<title>Category-basis-products</title>{% endblock title %}
+
+{% block main %}
+
+
+
+<div class="container  mt-1">
+
+    <div class="row">
+    
+        <div class="col  d-flex justify-content-between align-items-center flex-wrap">
+{{ hi }} {{ su }}
+          
+        {% for product in products %}
+
+          <div class="item shadow bg-white border mt-4" style="height: 420; border-radius: 10px;">
+            <a href="{% url 'productdetails' product.id %}" class="text-decoration-none text-dark">
+              <img src="{{ product.product_image.url }}" class="rounded-top" width="320" height="240">
+  
+              <div class="m-3 mb-3">
+                <h6 class="mt-0">{{ product.title }}</small></h5>
+                  <small class="mb-3">{{ product.description }}</small>
+              </div>
+  
+              <div class="m-3 mb-3">
+                    <small class="text-decoration-line-through text-muted" style="font-size: 12px;">MRP: {{ product.selling_price }} | 500 Gms</small><br>
+                    <span class="text-danger mt-0  fw-bold fs-6"><i
+                        class="fa-solid fa-indian-rupee-sign text-danger fa-xs"></i>{{ product.discounted_price }} | {{ c.quantity }}</span>
+
+                
+          <a class="btn btn-sm  btn-danger addToCart" id="id{{d.id}}" data-action="add" data-product="{{ product.id}}"
+          style="float: right;">Add to Cart</a>
+
+  
+              </div>
+              <div class="text-center mt-3 card-footer mt-4">
+                <small class="">
+                  Delivery today within 2hrs
+                </small>
+              </div>
+            </a>
+  
+          </div>
+          {% endfor %}
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+
+
+{% endblock main %}

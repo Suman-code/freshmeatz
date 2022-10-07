@@ -3,11 +3,11 @@ from importlib.metadata import requires
 from itertools import product
 import json
 from multiprocessing import context
+
 from telnetlib import STATUS
 from threading import local
-from tkinter import E
+
 import urllib.request 
-from turtle import title
 from typing import List
 from unicodedata import category
 from urllib import request
@@ -32,9 +32,22 @@ def homePage(request):
     video = Myvideo.objects.all()
     banner = Banner.objects.all()
     category = Category.objects.all()
-    dealOfTheDay = Product.objects.filter(category = 'Deal_of_the_day')
-    #for time being , the below query need to change. it should be dealof the day
-    fish = Product.objects.filter(category = 'Country_chicken')
+    products = Product.objects.filter()
+    products = None
+    toDaysale = Category.objects.get(title ='Deal_of_the_day')
+    todaySaleProducts = Product.objects.filter(category=toDaysale)
+    #best selling products for temporary chicken has mentioned
+    chickenproducts = Category.objects.get(title='Country_chicken')
+    bestSellingProducts =  Product.objects.filter(category = chickenproducts)
+
+    categoryId = request.GET.get('category')
+    if categoryId:
+        products = Product.get_product_by_categoryid(categoryId)
+
+    else:
+        products = Product.get_all_products()
+    
+
 
     if request.user.is_authenticated:
         customer = request.user
@@ -49,17 +62,53 @@ def homePage(request):
     return render( request , 'myapp/home.html' , 
     {'video' : video , 
     'banner': banner , 
-    'category' : category , 
-    'DOTD' : dealOfTheDay ,
-    'fish' : fish, 
+    'category' : category ,
+    'todaySaleProducts' : todaySaleProducts,
     'cart' : cart,
     'cartitems' : cartitems,
-    'active' : 'border-bottom border-danger border-2'})
+    'bestsellingngProducts' : bestSellingProducts
+    })
+
+#-----------category wise items-------------
+def categoryItemsView(request):
+    products = {}  
+    '''
+     products = {}  
+    if request.method == "GET":
+        categoryId = request.GET.get('category_id')
+        ''''''
+        print(categoryId)
+        products = Product.objects.filter(category_id= categoryId)
+        print(products)
+    else:
+        print('Error')
+    
+    '''
+    if request.method == "GET":
+        category_id = request.GET.get('category_id')
+        print(category_id)
+        products = Product.objects.filter(category_id= category_id)
+        prod = list(products)
+        print(prod)
+
+    else:
+        print('error')
+    
+
+
+   
+
+
+    return render(request, 'myapp/category.html' , {'hi':'hello', 'products' : prod})
+
+
+
+
 
  
 def todaySale(request):
-    todaySale = Product.objects.filter(category='Deal_of_the_day')
-    todayDeal = Product.objects.filter(category = 'Deal_of_the_day')
+    todaySaleCategory = Category.objects.get(title='Deal_of_the_day')
+    todayDeal = Product.objects.filter(category = todaySaleCategory)
     return render(request , 'myapp/todaysale.html' , {'todaydeal' : todayDeal})
 
 
@@ -152,6 +201,7 @@ def addToCart(request):
             }
     
     return JsonResponse( msg ,  safe=False, status=200)
+
 
 #--------------cart items display----------------
 def cartItems(request):

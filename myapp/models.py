@@ -51,7 +51,7 @@ class Category(models.Model):
     image = models.ImageField(upload_to = "category_images/")
 
     def __str__(self):
-        return str(self.category)
+        return str(self.title)
 
 
 STATUS_CHOICES = (
@@ -64,7 +64,7 @@ STATUS_CHOICES = (
 
 #product models
 class Product(models.Model):
-    category = models.CharField(choices = CATEGORY_CHOICES ,  max_length = 100)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)
     title = models.CharField(max_length = 100)
     description = models.TextField()
     selling_price = models.FloatField()
@@ -77,7 +77,22 @@ class Product(models.Model):
 
     def __str__(self):
         return str(self.title)
-# cart
+
+    @staticmethod
+    def get_all_products():
+        return Product.objects.all()
+
+
+    @staticmethod
+    def get_product_by_categoryid(category_id):
+        if category_id:
+            return Product.objects.filter(category=category_id)
+        else:
+            return Product.get_all_products()
+
+
+
+#---------------------art-----------------
 
 class Cart(models.Model):
     user = models.ForeignKey(User,  on_delete=models.CASCADE)

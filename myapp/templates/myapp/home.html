@@ -56,7 +56,7 @@
 </div>
 <!-------------- end div video of product process-------------->
 
-<!---------------live sale start here--------------->
+<!---------------live sale start here today sale --------------->
 
 <div class="container mt-4">
   <div class="row">
@@ -73,10 +73,10 @@
 
       <div class="owl-carousel" id="slider5">
 
-        {% for d in DOTD %}
+        {% for d in todaySaleProducts %}
         <div class="item shadow bg-white mt-3">
           <a href="{% url 'productdetails' d.id %}" class="text-decoration-none text-dark">
-            <img src="{{ d.product_image.url }}" class="rounded-top img-fluid" width="320" height="240">
+            <img src="{{ d.product_image.url }}" class="rounded-top img-fluid" width="320" height="auto" alt="">
 
             <div class="m-3 mb-3">
               <h6 class="mt-0">{{ d.title }}</small></h5>
@@ -89,12 +89,11 @@
                 | 500gms </small><br>
               <span class="text-danger mt-0  fw-bold fs-6"><i
                   class="fa-solid fa-indian-rupee-sign text-danger fa-xs"></i>{{ d.discounted_price }} | {{ d.quantity }}</span>
-                </a>
+          </a>
 
 
           <a class="btn btn-danger addToCart" id="id{{d.id}}" data-action="add" data-product="{{ d.id}}"
-            style="float: right;">Add to
-            Cart</a>
+            style="float: right;">Add to Cart</a>
 
 
         </div>
@@ -130,7 +129,7 @@
       <h3 class="mt-4 mb-3">Best Selling Products</h3>
 
       <div class="owl-carousel" id="slider1">
-        {% for f in fish %}
+        {% for f in bestsellingngProducts %}
         <div class="item bg-white" style="height: auto" ;>
           <a href="{% url 'productdetails' f.id %}" class=" text-decoration-none text-dark">
             <img src="{{ f.product_image.url }}" class="rounded-top" width="320" height="240">
@@ -144,7 +143,7 @@
                   class="fa-solid fa-indian-rupee-sign text-danger fa-xs"></i>150 | 500gms</span>
           </a>
           <!--{{ product | is_in_cart:cartitems }}-->
-        
+
           <span id="item{{f.id}}"> <a class="btn btn-danger addToCart" data-action="add" data-product="{{ f.id}}"
               style="float: right;">Add to cart
             </a>
@@ -188,7 +187,7 @@
 
 
 
-<!-----------------------products categories div start------------------------->
+<!-----------------------products categories div start-------------------------
 <div class="container  mt-5">
   <div class="row">
     <div class="col col-sm-0 offset-sm-0">
@@ -266,21 +265,53 @@
   </div>
 </div>
 
-<!--- ------------------------------end category div----------------------------------->
+<!- ------------------------------end category div----------------------------------->
 
-<div class="mt-5 container-fluid">
+
+
+<!-----------------------products categories div start------------------------->
+
+<div class="container  mt-5">
   <div class="row">
-    <div class="col">
-      <hr>
-      <div class="mt-5 mb-5">
-        <h5 class="text-center">"We provide contactless Delivery service to maintain the social distance."</h5>
+    <div class="col col-sm-0 offset-sm-0">
+      <h3 class="mb-3">Browse by Category</h3>
+      <div class="d-flex flex-wrap justify-content-between align-items-center" id="categories">
+        {% for category in category %}
+        <div class="card categoryDiv mt-2">
+          <a href="{% url 'categoryitems' %}" class="categoryLink" data-product="{{category.id}}">
+            <img src="{{  category.image.url }}" class="card-img-top" alt="..." width="450px" height="auto">
+            <figcaption class="py-2">{{ category.title}}</figcaption>
+
+          </a>
+        </div>
+
+        {% endfor %}
+
+
 
       </div>
-      <hr>
+
+    </div>
+  </div>
+</div>
+
+<!- ------------------------------end category div----------------------------------->
+
+
+
+  <div class="mt-5 container-fluid">
+    <div class="row">
+      <div class="col">
+        <hr>
+        <div class="mt-5 mb-5">
+          <h5 class="text-center">"We provide contactless Delivery service to maintain the social distance."</h5>
+
+        </div>
+        <hr>
+      </div>
+
     </div>
 
   </div>
 
-</div>
-
-{% endblock main %}
+  {% endblock main %}

@@ -24,6 +24,8 @@ path('countrychicken_items/' ,  views. countryChickenProducts , name="countrychi
 path('poultrychicken_items/' ,  views.poultryChickenProducts , name="poultrychicken"),
 #Ready to Cook products url
 path('readytocookmeat/' ,  views.readyToCookProducts, name="readytocook"),
+#---category base 
+path('category-base-items/' , views.categoryItemsView, name="categoryitems"),
 
 
 # Single product details

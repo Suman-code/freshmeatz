@@ -17,7 +17,7 @@ class CategoryModelAdmin(admin.ModelAdmin):
 
 @admin.register(Product)
 class ProductModelAdmin(admin.ModelAdmin):
-    list_display = ['id' , 'title' , 'selling_price' , 'discounted_price' , 'category' , 'product_image' , 'date_added']
+    list_display = ['id' , 'category_id' , 'title' , 'selling_price' , 'discounted_price' , 'category' , 'product_image' , 'date_added']
 
 @admin.register(Wishlist)
 class WhishlistModelAdmin(admin.ModelAdmin):
