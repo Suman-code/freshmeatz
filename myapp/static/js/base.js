@@ -302,7 +302,7 @@ $(document).on("click", ".delete-wishlist-item", function () {
   // ajx end
 });
 
-  //--------------------update cart quantity item plus/item minus------------------------
+  
 
   // delivery date picker
   $("#datepicker").datepicker({
@@ -311,11 +311,16 @@ $(document).on("click", ".delete-wishlist-item", function () {
     minDate: 0,
   });
 
+  //--------------------update cart quantity (increment /decrement------------------------
+
   ///-------------------------Plus cart item-----------------
 
   $(document).on("click", ".plus-cart", function () {
-    var itemId = $(this).attr("data-product");
-    var ele = $(this);
+    var itemId = $(this).attr('pid').toString();
+    var e = .00
+    var ele = this.parentNode.children[1];
+    var totalEle = this.parentNode.parentNode.nextElementSibling;
+
     // ajax
 
     $.ajax({
@@ -325,14 +330,14 @@ $(document).on("click", ".delete-wishlist-item", function () {
       },
       dataType: "json",
       success: function (response) {
-        console.log(response.status);
         data = response.data;
-        
-        
-        document.getElementById("quantity").innerText = data.quantity;
-        document.getElementById("total").innerText = data.total;
-        document.getElementById("subTotal").innerText = data.subTotal;
-        document.getElementById("grandTotal").innerText = data.grandTotal;
+      
+        ele.innerText = data.quantity;
+        totalEle.innerHTML = `<i class="fa-solid fa-2xs text-muted fa-indian-rupee-sign"></i> ${data.total} .00` ;
+        document.getElementById("subTotal").innerHTML= ` ${data.subTotal} .00`;
+        document.getElementById("grandTotal").innerHTML =  `<b><i class="fa-solid fa-2xs text-muted fa-indian-rupee-sign"></i> ${data.grandTotal} .00<b/>` ;
+      
+
       
       },
       
@@ -344,10 +349,10 @@ $(document).on("click", ".delete-wishlist-item", function () {
   //--------------------decrese cart items-------------------
 
   $(document).on("click", ".minus-cart", function () {
-    var productId = $(this).attr("data-product");
-    console.log(productId);
-    var ele = $(this).first();
-    console.log(ele)
+    var productId = $(this).attr('pid').toString();
+    var qtyEle = this.parentNode.children[1];
+    var totalProdEle = this.parentNode.parentNode.nextElementSibling;
+   
     // ajax
 
     $.ajax({
@@ -362,12 +367,10 @@ $(document).on("click", ".delete-wishlist-item", function () {
         console.log(response.data);
         data = response.data;
        
-        
-        //document.getElementById("quantity").innerText = data.quantity;
-       ele.innerText = data.quantity;
-        document.getElementById("total").innerText = data.total;
-        document.getElementById("subTotal").innerText = data.subTotal;
-        document.getElementById("grandTotal").innerText = data.grandTotal;
+       qtyEle.innerText = data.quantity;
+       totalProdEle.innerHTML = `<i class="fa-solid fa-2xs text-muted fa-indian-rupee-sign"></i> ${data.total} .00` ;
+        document.getElementById("subTotal").innerHTML= ` ${data.subTotal} .00` 
+        document.getElementById("grandTotal").innerHTML =  `<b><i class="fa-solid fa-2xs text-muted fa-indian-rupee-sign"></i> ${data.grandTotal} .00</b>` ;
       },
     });
 
@@ -389,11 +392,10 @@ $(document).on("click", ".delete-wishlist-item", function () {
       dataType: "json",
 
       success: function (response) {
-        console.log(response.cartitems);
-        console.log(response.status);
+        
         data = response.cartitems;
         document.getElementById("subTotal").innerText = data.subTotal;
-        document.getElementById("grandTotal").innerText = data.grandTotal;
+        document.getElementById("grandTotal").innerHTML = `<b><i class="fa-solid fa-2xs text-muted fa-indian-rupee-sign"></i> ${data.grandTotal} .00</b>` ;
         ele.parentNode.remove();
       },
     });

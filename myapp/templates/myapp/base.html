@@ -111,10 +111,13 @@ function getToken(name) {
 
       <li class="nav-item py-2 text-muted" style="list-style-type : none;">
         <a href="{% url 'cart' %}" class="text-muted ">
-          <span  class="text-white bg-danger  rounded-circle px-2" style="position: absolute; right: 90px; bottom: 35px; font-size: 14px;" id="cartcount">{{ cart.cartquantity }}</span>
+         <span  class="text-white bg-danger text-center cartcount px-0" style="position: absolute; right: 90px; bottom: 35px; font-size: 14px;" id="cartcount">{{ cart.cartquantity }}</span>
           <i class="fas fa-shopping-cart mx-1  fs-5 text-muted " style="position: relative;"></i>
+          
+          
         </a> Cart
-        </li>
+        
+      </li>
 
 
 

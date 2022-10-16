@@ -232,9 +232,11 @@ def minusCartItem(request):
         cart = Cart.objects.get(user = request.user)
         shipping_charge = 70.0
         data = {
-            'quantity' : cart_item.quantity,
-            'subTotal' : cart_item.subtotal,
+              'quantity' : cart_item.quantity,
+            'total' : cart_item.subtotal,
+            'subTotal' : cart.grandtotal,
             'grandTotal' : cart.grandtotal + shipping_charge
+
 
         }
 

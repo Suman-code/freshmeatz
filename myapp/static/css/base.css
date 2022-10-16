@@ -225,8 +225,17 @@ input[type=text] {
   border: none;
 }
 */
+/* cart quantity */
 
-
+.cartcount{
+  
+  width: 2vw;
+  height: 2vw;
+  border-radius: 70%;
+  
+ 
+  
+}
 
 .subscribeDiv {
   position: relative;

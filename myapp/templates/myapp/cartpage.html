@@ -27,12 +27,12 @@
   </nav>
 </header>
 
-{% endblock navbar %} 
+{% endblock navbar %}
 
 
-{% block subnavbar %} 
+{% block subnavbar %}
 
-{% endblock subnavbar %} 
+{% endblock subnavbar %}
 
 {% block main %}
 
@@ -42,8 +42,11 @@
     <div class="col-sm-8 col-lg-8 bg-light py-3 shadow">
       <h6 class="p-3 fw-bold text-center">CART PRODUCTS</h6>
       <table class="table table-image border-top">
+
         <tbody>
+          {% if cartitems %}
           {% for item in cartitems %}
+
           <tr id="cartItem">
             <td class="w-25 p-3">
               <img src="{{ item.product.product_image.url}}" class="rounded-2 img-fluid" alt="..." id="img" />
@@ -57,17 +60,19 @@
             <!--<td class="text-center">  <label for="quantiy">Qty :</label> <input  type="number" name="quantity" class="quantity bg-light text-center" data-product="{{item.product.id}}" value="{{ item.quantity }}" step="1" style="width: 50px; height: auto; border: 1px solid lightgray;">-->
             <td>
               <small>
-                <span class="minus-cart btn" data-product="{{ item.product.id }}"><i class="fas fa-minus-square fa-sm text-secondary"></i></span>
+                <span class="minus-cart btn" pid="{{ item.product.id }}"><i
+                    class="fas fa-minus-square fa-sm text-secondary"></i></span>
 
-                <span id="quantity" class="">{{ item.quantity}}</span>
+                <span id="quantity" class="qty">{{ item.quantity}}</span>
 
-                <span class="plus-cart btn" data-product="{{ item.product.id }}"><i class="fas fa-plus-square fa-sm text-secondary"></i></span>
+                <span class="plus-cart btn" pid="{{ item.product.id }}"><i
+                    class="fas fa-plus-square fa-sm text-secondary"></i></span>
 
               </small>
             </td>
 
 
-            <td class="text-center " id="total">{{ item.subtotal }}</td>
+            <td class="text-center " id="total"> <i class="fa-solid fa-2xs text-muted fa-indian-rupee-sign"></i> {{ item.subtotal | floatformat:2 }}</td>
 
 
             <td class="delete-cart-item" data-item="{{ item.id }}">
@@ -87,13 +92,14 @@
           <div class="p-3">
             <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0 bg-light">
               Subtotal
-              <span>Rs.
+              <span><i class="fa-solid fa-2xs text-muted fa-indian-rupee-sign"></i>
                 <span id="subTotal">{{ cart.grandtotal | floatformat:2 }}
                 </span></span>
             </li>
 
             <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0 bg-light">
-              Shipping charge<span class="ms-3">Rs. 70.00</span>
+              Shipping charge<span class="ms-3"><i class="fa-solid fa-2xs text-muted fa-indian-rupee-sign"></i>
+                70.00</span>
             </li>
             <!--
              <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0 bg-light">
@@ -104,17 +110,47 @@
               <b>Grand Total</b>
               <span id="grandTotal">
                 <strong>
-                  Rs. {{ cart.grandtotal | floatformat:2 }}</strong></span>
+                  <i class="fa-solid fa-2xs text-muted fa-indian-rupee-sign"></i> {{ cart.grandtotal | floatformat:2 }}</strong></span>
             </li>
           </div>
         </ul>
-
         <div class="d-grid shadow">
           <a href="{% url 'checkout' %}" class="btn btn-danger">CHECKOUT</a>
         </div>
+
       </div>
     </div>
+
   </div>
 </div>
+
+
+
+
+{% else %}
+<h1>Hello</h1>
+<div class="container">
+  <div class="row">
+
+    <div class="col-sm-8 col-lg-8  py-3  text-center">
+      <div class="text-center">
+        <img src="{% static 'images/banner/emptycart.png' %}" class="img-fluid">
+
+      </div>
+
+
+
+    </div>
+
+
+  </div>
+
+
+</div>
+
+
+{% endif %}
+
+
 
 {% endblock main %}
